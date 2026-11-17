@@ -1,10 +1,12 @@
 /**
- * Pasek walki: panel akcji postaci oraz amunicja, przeładowanie i szybka zmiana broni.
+ * Pasek walki: licznik Przewagi, panel akcji postaci oraz amunicja, przeładowanie i szybka zmiana broni.
  * Pokazuje zaznaczoną postać, a bez zaznaczenia postać przypisaną do gracza.
+ * HUD przesuwa się za uchwyt; podwójny klik na uchwycie wraca na miejsce nad paskiem makr.
  */
 import { MODULE_ID, t, log } from "./constants.mjs";
-import { getSetting } from "./settings.mjs";
+import { getSetting, hasSetting, setSetting } from "./settings.mjs";
 import { ammoState } from "./ammo-data.mjs";
+import { advantageOf, clampAnchor, isAnchor } from "./hud-data.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -25,7 +27,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
       reload: BattleBar.#onReload,
       toggleEquip: BattleBar.#onToggleEquip,
       openTab: BattleBar.#onOpenTab,
-      runAction: BattleBar.#onRunAction
+      runAction: BattleBar.#onRunAction,
+      gainAdvantage: BattleBar.#onGainAdvantage
     }
   };
 
@@ -37,20 +40,34 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     return selected?.actor ?? game.user.character ?? null;
   }
 
+  /** Przewaga do pokazania na HUD-zie albo `null` (inny system, ustawienie wyłączone, brak postaci). */
+  static advantage(actor) {
+    if (!actor || !hasSetting("showAdvantage") || !getSetting("showAdvantage")) return null;
+    return advantageOf(actor);
+  }
+
   /** Pokazuje, odświeża albo chowa pasek zależnie od bieżącej postaci. */
   static refresh() {
     this.#instance ??= new this();
     const actor = this.actor;
     const ammo = this.adapter && getSetting("showBar") && actor && this.adapter.allWeapons(actor).length > 0;
-    const visible = ammo || (actor && this.actions && getSetting("showActions"));
+    const visible = ammo || (actor && this.actions && getSetting("showActions")) || this.advantage(actor);
     if (visible) this.#instance.render({ force: true });
     else if (this.#instance.rendered) this.#instance.close();
+  }
+
+  /** Przywraca HUD na domyślne miejsce nad paskiem makr. */
+  static async resetPosition() {
+    await setSetting("hudPosition", {});
+    if (this.#instance?.rendered) this.#instance.#place();
   }
 
   /** Lista broni, dla której otwarto wybór amunicji. */
   openList = null;
   /** Zakładka panelu akcji, która jest rozwinięta. */
   openTab = null;
+  /** Ostatnio pokazana Przewaga („uuid:wartość”) – zmiana wartości uruchamia animację licznika. */
+  #shownAdvantage = null;
 
   get adapter() {
     return this.constructor.adapter;
@@ -61,7 +78,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const { adapter } = this;
     const actor = this.constructor.actor;
     if (!actor) return context;
-    Object.assign(context, this.#actionContext(actor));
+    Object.assign(context, this.#actionContext(actor), { advantage: this.#advantageContext(actor) });
     if (!adapter || !getSetting("showBar")) return Object.assign(context, { weapons: [], gear: [] });
     const low = getSetting("lowAmmo");
     const onlyEquipped = getSetting("onlyEquipped");
@@ -88,6 +105,19 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     });
   }
 
+  /** Licznik animuje się tylko wtedy, gdy zmieniła się Przewaga tej samej postaci, a nie przy zmianie zaznaczenia. */
+  #advantageContext(actor) {
+    const advantage = this.constructor.advantage(actor);
+    if (!advantage) {
+      this.#shownAdvantage = null;
+      return null;
+    }
+    const key = `${actor.uuid}:${advantage.value}`;
+    const changed = Boolean(this.#shownAdvantage?.startsWith(`${actor.uuid}:`)) && this.#shownAdvantage !== key;
+    this.#shownAdvantage = key;
+    return { ...advantage, changed };
+  }
+
   #actionContext(actor) {
     const { actions } = this.constructor;
     if (!actions || !getSetting("showActions")) return { actionTabs: [], actionPanel: null };
@@ -99,15 +129,25 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     };
   }
 
-  /** Prawy klik na akcji: arkusz przedmiotu, zdjęcie stanu, uszkodzenie sprzętu z Ctrl. */
+  /** Prawy klik na akcji: arkusz przedmiotu, zdjęcie stanu, uszkodzenie sprzętu z Ctrl; na Przewadze: −1. */
   _onFirstRender(context, options) {
     super._onFirstRender(context, options);
-    this.element.addEventListener("contextmenu", (event) => {
+    const root = this.element;
+    root.addEventListener("contextmenu", (event) => {
+      if (event.target.closest(".whb-advantage")) {
+        event.preventDefault();
+        return this.#changeAdvantage(-1);
+      }
       const button = event.target.closest(".whb-action");
       if (!button) return;
       event.preventDefault();
       this.#perform(button, event, true);
     });
+    root.addEventListener("pointerdown", (event) => this.#onDragStart(event));
+    root.addEventListener("dblclick", (event) => {
+      if (event.target.closest(".whb-grip")) this.constructor.resetPosition();
+    });
+    window.addEventListener("resize", foundry.utils.debounce(() => this.rendered && this.#place(), 100));
   }
 
   #perform(button, event, right) {
@@ -117,11 +157,60 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     return this.constructor.actions.perform(actor, button.dataset.value, mods);
   }
 
-  /** Pasek makr bywa jedno- lub dwurzędowy, więc wysokość liczymy z jego rzeczywistego położenia. */
+  async #changeAdvantage(delta) {
+    const actor = this.constructor.actor;
+    if (!actor) return ui.notifications.warn(t("NoActor"));
+    try {
+      await actor.modifyAdvantage(delta);
+    } catch (err) {
+      log.error(actor.name, err);
+      ui.notifications.error(typeof err === "string" ? err : t("Failed"));
+    }
+  }
+
   _onRender(context, options) {
     super._onRender(context, options);
-    const top = document.getElementById("hotbar")?.getBoundingClientRect().top;
-    if (top > 0) this.element.style.bottom = `${window.innerHeight - top + 8}px`;
+    this.#place();
+  }
+
+  /**
+   * Ustawia HUD w zapisanym miejscu, a bez zapisu – nad paskiem makr.
+   * Pasek makr bywa jedno- lub dwurzędowy, więc wysokość liczymy z jego rzeczywistego położenia.
+   */
+  #place(saved = getSetting("hudPosition")) {
+    const { style, offsetWidth, offsetHeight } = this.element;
+    if (!isAnchor(saved)) {
+      const top = document.getElementById("hotbar")?.getBoundingClientRect().top;
+      Object.assign(style, { left: "", bottom: top > 0 ? `${window.innerHeight - top + 8}px` : "" });
+      return;
+    }
+    const { x, bottom } = clampAnchor(saved, offsetWidth, offsetHeight, window.innerWidth, window.innerHeight);
+    Object.assign(style, { left: `${x}px`, bottom: `${bottom}px` });
+  }
+
+  /** HUD przesuwa się za uchwyt; położenie zapisujemy po puszczeniu, i tylko gdy faktycznie się ruszył. */
+  #onDragStart(event) {
+    if (!event.target.closest(".whb-grip") || event.button !== 0) return;
+    event.preventDefault();
+    const { element } = this;
+    const box = element.getBoundingClientRect();
+    const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY };
+    let moved = false;
+    const move = (e) => {
+      moved = true;
+      this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y) });
+    };
+    const stop = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", stop);
+      element.classList.remove("dragging");
+      if (!moved) return;
+      const { left, width, bottom } = element.getBoundingClientRect();
+      setSetting("hudPosition", { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom) });
+    };
+    element.classList.add("dragging");
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop);
   }
 
   /** Pozycje z paska dotyczą zawsze aktualnej postaci, a błędy systemu nie mogą zostawiać kliknięcia bez odpowiedzi. */
@@ -158,6 +247,10 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static #onRunAction(event, target) {
     return this.#perform(target, event, false);
+  }
+
+  static #onGainAdvantage() {
+    return this.#changeAdvantage(1);
   }
 
   static #onReload(_event, target) {

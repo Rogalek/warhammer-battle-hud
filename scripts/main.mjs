@@ -28,12 +28,14 @@ Hooks.once("init", () => {
   PartyFrames.adapter = frames;
   BattleBar.adapter = ammoFor(game.system.id);
   registerFrameSettings(refreshFrames);
-  registerBarSettings(Boolean(BattleBar.adapter), refreshBar);
+  registerBarSettings(Boolean(BattleBar.adapter), refreshBar, game.system.id === "wfrp4e");
   game.modules.get(MODULE_ID).api = {
     refresh: () => {
       BattleBar.refresh();
       PartyFrames.refresh();
-    }
+    },
+    /** Przywraca HUD na domyślne miejsce nad paskiem makr. */
+    resetPosition: () => BattleBar.resetPosition()
   };
 });
 

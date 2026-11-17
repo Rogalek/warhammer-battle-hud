@@ -16,6 +16,14 @@ Paste into *Manifest URL* under **Add-on Modules → Install Module**:
 https://github.com/TomasWarchol/warhammer-battle-hud/releases/latest/download/module.json
 ```
 
+## 🧭 Floating HUD
+
+The HUD (Advantage, action panel and ammunition) floats over the scene. Drag it by the handle on its left; the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
+
+## ⚡ Advantage (WFRP)
+
+A large counter at the front of the HUD shows the character's Advantage and glows brighter as it grows, up to the maximum. **Click**: +1, **right-click**: −1. The party frames highlight it too. It can be hidden in the settings.
+
 ## ⚔️ Action panel
 
 Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In the other systems: the system's tests with the character's values.

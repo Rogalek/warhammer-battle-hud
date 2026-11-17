@@ -8,7 +8,12 @@
     "Reload": "Przeładuj",
     "Failed": "To się nie udało. Szczegóły w konsoli (F12).",
     "Empty": "{name}: zużyto ostatnią sztukę.",
+    "Advantage": "Przewaga",
+    "AdvantageHint": "Klik: +1 Przewagi. Prawy klik: −1.",
+    "Drag": "Przeciągnij, aby przesunąć HUD. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
+      "ShowAdvantageName": "Pokazuj licznik Przewagi",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a. Klik dodaje punkt, prawy klik odejmuje.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",

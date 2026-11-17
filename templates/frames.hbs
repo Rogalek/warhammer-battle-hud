@@ -18,7 +18,7 @@
           {{/each}}
           {{#if stats.length}}
             <div class="whf-stats">
-              {{#each stats}}<span data-tooltip="{{label}}"><i class="fa-solid {{icon}}" inert></i> {{value}}{{#if max}}/{{max}}{{/if}}</span>{{/each}}
+              {{#each stats}}<span class="whf-stat-{{key}}" data-tooltip="{{label}}"><i class="fa-solid {{icon}}" inert></i> {{value}}{{#if max}}/{{max}}{{/if}}</span>{{/each}}
             </div>
           {{/if}}
           {{#if conditions.length}}
