@@ -24,6 +24,8 @@ The HUD (Advantage, action panel and ammunition) floats over the scene. Drag it 
 
 A large counter at the front of the HUD shows the character's Advantage and glows brighter as it grows, up to the maximum. **Click**: +1, **right-click**: −1. The party frames highlight it too. It can be hidden in the settings.
 
+The first tab of the action panel, **Advantage**, lists what the character can spend Advantage on right now, each with its cost (⚡1, ⚡2): the system's Advantage actions (with Up in Arms: Batter, Trick, Additional Effort, Flee from Harm, Additional Action) and, with **Underworld Crew** (`wfrp4e-underworld`), the tactical orders the Chief's retinue can carry out. Actions the character cannot afford yet are dimmed. Clicking an Advantage action spends the cost, posts it to chat and rolls its test, just like the button on the character sheet; clicking a crew order opens Underworld's order dialog.
+
 ## ⚔️ Action panel
 
 Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In the other systems: the system's tests with the character's values.

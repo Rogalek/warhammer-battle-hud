@@ -38,7 +38,9 @@ export function actionsByGroup(actor, env) {
     [G.extended]: B.buildExtendedTests(actor),
     [G.effects]: B.buildManualEffects(collectEffects(actor)),
     [G.conditions]: B.buildConditions(actor, env),
-    [G.advantage]: B.buildAdvantage(actor, env)
+    [G.advantage]: B.buildAdvantage(actor, env),
+    [G.advantageActions]: B.buildAdvantageActions(actor, env),
+    [G.gangOrders]: B.buildGangOrders(actor, env)
   };
 }
 
@@ -74,6 +76,8 @@ export function wfrpActions(getSetting) {
     localize: (key) => game.i18n.localize(key),
     edition: getEdition(),
     settings: settings(),
+    // Rozkazy szajki z Underworld (starsze wersje modułu nie mają tego API)
+    gangOrders: (actor) => (typeof game.underworld?.tacticalOrders === "function" ? game.underworld.tacticalOrders(actor) : []),
     conditionValue: (actor, key) => {
       const effect = actor.hasCondition?.(key);
       return effect ? (effect.conditionValue ?? 1) : 0;

@@ -24,6 +24,8 @@ HUD (Przewaga, panel akcji i amunicja) unosi się nad sceną. Przeciągnij go za
 
 Duży licznik z przodu HUD-a pokazuje Przewagę postaci i świeci mocniej, im jest jej więcej, aż do maksimum. **Klik**: +1, **prawy klik**: −1. Ramki drużyny też ją wyróżniają. Można go ukryć w ustawieniach.
 
+Pierwsza zakładka panelu akcji, **Przewaga**, pokazuje, na co postać może teraz wydać Przewagę, z kosztem (⚡1, ⚡2): użycia Przewagi z systemu (z Up in Arms: Grzmotnięcie, Sztuczka, Dodatkowy wysiłek, Ucieczka przed zagrożeniem, Dodatkowa Akcja), a z modułem **Underworld** (`wfrp4e-underworld`) także rozkazy taktyczne, które może wykonać Świta Herszta. Akcje, na które jeszcze brakuje Przewagi, są przygaszone. Klik na użyciu Przewagi odejmuje koszt, wysyła opis na czat i rzuca test, tak jak przycisk na karcie postaci; klik na rozkazie szajki otwiera okno rozkazu z Underworld.
+
 ## ⚔️ Panel akcji
 
 Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W WFRP: cechy, umiejętności, walka, magia, religia, talenty, stany i Przewaga. W pozostałych systemach: testy systemu z wartościami postaci.

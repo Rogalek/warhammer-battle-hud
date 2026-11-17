@@ -85,6 +85,36 @@ async function postToChat(actor, action) {
 }
 
 /**
+ * Użycie Przewagi z konfiguracji systemu – tak jak przycisk w zakładce Walka karty postaci:
+ * odjęcie kosztu, opis na czacie i test cechy, jeśli akcja go ma.
+ */
+async function useAdvantageAction(actor, action) {
+  const entry = game.wfrp4e?.config?.groupAdvantageActions?.[Number(action.id)];
+  if (!entry) return;
+  const cost = Number(entry.cost) || 0;
+  const path = "system.status.advantage.value";
+  const current = Number(foundry.utils.getProperty(actor, path)) || 0;
+  if (cost > current) return ui.notifications.warn(t("Notify.NotEnoughAdvantage", { cost, current }));
+  if (typeof actor.spend === "function") {
+    if (!(await actor.spend(path, cost))) return ui.notifications.warn(t("Notify.NotEnoughAdvantage", { cost, current }));
+  } else await actor.update({ [path]: current - cost });
+
+  const content = await foundry.applications.ux.TextEditor.enrichHTML(`<p><strong>${entry.name}</strong>: ${entry.description ?? ""}</p><p>${entry.effect ?? ""}</p>`);
+  await ChatMessage.create({
+    content,
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flavor: `${t("Advantage")} (−${cost})`
+  });
+  if (entry.test?.type === "characteristic") await runTest(actor.setupCharacteristic(entry.test.value, { appendTitle: ` - ${entry.name}` }));
+}
+
+/** Rozkaz szajki z modułu Underworld – otwiera jego dialog (Dowodzenie, Przewaga albo rozkaz wprost). */
+async function issueGangOrder(actor, action) {
+  if (typeof game.underworld?.issueOrder !== "function") return;
+  return game.underworld.issueOrder(actor, action.id);
+}
+
+/**
  * Wykonuje akcję dla jednego aktora.
  * @param {Actor} actor
  * @param {{type: string, id: string, extra: string}} action  zdekodowana akcja
@@ -99,6 +129,7 @@ export async function performAction(actor, action, intent) {
       case "damage": return await damageGear(actor, action, 1);
       case "repair": return await damageGear(actor, action, -1);
       case "run": return await runManualScript(actor, action);
+      case "use": return action.type === T.gangOrder ? await issueGangOrder(actor, action) : await useAdvantageAction(actor, action);
       case "increase":
       case "decrease": {
         const up = intent.intent === "increase";
