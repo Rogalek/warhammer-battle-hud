@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 - The HUD floats: drag it by the handle and it stays where you put it, saved per player. Double-click the handle to reset it.
 - WFRP: a large Advantage counter at the front of the HUD (click +1, right-click −1), also highlighted on the party frames.
 
