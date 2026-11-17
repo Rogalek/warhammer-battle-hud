@@ -132,6 +132,128 @@
   padding-left: 1rem;
 }
 
+/* Pływający HUD: uchwyt i licznik Przewagi po lewej, panel akcji i amunicja po prawej */
+.whb-hud {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.whb-side {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+}
+
+.whb-grip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  min-height: 2.5rem;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #aaa;
+  cursor: grab;
+  touch-action: none;
+}
+
+.whb-grip:hover {
+  border-color: #c9a227;
+  color: #c9a227;
+}
+
+#warhammer-battle-hud-bar.dragging,
+#warhammer-battle-hud-bar.dragging .whb-grip {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* Przewaga – kluczowa w walce, więc duża i zawsze na wierzchu */
+.whb-advantage {
+  --whb-adv-glow: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 4.75rem;
+  height: 4.75rem;
+  padding: 0.2rem;
+  background: radial-gradient(circle at 50% 35%, #5a1f14 0%, #2a0d08 70%);
+  border: 2px solid #c9a227;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #000, 0 0 12px 2px var(--whb-adv-glow), inset 0 0 8px rgba(0, 0, 0, 0.8);
+  color: #f3e3b5;
+  line-height: 1;
+  text-shadow: 0 0 3px #000;
+  cursor: pointer;
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.whb-advantage:hover {
+  border-color: #f0cf5a;
+}
+
+.whb-advantage-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.whb-advantage-value {
+  font-size: 2.1rem;
+  font-weight: bold;
+}
+
+.whb-advantage-max {
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
+.whb-advantage.none {
+  background: radial-gradient(circle at 50% 35%, #3a3a3a 0%, #151515 70%);
+  border-color: #777;
+  color: #bbb;
+}
+
+.whb-advantage.low {
+  --whb-adv-glow: rgba(201, 162, 39, 0.35);
+}
+
+.whb-advantage.high {
+  --whb-adv-glow: rgba(240, 190, 60, 0.75);
+  border-color: #f0cf5a;
+}
+
+.whb-advantage.max {
+  --whb-adv-glow: rgba(230, 70, 40, 0.9);
+  border-color: #ff8a4a;
+  animation: whb-adv-pulse 1.6s ease-in-out infinite;
+}
+
+.whb-advantage.changed .whb-advantage-value {
+  animation: whb-adv-pop 0.45s ease-out;
+}
+
+@keyframes whb-adv-pop {
+  0% { transform: scale(1.6); color: #fff; }
+  100% { transform: scale(1); }
+}
+
+@keyframes whb-adv-pulse {
+  50% { box-shadow: 0 0 0 1px #000, 0 0 20px 6px var(--whb-adv-glow), inset 0 0 8px rgba(0, 0, 0, 0.8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whb-advantage.max,
+  .whb-advantage.changed .whb-advantage-value {
+    animation: none;
+  }
+}
+
 .whb-stack {
   display: flex;
   flex-direction: column;
@@ -414,4 +536,14 @@
   align-items: center;
   font-size: 0.65rem;
   line-height: 1;
+}
+
+/* Przewaga na ramkach – wyróżniona, bo zmienia się w każdej rundzie walki */
+.whf-stats .whf-stat-advantage {
+  padding: 0 4px;
+  background: var(--whf-accent);
+  border-radius: 3px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }

@@ -16,6 +16,14 @@ Wklej w *Manifest URL* w **Dodatki → Zainstaluj moduł**:
 https://github.com/TomasWarchol/warhammer-battle-hud/releases/latest/download/module.json
 ```
 
+## 🧭 Pływający HUD
+
+HUD (Przewaga, panel akcji i amunicja) unosi się nad sceną. Przeciągnij go za uchwyt po lewej; położenie zapisuje się przy koncie gracza, więc działa na każdym komputerze. **Podwójny klik** na uchwycie przywraca go nad pasek makr.
+
+## ⚡ Przewaga (WFRP)
+
+Duży licznik z przodu HUD-a pokazuje Przewagę postaci i świeci mocniej, im jest jej więcej, aż do maksimum. **Klik**: +1, **prawy klik**: −1. Ramki drużyny też ją wyróżniają. Można go ukryć w ustawieniach.
+
 ## ⚔️ Panel akcji
 
 Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W WFRP: cechy, umiejętności, walka, magia, religia, talenty, stany i Przewaga. W pozostałych systemach: testy systemu z wartościami postaci.
