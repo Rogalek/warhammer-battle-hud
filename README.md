@@ -6,7 +6,7 @@ Everything a character needs in a fight, on one screen and with no other modules
 
 Requires **Foundry VTT v14** and one of: **WFRP 4e / 5e** (`wfrp4e` 10.0+), **The Old World** (`whtow`), **Imperium Maledictum** (`impmal`), **Wrath & Glory** (`wrath-and-glory`), **Soulbound** (`age-of-sigmar-soulbound`).
 
-Don't enable it together with the older *Warhammer Party Frames*, *Warhammer Ammo & Quick Gear* or *WFRP4e – Action HUD*, which it replaces.
+Don't enable it together with other modules that add party frames, track ammunition or add an action HUD: they would do the same job twice and get in each other's way.
 
 ## 📥 Installation
 

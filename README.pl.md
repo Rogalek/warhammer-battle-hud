@@ -6,7 +6,7 @@ Wszystko, czego postać potrzebuje w walce, na jednym ekranie i bez dodatkowych 
 
 Wymaga **Foundry VTT v14** i jednego z systemów: **WFRP 4e / 5e** (`wfrp4e` 10.0+), **The Old World** (`whtow`), **Imperium Maledictum** (`impmal`), **Wrath & Glory** (`wrath-and-glory`), **Soulbound** (`age-of-sigmar-soulbound`).
 
-Nie włączaj go razem ze starszymi modułami *Warhammer Party Frames*, *Warhammer Ammo & Quick Gear* i *WFRP4e – Action HUD*, które zastępuje.
+Nie włączaj go razem z innymi modułami, które dodają ramki drużyny, śledzą amunicję albo dodają HUD akcji: robiłyby to samo podwójnie i przeszkadzały sobie nawzajem.
 
 ## 📥 Instalacja
 
