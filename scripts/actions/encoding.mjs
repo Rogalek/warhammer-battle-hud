@@ -23,7 +23,9 @@ export const ACTION_TYPES = Object.freeze({
   item: "item",
   effect: "effect",
   condition: "condition",
-  advantage: "advantage"
+  advantage: "advantage",
+  advantageAction: "advantageAction",
+  gangOrder: "gangOrder"
 });
 
 /** Składa wartość przycisku z typu, id i opcjonalnego dodatku. */

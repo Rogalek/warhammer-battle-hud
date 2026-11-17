@@ -547,3 +547,25 @@
   font-weight: bold;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }
+
+/* Zakładka Przewagi – wyróżniona, bo jej akcje zależą od licznika */
+.whb-tabs button[data-tab="advantage"] {
+  color: #f0cf5a;
+  font-weight: bold;
+}
+
+.whb-tabs button[data-tab="advantage"].active {
+  background: #7a5a10;
+  color: #fff;
+}
+
+.whb-action.advantage-cost small {
+  color: #f0cf5a;
+  opacity: 1;
+  font-weight: bold;
+}
+
+/* Na akcję brakuje Przewagi: widoczna, ale przygaszona */
+.whb-action.unaffordable {
+  opacity: 0.45;
+}

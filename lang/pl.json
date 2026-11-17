@@ -94,14 +94,14 @@
   "WFRP4E_HUD": {
     "Advantage": "Przewaga",
     "Tabs": {
+      "Advantage": "Przewaga",
       "Characteristics": "Cechy",
       "Skills": "Umiejętności",
       "Combat": "Walka",
       "Magic": "Magia",
       "Religion": "Wiara",
       "Talents": "Talenty",
-      "Conditions": "Stany",
-      "Utility": "Inne"
+      "Conditions": "Stany"
     },
     "Groups": {
       "Characteristics": "Cechy",
@@ -120,7 +120,9 @@
       "ExtendedTests": "Testy rozszerzone",
       "Effects": "Skrypty efektów",
       "Conditions": "Stany",
-      "Advantage": "Przewaga"
+      "Advantage": "Przewaga",
+      "AdvantageActions": "Użycie Przewagi",
+      "GangOrders": "Rozkazy szajki"
     },
     "Info": {
       "Damage": "Uszkodzenie przedmiotu",
@@ -130,7 +132,8 @@
       "NoActor": "Najpierw zaznacz token.",
       "ItemMissing": "Tego przedmiotu nie ma już u aktora.",
       "EffectMissing": "Ten skrypt efektu nie jest już dostępny.",
-      "ActionFailed": "Akcja nie powiodła się. Szczegóły w konsoli (F12)."
+      "ActionFailed": "Akcja nie powiodła się. Szczegóły w konsoli (F12).",
+      "NotEnoughAdvantage": "Za mało Przewagi: koszt {cost}, masz {current}."
     }
   }
 }

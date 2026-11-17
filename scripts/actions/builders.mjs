@@ -26,10 +26,18 @@ export const GROUP_IDS = Object.freeze({
   extended: "extended-tests",
   effects: "effects",
   conditions: "conditions",
-  advantage: "advantage"
+  advantage: "advantage",
+  advantageActions: "advantage-actions",
+  gangOrders: "gang-orders"
 });
 
 const MAX_TOOLTIP = 500;
+
+/** Bez HTML i skrócone – do podpowiedzi. */
+const plain = (html) => {
+  const text = String(html ?? "").replace(/<\/?(strong|em|b|i|span|a)\b[^>]*>/g, "").replace(/<[^>]*>/g, " ").replace(/@\w+\[[^\]]*\]\{([^}]*)\}/g, "$1").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+  return text.length > MAX_TOOLTIP ? `${text.slice(0, MAX_TOOLTIP - 1)}…` : text;
+};
 
 const items = (actor, type) => actor?.itemTypes?.[type] ?? [];
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
@@ -256,4 +264,43 @@ export function buildAdvantage(actor, env) {
     encodedValue: encodeAction(T.advantage),
     info1: { text: `${advantage.value ?? 0}${advantage.max ? `/${advantage.max}` : ""}` }
   }];
+}
+
+/** Koszt w Przewadze: podpis przy akcji i klasa przygaszenia, gdy postaci na nią nie stać. */
+function costView(cost, current) {
+  return {
+    info1: cost > 0 ? { text: `⚡${cost}` } : undefined,
+    cssClass: cost > current ? "advantage-cost unaffordable" : "advantage-cost"
+  };
+}
+
+const currentAdvantage = (actor) => Number(actor?.system?.status?.advantage?.value) || 0;
+
+/** Użycia Przewagi z konfiguracji systemu (np. Grzmotnięcie, Sztuczka z Up in Arms), z kosztem. */
+export function buildAdvantageActions(actor, env) {
+  if (!actor?.system?.status?.advantage) return [];
+  const current = currentAdvantage(actor);
+  return (env.config?.groupAdvantageActions ?? []).map((action, index) => {
+    const cost = Number(action.cost) || 0;
+    return {
+      id: `${T.advantageAction}-${index}`,
+      name: action.name,
+      encodedValue: encodeAction(T.advantageAction, index),
+      tooltip: [plain(action.description), plain(action.effect)].filter(Boolean).join(" — "),
+      ...costView(cost, current)
+    };
+  });
+}
+
+/** Rozkazy taktyczne szajki z modułu Underworld (gdy jest aktywny), z kosztem w Przewadze i wykonawcą. */
+export function buildGangOrders(actor, env) {
+  const orders = env.gangOrders?.(actor) ?? [];
+  const current = currentAdvantage(actor);
+  return orders.map((order) => ({
+    id: `${T.gangOrder}-${order.id}`,
+    name: order.name,
+    encodedValue: encodeAction(T.gangOrder, order.id),
+    tooltip: [order.executor ? `${order.executor}:` : "", plain(order.description), plain(order.effect)].filter(Boolean).join(" "),
+    ...costView(Number(order.cost) || 0, current)
+  }));
 }

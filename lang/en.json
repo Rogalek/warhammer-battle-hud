@@ -94,14 +94,14 @@
   "WFRP4E_HUD": {
     "Advantage": "Advantage",
     "Tabs": {
+      "Advantage": "Advantage",
       "Characteristics": "Characteristics",
       "Skills": "Skills",
       "Combat": "Combat",
       "Magic": "Magic",
       "Religion": "Religion",
       "Talents": "Talents",
-      "Conditions": "Conditions",
-      "Utility": "Utility"
+      "Conditions": "Conditions"
     },
     "Groups": {
       "Characteristics": "Characteristics",
@@ -120,7 +120,9 @@
       "ExtendedTests": "Extended Tests",
       "Effects": "Effect Scripts",
       "Conditions": "Conditions",
-      "Advantage": "Advantage"
+      "Advantage": "Advantage",
+      "AdvantageActions": "Use Advantage",
+      "GangOrders": "Gang orders"
     },
     "Info": {
       "Damage": "Damage to the item",
@@ -130,7 +132,8 @@
       "NoActor": "Select a token first.",
       "ItemMissing": "This item no longer exists on the actor.",
       "EffectMissing": "This effect script is no longer available.",
-      "ActionFailed": "The action failed. See the console (F12) for details."
+      "ActionFailed": "The action failed. See the console (F12) for details.",
+      "NotEnoughAdvantage": "Not enough Advantage: costs {cost}, you have {current}."
     }
   }
 }
