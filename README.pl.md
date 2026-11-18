@@ -13,7 +13,7 @@ Nie włączaj go razem z innymi modułami, które dodają ramki drużyny, śledz
 Wklej w *Manifest URL* w **Dodatki → Zainstaluj moduł**:
 
 ```
-https://github.com/TomasWarchol/warhammer-battle-hud/releases/latest/download/module.json
+https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/latest/download/module.json
 ```
 
 ## 🧭 Pływający HUD

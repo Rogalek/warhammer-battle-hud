@@ -13,7 +13,7 @@ Don't enable it together with other modules that add party frames, track ammunit
 Paste into *Manifest URL* under **Add-on Modules → Install Module**:
 
 ```
-https://github.com/TomasWarchol/warhammer-battle-hud/releases/latest/download/module.json
+https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/latest/download/module.json
 ```
 
 ## 🧭 Floating HUD
