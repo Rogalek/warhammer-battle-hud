@@ -569,3 +569,97 @@
 .whb-action.unaffordable {
   opacity: 0.45;
 }
+
+/* Podpowiedzi panelu akcji: nazwa, statystyki, opis i ściąga sterowania */
+.whb-tooltip {
+  max-width: 22rem;
+  text-align: left;
+}
+
+.whb-tooltip .whb-tip-name {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 1.05em;
+}
+
+.whb-tooltip .whb-tip-details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 0.6rem;
+  margin: 0 0 0.3rem;
+}
+
+.whb-tooltip .whb-tip-details dt {
+  opacity: 0.7;
+}
+
+.whb-tooltip .whb-tip-details dd {
+  margin: 0;
+  font-weight: bold;
+}
+
+.whb-tooltip .whb-tip-text {
+  margin: 0 0 0.3rem;
+}
+
+.whb-tooltip .whb-tip-hint {
+  margin: 0;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+/* Wybór postaci i ukrywanie ramek */
+.whf-header .whf-choose-button b {
+  margin-left: 2px;
+  font-size: 0.65rem;
+}
+
+.whf-frame {
+  position: relative;
+}
+
+.whf-frame .whf-hide {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  display: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  padding: 0;
+  background: var(--whf-bg);
+  border: 1px solid var(--whf-border);
+  border-radius: 3px;
+  color: var(--whf-text);
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.whf-frame:hover .whf-hide,
+.whf-frame .whf-hide:focus-visible {
+  display: block;
+}
+
+.whf-choose .whf-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.whf-choose .whf-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.whf-choose .whf-choice img {
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  object-fit: cover;
+  object-position: top;
+}

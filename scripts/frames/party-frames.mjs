@@ -1,11 +1,13 @@
 /**
  * Ramki drużyny na ekranie. Klik: cel, podwójny klik: przejście do tokena, prawy klik: karta postaci.
+ * Nagłówek: tryb, wybór widocznych postaci, zwinięcie i ukrycie ramek.
  */
 import { MODULE_ID, t } from "./constants.mjs";
-import { getSetting, setSetting } from "./settings.mjs";
-import { clampPosition, nextMode, percent, pickActors, tone } from "./frames-data.mjs";
+import { getSetting, setSetting, toggleFrames } from "./settings.mjs";
+import { applyChoice, candidateActors, clampPosition, nextMode, percent, pickActors, tone } from "./frames-data.mjs";
 
-const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+const { ApplicationV2, HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api;
+const { escapeHTML } = foundry.utils;
 /** Czas na drugie kliknięcie, zanim pojedyncze zadziała. */
 const DOUBLE_CLICK_MS = 220;
 
@@ -17,7 +19,13 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
     id: `${MODULE_ID}-root`,
     classes: [MODULE_ID],
     window: { frame: false, positioned: false },
-    actions: { cycleMode: PartyFrames.#onCycleMode, toggleCollapse: PartyFrames.#onToggleCollapse }
+    actions: {
+      cycleMode: PartyFrames.#onCycleMode,
+      toggleCollapse: PartyFrames.#onToggleCollapse,
+      chooseActors: PartyFrames.#onChooseActors,
+      hideActor: PartyFrames.#onHideActor,
+      hideFrames: PartyFrames.#onHideFrames
+    }
   };
 
   static PARTS = { frames: { template: `modules/${MODULE_ID}/templates/frames.hbs` } };
@@ -30,8 +38,9 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
 
   #clickTimer = null;
 
-  #actors() {
-    return pickActors({
+  /** Dane do wyboru postaci w bieżącym trybie. */
+  #source() {
+    return {
       mode: getSetting("mode"),
       users: game.users.contents,
       actors: game.actors.contents,
@@ -39,7 +48,15 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
       controlled: canvas.tokens?.controlled.map((token) => token.actor) ?? [],
       partyTypes: this.constructor.adapter.partyTypes,
       isGM: game.user.isGM
-    });
+    };
+  }
+
+  /** Lista do wyboru, domyślna lista trybu i to, co faktycznie widać po wyborze gracza. */
+  #lists() {
+    const source = this.#source();
+    const defaults = pickActors(source);
+    const candidates = candidateActors(source);
+    return { defaults, candidates, visible: applyChoice(defaults, candidates, getSetting("actorChoice")) };
   }
 
   #conditions(actor) {
@@ -69,11 +86,13 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
     const context = await super._prepareContext(options);
     const seeAll = game.user.isGM || getSetting("playersSeeAll");
     const mode = getSetting("mode");
+    const { candidates, visible } = this.#lists();
     return Object.assign(context, {
       skin: getSetting("skin"),
       collapsed: getSetting("collapsed"),
       modeLabel: t(`Mode.${mode}`),
-      frames: this.#actors().map((actor) => this.#frame(actor, seeAll))
+      hiddenCount: candidates.length - visible.length,
+      frames: visible.map((actor) => this.#frame(actor, seeAll))
     });
   }
 
@@ -106,6 +125,7 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   #onClick(event) {
+    if (event.target.closest("button")) return;
     const { token, actor } = this.#tokenAt(event);
     if (!actor) return;
     clearTimeout(this.#clickTimer);
@@ -117,6 +137,7 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
   }
 
   #onDoubleClick(event) {
+    if (event.target.closest("button")) return;
     const { token, actor } = this.#tokenAt(event);
     if (!actor) return;
     clearTimeout(this.#clickTimer);
@@ -152,6 +173,47 @@ export class PartyFrames extends HandlebarsApplicationMixin(ApplicationV2) {
   static async #onCycleMode() {
     await setSetting("mode", nextMode(getSetting("mode")));
     this.render();
+  }
+
+  /** Okno z listą postaci trybu: zaznaczone są widoczne w ramkach. */
+  static async #onChooseActors() {
+    const { defaults, candidates, visible } = this.#lists();
+    if (!candidates.length) return ui.notifications.info(t("Empty"));
+    const shown = new Set(visible.map((a) => a.uuid));
+    const rows = candidates.map((actor) => `
+      <label class="whf-choice">
+        <input type="checkbox" name="${escapeHTML(actor.uuid)}" ${shown.has(actor.uuid) ? "checked" : ""}>
+        <img src="${escapeHTML(actor.img)}" alt="">
+        <span>${escapeHTML(actor.name)}</span>
+      </label>`).join("");
+    const picked = await DialogV2.input({
+      window: { title: t("Choose.Title") },
+      classes: [MODULE_ID, "whf-choose"],
+      content: `<p class="hint">${t("Choose.Hint")}</p><div class="whf-choices">${rows}</div>`,
+      ok: { label: t("Choose.Save"), icon: "fa-solid fa-check" },
+      rejectClose: false
+    });
+    if (!picked) return;
+    // Zapisujemy tylko odstępstwa od trybu, żeby nowe postacie dalej pojawiały się same
+    const inMode = new Set(defaults.map((a) => a.uuid));
+    const choice = { ...getSetting("actorChoice") };
+    for (const actor of candidates) {
+      const on = Boolean(picked[actor.uuid]);
+      if (on === inMode.has(actor.uuid)) delete choice[actor.uuid];
+      else choice[actor.uuid] = on;
+    }
+    await setSetting("actorChoice", choice);
+  }
+
+  static async #onHideActor(_event, target) {
+    const uuid = target.closest("[data-uuid]")?.dataset.uuid;
+    if (!uuid) return;
+    await setSetting("actorChoice", { ...getSetting("actorChoice"), [uuid]: false });
+  }
+
+  static async #onHideFrames() {
+    await toggleFrames(false);
+    ui.notifications.info(t("HiddenInfo"));
   }
 
   static async #onToggleCollapse() {

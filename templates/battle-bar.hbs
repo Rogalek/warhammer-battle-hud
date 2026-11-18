@@ -17,7 +17,7 @@
             <h4>{{label}}</h4>
             <div class="whb-actions">
               {{#each actions}}
-                <button type="button" class="whb-action {{cssClass}}" data-action="runAction" data-value="{{value}}" {{#if tooltip}}data-tooltip="{{tooltip}}"{{/if}}>
+                <button type="button" class="whb-action {{cssClass}}" data-action="runAction" data-value="{{value}}" {{#if tooltip}}data-tooltip-html="{{tooltip}}" data-tooltip-class="whb-tooltip"{{/if}}>
                   {{#if img}}<img src="{{img}}" alt="">{{/if}}
                   <span>{{name}}</span>
                   {{#if detail}}<small>{{detail}}</small>{{/if}}

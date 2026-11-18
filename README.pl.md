@@ -32,6 +32,7 @@ Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W W
 
 * **Lewy klik**: rzut, dodanie stanu lub Przewagi, talent na czat.
 * **Prawy klik**: arkusz przedmiotu, zdjęcie stanu lub Przewagi.
+* **Najechanie kursorem** (WFRP): podpowiedź z najważniejszymi wartościami (np. obrażenia, grupa i długość broni, cecha i rozwinięcia umiejętności, PZ pancerza, PM, zasięg i czas trwania czaru), opisem i ściągą sterowania.
 * **Shift**: tajny rzut MG. **Alt**: pominięcie okna rzutu. **Ctrl + lewy / prawy** na broni i pancerzu: naprawa / uszkodzenie.
 
 ## 🏹 Amunicja
@@ -41,6 +42,10 @@ W systemach, które ją śledzą (WFRP, Imperium Maledictum, Wrath & Glory): wyb
 ## 🖼️ Ramki drużyny
 
 Portret, zdrowie, zasoby systemu i stany każdej postaci. **Klik** wskazuje cel, **podwójny klik** przechodzi do tokena, **prawy klik** otwiera kartę. Nagłówek przełącza Drużynę, Walkę i Zaznaczone tokeny, zwija ramki i przesuwa je po przeciągnięciu.
+
+* **Wybierz postacie** (ikona postaci w nagłówku): okno z listą postaci trybu, w którym zaznaczasz, kogo widać. W trybie Drużyny możesz też dodać postać gracza, która nie jest nikomu przypisana. Liczba przy ikonie mówi, ile postaci ukryto. Wybór należy do Ciebie i działa na każdym Twoim komputerze.
+* **×** na ramce (po najechaniu) ukrywa tę jedną postać.
+* **Ukryj ramki** (oko w nagłówku) chowa cały panel. Wraca przyciskiem ramek w narzędziach tokenów, opcjonalnym skrótem klawiszowym (do ustawienia w Konfiguracji sterowania) albo w ustawieniach modułu.
 
 ## 🎯 Token HUD
 

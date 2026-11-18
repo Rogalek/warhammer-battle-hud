@@ -8,7 +8,7 @@ import { registerSettings as registerBarSettings, getSetting } from "./bar/setti
 import { adapterFor as ammoFor } from "./bar/systems/index.mjs";
 import { BattleBar } from "./bar/battle-bar.mjs";
 import { t } from "./bar/constants.mjs";
-import { registerSettings as registerFrameSettings } from "./frames/settings.mjs";
+import { registerSettings as registerFrameSettings, getSetting as getFrameSetting, toggleFrames } from "./frames/settings.mjs";
 import { adapterFor as framesFor } from "./frames/systems.mjs";
 import { PartyFrames } from "./frames/party-frames.mjs";
 import { wfrpActions } from "./actions/wfrp4e.mjs";
@@ -71,4 +71,20 @@ Hooks.on("updateItem", (item, changes, _options, userId) => {
   // Ostrzeżenie dla osoby, która zużyła ostatnią sztukę
   const next = BattleBar.adapter && foundry.utils.getProperty(changes, BattleBar.adapter.quantityPath);
   if (next === 0 && userId === game.user.id) ui.notifications.warn(t("Empty", { name: item.name }));
+});
+
+/** Przełącznik ramek drużyny w narzędziach tokenów – stąd wraca się do ukrytych ramek. */
+Hooks.on("getSceneControlButtons", (controls) => {
+  if (!supported) return;
+  const tools = (controls?.tokens ?? controls?.token)?.tools;
+  if (!tools || tools[`${MODULE_ID}-frames`]) return;
+  tools[`${MODULE_ID}-frames`] = {
+    name: `${MODULE_ID}-frames`,
+    title: game.i18n.localize("WHFRAMES.Toggle"),
+    icon: "fa-solid fa-users-rectangle",
+    order: Object.keys(tools).length,
+    toggle: true,
+    active: getFrameSetting("showFrames"),
+    onChange: (_event, active) => toggleFrames(active)
+  };
 });

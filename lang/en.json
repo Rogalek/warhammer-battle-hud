@@ -89,6 +89,16 @@
       "SkinHint": "For this user only.",
       "PlayersSeeAllName": "Players see everyone's details",
       "PlayersSeeAllHint": "When off, players see only the health bars of characters they do not own, without numbers, resources or conditions."
+    },
+    "Toggle": "Show or hide the party frames",
+    "Hide": "Hide the party frames",
+    "HideActor": "Hide this character",
+    "HiddenInfo": "Party frames hidden. Bring them back with the party frames button in the token controls.",
+    "Choose": {
+      "Button": "Choose characters",
+      "Title": "Characters in the party frames",
+      "Hint": "Ticked characters are shown in the frames for the current mode. Only you see this choice.",
+      "Save": "Save"
     }
   },
   "WFRP4E_HUD": {
@@ -134,6 +144,42 @@
       "EffectMissing": "This effect script is no longer available.",
       "ActionFailed": "The action failed. See the console (F12) for details.",
       "NotEnoughAdvantage": "Not enough Advantage: costs {cost}, you have {current}."
+    },
+    "Tip": {
+      "Initial": "Initial",
+      "Advances": "Advances",
+      "Modifier": "Modifier",
+      "Total": "Total",
+      "Characteristic": "Characteristic",
+      "Damage": "Damage",
+      "Group": "Group",
+      "Range": "Range",
+      "Reach": "Reach",
+      "Skill": "Skill",
+      "Qualities": "Qualities",
+      "Flaws": "Flaws",
+      "ItemDamage": "Item damage",
+      "AP": "AP",
+      "CN": "CN",
+      "Target": "Target",
+      "Duration": "Duration",
+      "Taken": "Taken",
+      "Tests": "Tests",
+      "Test": "Test",
+      "SL": "SL",
+      "Cost": "Advantage cost",
+      "Executor": "Carried out by"
+    },
+    "Hint": {
+      "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
+      "RollItem": "Click: test · Right-click: open the item · Alt: skip the dialog · Shift: Blind GM roll",
+      "Weapon": "Click: attack · Right-click: open the item · Ctrl+click: repair, Ctrl+right-click: damage",
+      "Armour": "Click: open the item · Ctrl+click: repair, Ctrl+right-click: damage",
+      "Post": "Click: post to chat · Right-click: open the item",
+      "Effect": "Click: run the script · Right-click: open the effect",
+      "Counter": "Click: +1 · Right-click: −1",
+      "AdvantageAction": "Click: spend the Advantage and use it",
+      "GangOrder": "Click: open the order dialog"
     }
   }
 }

@@ -54,7 +54,7 @@ const env = {
 
 describe("builders", () => {
   it("cechy z konfiguracji, tylko istniejące u aktora", () => {
-    expect(B.buildCharacteristics(actor, env)).toEqual([
+    expect(B.buildCharacteristics(actor, env)).toMatchObject([
       { id: "characteristic-ws", name: "L(CHAR.WS)", encodedValue: "characteristic|ws", info1: { text: "45" } },
       { id: "characteristic-bs", name: "L(CHAR.BS)", encodedValue: "characteristic|bs", info1: { text: "30" } }
     ]);

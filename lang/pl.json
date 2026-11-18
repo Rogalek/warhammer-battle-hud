@@ -89,6 +89,16 @@
       "SkinHint": "Tylko dla tego użytkownika.",
       "PlayersSeeAllName": "Gracze widzą szczegóły wszystkich postaci",
       "PlayersSeeAllHint": "Gdy wyłączone, przy cudzych postaciach gracze widzą tylko paski zdrowia, bez liczb, zasobów i stanów."
+    },
+    "Toggle": "Pokaż lub ukryj ramki drużyny",
+    "Hide": "Ukryj ramki drużyny",
+    "HideActor": "Ukryj tę postać",
+    "HiddenInfo": "Ramki drużyny ukryte. Przywrócisz je przyciskiem ramek w narzędziach tokenów.",
+    "Choose": {
+      "Button": "Wybierz postacie",
+      "Title": "Postacie w ramkach drużyny",
+      "Hint": "Zaznaczone postacie są widoczne w ramkach w bieżącym trybie. Ten wybór widzisz tylko Ty.",
+      "Save": "Zapisz"
     }
   },
   "WFRP4E_HUD": {
@@ -134,6 +144,42 @@
       "EffectMissing": "Ten skrypt efektu nie jest już dostępny.",
       "ActionFailed": "Akcja nie powiodła się. Szczegóły w konsoli (F12).",
       "NotEnoughAdvantage": "Za mało Przewagi: koszt {cost}, masz {current}."
+    },
+    "Tip": {
+      "Initial": "Początkowa",
+      "Advances": "Rozwinięcia",
+      "Modifier": "Modyfikator",
+      "Total": "Wartość",
+      "Characteristic": "Cecha",
+      "Damage": "Obrażenia",
+      "Group": "Grupa",
+      "Range": "Zasięg",
+      "Reach": "Długość",
+      "Skill": "Umiejętność",
+      "Qualities": "Zalety",
+      "Flaws": "Wady",
+      "ItemDamage": "Uszkodzenie",
+      "AP": "PZ",
+      "CN": "PM",
+      "Target": "Cel",
+      "Duration": "Czas trwania",
+      "Taken": "Wykupiony",
+      "Tests": "Testy",
+      "Test": "Test",
+      "SL": "PS",
+      "Cost": "Koszt w Przewadze",
+      "Executor": "Wykonuje"
+    },
+    "Hint": {
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "RollItem": "Klik: test · Prawy klik: karta przedmiotu · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Weapon": "Klik: atak · Prawy klik: karta przedmiotu · Ctrl+klik: naprawa, Ctrl+prawy: uszkodzenie",
+      "Armour": "Klik: karta przedmiotu · Ctrl+klik: naprawa, Ctrl+prawy: uszkodzenie",
+      "Post": "Klik: na czat · Prawy klik: karta przedmiotu",
+      "Effect": "Klik: uruchom skrypt · Prawy klik: karta efektu",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "AdvantageAction": "Klik: wydaj Przewagę i użyj",
+      "GangOrder": "Klik: okno rozkazu"
     }
   }
 }

@@ -7,6 +7,8 @@ import { getEdition } from "./edition.mjs";
 import { resolveIntent } from "./intent.mjs";
 import { GROUPS, LAYOUT } from "./layout.mjs";
 import { performAction } from "./wfrp-actions.mjs";
+import { tooltipHtml } from "./tooltip.mjs";
+import { ACTION_TYPES as T } from "./encoding.mjs";
 
 const G = B.GROUP_IDS;
 const FULL_ACTORS = ["character", "npc", "creature"];
@@ -17,10 +19,10 @@ const collectEffects = (actor) => [...(actor.effects ?? []), ...[...(actor.items
 /** Akcje postaci według grup. Pojazdy mają tylko stany. */
 export function actionsByGroup(actor, env) {
   if (!FULL_ACTORS.includes(actor.type)) return { [G.conditions]: B.buildConditions(actor, env) };
-  const skills = B.buildSkills(actor);
+  const skills = B.buildSkills(actor, env);
   const weapons = B.buildWeapons(actor, env);
   const spells = B.buildSpells(actor, env);
-  const prayers = B.buildPrayers(actor);
+  const prayers = B.buildPrayers(actor, env);
   return {
     [G.characteristics]: B.buildCharacteristics(actor, env),
     [G.skillsBasic]: skills.basic,
@@ -34,14 +36,40 @@ export function actionsByGroup(actor, env) {
     [G.channelling]: spells.channelling,
     [G.blessings]: prayers.blessings,
     [G.miracles]: prayers.miracles,
-    [G.talents]: B.buildTalents(actor),
-    [G.extended]: B.buildExtendedTests(actor),
+    [G.talents]: B.buildTalents(actor, env),
+    [G.extended]: B.buildExtendedTests(actor, env),
     [G.effects]: B.buildManualEffects(collectEffects(actor)),
     [G.conditions]: B.buildConditions(actor, env),
     [G.advantage]: B.buildAdvantage(actor, env),
     [G.advantageActions]: B.buildAdvantageActions(actor, env),
     [G.gangOrders]: B.buildGangOrders(actor, env)
   };
+}
+
+/** Ściąga sterowania w podpowiedzi, według typu akcji (klucze WFRP4E_HUD.Hint.*). */
+const HINTS = {
+  [T.characteristic]: "Roll",
+  [T.skill]: "RollItem",
+  [T.spell]: "RollItem",
+  [T.channel]: "RollItem",
+  [T.channelWind]: "Roll",
+  [T.prayer]: "RollItem",
+  [T.trait]: "RollItem",
+  [T.extended]: "RollItem",
+  [T.weapon]: "Weapon",
+  [T.armour]: "Armour",
+  [T.talent]: "Post",
+  [T.item]: "Post",
+  [T.effect]: "Effect",
+  [T.condition]: "Counter",
+  [T.advantage]: "Counter",
+  [T.advantageAction]: "AdvantageAction",
+  [T.gangOrder]: "GangOrder"
+};
+
+function hintFor(action, env) {
+  const key = HINTS[decodeAction(action.encodedValue)?.type];
+  return key ? env.localize(`WFRP4E_HUD.Hint.${key}`) : "";
 }
 
 /** Zakładki z co najmniej jedną akcją, z grupami do pokazania. */
@@ -52,7 +80,12 @@ export function buildPanel(actor, env) {
     img: action.img,
     value: action.encodedValue,
     detail: action.info1?.text ?? "",
-    tooltip: action.tooltip,
+    tooltip: tooltipHtml({
+      name: action.name,
+      details: action.details,
+      text: action.tooltip,
+      hint: hintFor(action, env)
+    }),
     cssClass: action.cssClass ?? ""
   });
   return LAYOUT.map((tab) => ({

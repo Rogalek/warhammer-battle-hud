@@ -31,7 +31,7 @@ The first tab of the action panel, **Advantage**, lists what the character can s
 Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In the other systems: the system's tests with the character's values.
 
 * **Left click**: roll, add a condition or Advantage, post a talent to chat.
-* **Right click**: open the item, remove a condition or Advantage.
+* **Hover** (WFRP): a tooltip with the key numbers (e.g. a weapon's damage, group and reach, a skill's characteristic and advances, armour points, a spell's CN, range and duration), the description and a reminder of the controls.
 * **Shift**: Blind GM roll. **Alt**: skip the roll dialog. **Ctrl + left / right** on weapons and armour: repair / damage.
 
 ## 🏹 Ammunition
@@ -41,6 +41,10 @@ In systems that track ammunition (WFRP, Imperium Maledictum, Wrath & Glory): cho
 ## 🖼️ Party frames
 
 Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
+
+* **Choose characters** (the person icon in the header): a list of the mode's characters where you tick who is shown. In Party mode you can also add a player character that isn't assigned to anyone. The number next to the icon says how many are hidden. The choice is yours and follows you to any computer.
+* **×** on a frame (on hover) hides that one character.
+* **Hide the frames** (the eye in the header) hides the whole panel. Bring it back with the party frames button in the token controls, an optional keybinding (set it in Configure Controls) or in the module settings.
 
 ## 🎯 Token HUD
 
