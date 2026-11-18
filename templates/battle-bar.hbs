@@ -11,7 +11,7 @@
   </div>
   <div class="whb-stack">
     {{#if actionPanel}}
-      <div class="whb-panel">
+      <div class="whb-panel{{#if actionColumns}} whb-columns" style="--whb-columns: {{actionColumns}}{{/if}}">
         {{#each actionPanel}}
           <section>
             <h4>{{label}}</h4>

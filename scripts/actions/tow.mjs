@@ -28,7 +28,7 @@ export function towPanel(actor, e = env()) {
   const status = B.buildStatus(actor, e);
   const tabs = [
     { id: "combat", groups: [group("Actions", B.buildCombatActions(e)), group("Melee", combat.melee), group("Ranged", combat.ranged), group("Reload", combat.reload), group("Attacks", combat.attacks), group("Armour", combat.armour)] },
-    { id: "skills", groups: B.buildSkillGroups(actor, e) },
+    { id: "skills", columns: 4, groups: B.buildSkillGroups(actor, e) },
     { id: "magic", groups: [group("Casting", magic.lores), group("Spells", magic.spells), group("Miscasts", magic.miscasts)] },
     { id: "religion", groups: [group("Blessing", B.buildBlessing(actor, e))] },
     { id: "talents", groups: [group("Talents", usable.talents), group("Abilities", usable.abilities), group("Lores", usable.lores)] },
@@ -43,7 +43,7 @@ export function towPanel(actor, e = env()) {
     tooltip: tooltipHtml({ name: action.name, ...action.tooltip })
   });
   return tabs
-    .map((tab) => ({ id: tab.id, label: label(`Tabs.${tab.id}`), groups: tab.groups.filter((g) => g.actions.length).map((g) => ({ ...g, actions: g.actions.map(view) })) }))
+    .map((tab) => ({ id: tab.id, columns: tab.columns, label: label(`Tabs.${tab.id}`), groups: tab.groups.filter((g) => g.actions.length).map((g) => ({ ...g, actions: g.actions.map(view) })) }))
     .filter((tab) => tab.groups.length);
 }
 
@@ -122,7 +122,7 @@ async function perform(actor, { type, id, extra }, mods, settings) {
 export function towActions(getSetting) {
   const settings = () => ({ blindOnShift: getSetting("blindOnShift"), skipDialogByDefault: getSetting("skipDialogByDefault") });
   return {
-    tabs: (actor) => towPanel(actor).map(({ id, label: name }) => ({ id, label: name })),
+    tabs: (actor) => towPanel(actor).map(({ id, label: name, columns }) => ({ id, label: name, columns })),
     groups: (actor, tabId) => towPanel(actor).find((tab) => tab.id === tabId)?.groups ?? [],
     async perform(actor, value, mods) {
       const action = B.readTowValue(value);
