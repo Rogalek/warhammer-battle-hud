@@ -81,11 +81,11 @@
       ]
     }
   },
-  "url": "https://github.com/TomasWarchol/warhammer-battle-hud",
-  "manifest": "https://github.com/TomasWarchol/warhammer-battle-hud/releases/latest/download/module.json",
-  "download": "https://github.com/TomasWarchol/warhammer-battle-hud/releases/latest/download/module.zip",
-  "bugs": "https://github.com/TomasWarchol/warhammer-battle-hud/issues",
-  "readme": "https://github.com/TomasWarchol/warhammer-battle-hud/blob/main/README.md",
-  "changelog": "https://github.com/TomasWarchol/warhammer-battle-hud/blob/main/CHANGELOG.md",
-  "license": "https://github.com/TomasWarchol/warhammer-party-frames/blob/main/LICENSE"
+  "url": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud",
+  "manifest": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/latest/download/module.json",
+  "download": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/latest/download/module.zip",
+  "bugs": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/issues",
+  "readme": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/blob/main/README.md",
+  "changelog": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/blob/main/CHANGELOG.md",
+  "license": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/blob/main/LICENSE"
 }
