@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.1
 - The module is now called **TomWa Warhammer HUD** (the id stays `warhammer-battle-hud`, so installs and settings carry on) and lives in the TomWa-Foundry-VTT-Workshop organisation on GitHub.
 
 ## 0.5.0
