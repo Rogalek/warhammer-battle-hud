@@ -28,7 +28,7 @@ The first tab of the action panel, **Advantage**, lists what the character can s
 
 ## ⚔️ Action panel
 
-Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In the other systems: the system's tests with the character's values.
+Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In The Old World: combat (the system's combat actions with the Manoeuvre variants, equipped weapons, reloading, attack abilities, shields and armour), skills grouped by characteristic with their dice, magic (casting by lore, spells with CV and accumulated power, the Miscast pool), faith (Favour, prayers, the Miracle), talents, abilities and lores, and status (Fate, conditions, wounds). In the other systems: the system's tests with the character's values.
 
 * **Left click**: roll, add a condition or Advantage, post a talent to chat.
 * **Hover** (WFRP): a tooltip with the key numbers (e.g. a weapon's damage, group and reach, a skill's characteristic and advances, armour points, a spell's CN, range and duration), the description and a reminder of the controls.

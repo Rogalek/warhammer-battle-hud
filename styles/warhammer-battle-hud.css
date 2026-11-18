@@ -663,3 +663,9 @@
   object-fit: cover;
   object-position: top;
 }
+
+/* Rany nieopatrzone i przepełniona pula Miscastów */
+.whb-action.untreated span,
+.whb-action.untreated small {
+  color: #e05050;
+}

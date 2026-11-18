@@ -80,7 +80,9 @@
       "encumbrance": "Obciążenie",
       "fate": "Los",
       "resilience": "Odporność",
-      "wrath": "Gniew"
+      "wrath": "Gniew",
+      "untreated": "Nieopatrzone rany",
+      "miscasts": "Pula Miscastów"
     },
     "Settings": {
       "ShowFramesName": "Pokazuj ramki drużyny",
@@ -168,7 +170,17 @@
       "Test": "Test",
       "SL": "PS",
       "Cost": "Koszt w Przewadze",
-      "Executor": "Wykonuje"
+      "Executor": "Wykonuje",
+      "Improvement": "Doskonalenie",
+      "Dice": "Kości",
+      "Grip": "Chwyt",
+      "Traits": "Cechy",
+      "Loaded": "Naładowanie",
+      "Resilience": "Odporność",
+      "Progress": "Zgromadzona moc",
+      "Lore": "Tradycja",
+      "Healing": "Leczenie",
+      "Treated": "Opatrzona"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -180,6 +192,63 @@
       "Counter": "Klik: +1 · Prawy klik: −1",
       "AdvantageAction": "Klik: wydaj Przewagę i użyj",
       "GangOrder": "Klik: okno rozkazu"
+    }
+  },
+  "WHB_TOW": {
+    "Reload": "Przeładuj",
+    "Cast": "Rzucanie",
+    "MiscastDispose": "Pozbądź się Miscastów",
+    "MiscastRoll": "Rzuć na Miscast",
+    "Favour": "Łaska",
+    "Miracle": "Dokonaj cudu",
+    "RegainMiracle": "Odzyskaj cud",
+    "Fate": "Los",
+    "FateRefresh": "Odnów Los",
+    "FateRestored": "Los odnowiony do {max}.",
+    "Tabs": {
+      "combat": "Walka",
+      "skills": "Umiejętności",
+      "magic": "Magia",
+      "religion": "Wiara",
+      "talents": "Talenty",
+      "status": "Stan"
+    },
+    "Groups": {
+      "Actions": "Akcje",
+      "Melee": "Broń biała",
+      "Ranged": "Broń dystansowa",
+      "Reload": "Przeładowanie",
+      "Attacks": "Ataki",
+      "Armour": "Pancerz i tarcze",
+      "Casting": "Rzucanie",
+      "Spells": "Zaklęcia",
+      "Miscasts": "Miscasty",
+      "Blessing": "Błogosławieństwo",
+      "Talents": "Talenty",
+      "Abilities": "Zdolności",
+      "Lores": "Wiedze",
+      "Fate": "Los",
+      "Conditions": "Stany",
+      "Wounds": "Rany"
+    },
+    "Hint": {
+      "Action": "Klik: wykonaj akcję",
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Unloaded": "Nienaładowana – najpierw przeładuj · Prawy klik: karta przedmiotu",
+      "Reload": "Klik: +1 krok przeładowania · Prawy klik: −1",
+      "Shield": "Klik: test Obrony z tarczą · Prawy klik: karta przedmiotu",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Cast": "Klik: test rzucania · Prawy klik: karta zaklęcia · Alt: bez okna rzutu",
+      "MiscastDispose": "Klik: pozbądź się kości Miscastów (w walce jednej, poza walką wszystkich)",
+      "MiscastRoll": "Klik: rzut na tabelę Miscastów i opróżnienie puli",
+      "Blessing": "Klik: przywołaj błogosławieństwo",
+      "RegainMiracle": "Klik: cud znów jest dostępny",
+      "Use": "Klik: użyj · Prawy klik: karta przedmiotu",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "FateRefresh": "Klik: odnów Los do maksimum",
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
+      "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany"
     }
   }
 }

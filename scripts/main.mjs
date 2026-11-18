@@ -12,6 +12,7 @@ import { registerSettings as registerFrameSettings, getSetting as getFrameSettin
 import { adapterFor as framesFor } from "./frames/systems.mjs";
 import { PartyFrames } from "./frames/party-frames.mjs";
 import { wfrpActions } from "./actions/wfrp4e.mjs";
+import { towActions } from "./actions/tow.mjs";
 import { testsFor } from "./tests/index.mjs";
 import { testActions } from "./tests/actions.mjs";
 import { registerTokenTests } from "./tests/token-tests.mjs";
@@ -43,7 +44,9 @@ Hooks.once("ready", async () => {
   if (!supported) return;
   const tests = testsFor(game.system.id);
   const catalog = tests ? await tests.catalog(game, []) : [];
-  BattleBar.actions = game.system.id === "wfrp4e" ? wfrpActions(getSetting) : tests ? testActions(tests, catalog) : null;
+  // Systemy z własnym panelem akcji; pozostałe dostają zakładkę testów
+  const panels = { wfrp4e: wfrpActions, whtow: towActions };
+  BattleBar.actions = panels[game.system.id]?.(getSetting) ?? (tests ? testActions(tests, catalog) : null);
   if (tests && getSetting("showTokenTests")) registerTokenTests(tests, catalog);
   BattleBar.refresh();
   PartyFrames.refresh();
