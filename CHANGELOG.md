@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- The module is now called **TomWa Warhammer HUD** (the id stays `warhammer-battle-hud`, so installs and settings carry on) and lives in the TomWa-Foundry-VTT-Workshop organisation on GitHub.
+
 ## 0.5.0
 - The Old World: a full action panel instead of the skill list. Combat (combat actions with the Manoeuvre variants, equipped weapons with damage and range, reloading weapons that need it, attack abilities, shield Defence tests, armour), skills grouped by characteristic with their dice, magic (casting by lore, spells with CV and accumulated power, disposing of and rolling Miscasts), faith (Favour, prayers, the Miracle and regaining it), talents, abilities and lores, and status (Fate +/− and restore, conditions, wounds marked treated). Every action has a tooltip and uses the same system calls as the character sheet.
 - The Old World party frames also show untreated wounds and a caster's Miscast pool.

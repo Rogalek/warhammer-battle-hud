@@ -1,4 +1,4 @@
-# Warhammer Battle HUD (`warhammer-battle-hud`)
+# TomWa Warhammer HUD (`warhammer-battle-hud`)
 
 **English** | [Polski](README.pl.md)
 
