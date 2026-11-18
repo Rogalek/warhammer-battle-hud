@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.4.0
 - WFRP action panel: every action has a tooltip with its key numbers (weapon damage, group, reach and skill; skill characteristic and advances; armour points per location; spell and prayer CN, range, target and duration; talent tests; condition descriptions), the description without raw links or roll formulas, and a reminder of the controls.
 - Party frames: choose which characters are shown (header button, saved per player; in Party mode you can also add unassigned player characters), hide a single character with × on its frame, and hide the whole panel with the eye button. A party frames toggle in the token controls and an optional keybinding bring them back.
 
