@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { clampPosition, MODES, nextMode, percent, pickActors, tone } from "../scripts/frames/frames-data.mjs";
+import { applyChoice, candidateActors, clampPosition, MODES, nextMode, percent, pickActors, tone } from "../scripts/frames/frames-data.mjs";
 import { ADAPTERS, adapterFor } from "../scripts/frames/systems.mjs";
 
 describe("wybór postaci", () => {
@@ -68,5 +68,31 @@ describe("adaptery", () => {
   it("Soulbound: Wytrzymałość maleje, Rany rosną", () => {
     const actor = { system: { combat: { health: { toughness: { value: 5, max: 9 }, wounds: { value: 1, max: 4 } }, mettle: { value: 2, max: 3 } } } };
     expect(ADAPTERS["age-of-sigmar-soulbound"].bars(actor).map((b) => b.kind)).toEqual(["health", "damage", "resource"]);
+  });
+});
+
+describe("wybór widocznych postaci", () => {
+  const actor = (uuid, type = "character", hasPlayerOwner = true) => ({ uuid, type, hasPlayerOwner });
+  const anna = actor("a");
+  const bruno = actor("b");
+  const rat = actor("r", "npc", false);
+  const base = { partyTypes: ["character"], isGM: true };
+
+  it("w trybie drużyny można dodać postać gracza bez przypisania", () => {
+    const users = [{ isGM: false, character: anna }];
+    const input = { ...base, mode: "party", users, actors: [anna, bruno, rat] };
+    expect(candidateActors(input)).toEqual([anna, bruno]);
+  });
+
+  it("wybór ukrywa i dodaje, a bez wyboru obowiązuje tryb", () => {
+    const defaults = [anna];
+    const candidates = [anna, bruno];
+    expect(applyChoice(defaults, candidates)).toEqual([anna]);
+    expect(applyChoice(defaults, candidates, { a: false })).toEqual([]);
+    expect(applyChoice(defaults, candidates, { b: true })).toEqual([anna, bruno]);
+  });
+
+  it("w walce wybierać można tylko spośród walczących", () => {
+    expect(candidateActors({ ...base, mode: "combat", combatants: [anna, rat], actors: [bruno] })).toEqual([anna, rat]);
   });
 });

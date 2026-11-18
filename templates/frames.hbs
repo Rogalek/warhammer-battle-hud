@@ -2,12 +2,15 @@
   <header class="whf-header">
     <i class="fa-solid fa-grip-vertical" inert></i>
     <button type="button" class="whf-mode" data-action="cycleMode" data-tooltip="{{localize 'WHFRAMES.ChangeMode'}}">{{modeLabel}}</button>
+    <button type="button" class="whf-choose-button" data-action="chooseActors" data-tooltip="{{localize 'WHFRAMES.Choose.Button'}}" aria-label="{{localize 'WHFRAMES.Choose.Button'}}"><i class="fa-solid fa-user-gear" inert></i>{{#if hiddenCount}}<b>{{hiddenCount}}</b>{{/if}}</button>
     <button type="button" data-action="toggleCollapse" data-tooltip="{{localize 'WHFRAMES.Collapse'}}" aria-label="{{localize 'WHFRAMES.Collapse'}}"><i class="fa-solid {{#if collapsed}}fa-chevron-down{{else}}fa-chevron-up{{/if}}"></i></button>
+    <button type="button" data-action="hideFrames" data-tooltip="{{localize 'WHFRAMES.Hide'}}" aria-label="{{localize 'WHFRAMES.Hide'}}"><i class="fa-solid fa-eye-slash" inert></i></button>
   </header>
   {{#unless collapsed}}
     {{#each frames}}
       <article class="whf-frame {{#if targeted}}targeted{{/if}} {{#if active}}active{{/if}}" data-uuid="{{uuid}}" data-tooltip="{{localize 'WHFRAMES.Hint'}}">
         <img class="whf-portrait" src="{{img}}" alt="">
+        <button type="button" class="whf-hide" data-action="hideActor" data-tooltip="{{localize 'WHFRAMES.HideActor'}}" aria-label="{{localize 'WHFRAMES.HideActor'}}"><i class="fa-solid fa-xmark" inert></i></button>
         <div class="whf-body">
           <div class="whf-name">{{name}}</div>
           {{#each bars}}

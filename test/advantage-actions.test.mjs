@@ -34,7 +34,8 @@ describe("rozkazy szajki", () => {
       { id: "ambush", name: "Zasadzka", description: "", effect: "", cost: 2, executor: "Cień" }
     ];
     const [trip, shield, ambush] = B.buildGangOrders(actor, { gangOrders });
-    expect(trip).toMatchObject({ name: "Podcięcie", encodedValue: "gangOrder|trip", info1: { text: "⚡1" }, cssClass: "advantage-cost", tooltip: "Gruby Hans: Na ziemię" });
+    expect(trip).toMatchObject({ name: "Podcięcie", encodedValue: "gangOrder|trip", info1: { text: "⚡1" }, cssClass: "advantage-cost", tooltip: "Na ziemię" });
+    expect(trip.details).toEqual([{ label: "WFRP4E_HUD.Tip.Cost", value: 1 }, { label: "WFRP4E_HUD.Tip.Executor", value: "Gruby Hans" }]);
     expect(shield.info1).toBeUndefined();
     expect(ambush.cssClass).toBe("advantage-cost unaffordable");
   });

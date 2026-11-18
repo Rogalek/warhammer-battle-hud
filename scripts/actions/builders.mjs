@@ -35,18 +35,43 @@ const MAX_TOOLTIP = 500;
 
 /** Bez HTML i skrócone – do podpowiedzi. */
 const plain = (html) => {
-  const text = String(html ?? "").replace(/<\/?(strong|em|b|i|span|a)\b[^>]*>/g, "").replace(/<[^>]*>/g, " ").replace(/@\w+\[[^\]]*\]\{([^}]*)\}/g, "$1").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+  const text = String(html ?? "")
+    .replace(/<\/?(strong|em|b|i|span|a)\b[^>]*>/g, "")
+    .replace(/<[^>]*>/g, " ")
+    // Wzbogacenia Foundry: @UUID[...]{etykieta} → etykieta, @Condition[prone] → prone, [[/r 1d10]] → 1d10
+    .replace(/@\w+\[[^\]]*\]\{([^}]*)\}/g, "$1")
+    .replace(/@\w+\[([^\]]*)\]/g, "$1")
+    .replace(/\[\[\/\w+\s+([^\]]*)\]\]/g, "$1")
+    .replace(/\[\[([^\]]*)\]\]/g, "$1")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
   return text.length > MAX_TOOLTIP ? `${text.slice(0, MAX_TOOLTIP - 1)}…` : text;
 };
+
+/** Wiersz statystyk podpowiedzi; puste wartości pomija tooltip.mjs. */
+const tip = (env, key, value) => ({ label: (env.localize ?? String)(`WFRP4E_HUD.Tip.${key}`), value });
+
+/** Nazwy zalet albo wad przedmiotu (system podaje je już przetłumaczone). */
+const properties = (item, kind) => Object.values(item?.system?.properties?.[kind] ?? {}).map((p) => p?.display ?? p?.name).filter(Boolean).join(", ");
+
+/** Etykieta z konfiguracji systemu (np. grupa broni, cecha), przetłumaczona. */
+const configLabel = (env, table, key) => {
+  const label = key ? env.config?.[table]?.[key] : undefined;
+  return label ? env.localize(label) : undefined;
+};
+
+/** Środowisko zastępcze dla wywołań bez `env` (testy, starsze wywołania). */
+const NO_ENV = { localize: (key) => key };
 
 const items = (actor, type) => actor?.itemTypes?.[type] ?? [];
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 
 /** Skrócony opis przedmiotu do podpowiedzi (bez HTML). */
 export function plainDescription(item) {
-  const html = item?.system?.description?.value ?? "";
-  const text = String(html).replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
-  return text.length > MAX_TOOLTIP ? `${text.slice(0, MAX_TOOLTIP - 1)}…` : text;
+  const text = plain(item?.system?.description?.value);
+  // Opis będący tylko odnośnikiem do podręcznika („Atletyka”, „Broń Biała” przy specjalizacji) nic nie mówi
+  return text && String(item?.name ?? "").startsWith(text) ? "" : text;
 }
 
 /** Wspólne pola akcji opartej na przedmiocie. */
@@ -74,16 +99,30 @@ export function buildCharacteristics(actor, env) {
       id: `${T.characteristic}-${key}`,
       name: env.localize(label),
       encodedValue: encodeAction(T.characteristic, key),
-      info1: { text: String(characteristics[key].value ?? "") }
+      info1: { text: String(characteristics[key].value ?? "") },
+      details: [
+        tip(env, "Initial", characteristics[key].initial),
+        tip(env, "Advances", characteristics[key].advances || undefined),
+        tip(env, "Modifier", characteristics[key].modifier || undefined),
+        tip(env, "Total", characteristics[key].value)
+      ]
     }));
 }
 
 /** Umiejętności podstawowe i zaawansowane osobno (system: advanced.value = "bsc" | "adv"). */
-export function buildSkills(actor) {
+export function buildSkills(actor, env = NO_ENV) {
   const basic = [];
   const advanced = [];
   for (const skill of [...items(actor, "skill")].sort(byName)) {
-    const action = itemAction(skill, T.skill, { info1: { text: String(skill.system?.total?.value ?? "") } });
+    const action = itemAction(skill, T.skill, {
+      info1: { text: String(skill.system?.total?.value ?? "") },
+      tooltip: plainDescription(skill) || undefined,
+      details: [
+        tip(env, "Characteristic", configLabel(env, "characteristics", skill.system?.characteristic?.value)),
+        tip(env, "Advances", skill.system?.advances?.value || undefined),
+        tip(env, "Total", skill.system?.total?.value)
+      ]
+    });
     (skill.system?.advanced?.value === "adv" ? advanced : basic).push(action);
   }
   return { basic, advanced };
@@ -100,6 +139,18 @@ export function buildWeapons(actor, env) {
     const system = weapon.system ?? {};
     const damaged = system.damageToItem?.value > 0;
     const action = itemAction(weapon, T.weapon, {
+      tooltip: plainDescription(weapon) || undefined,
+      details: [
+        tip(env, "Damage", system.Damage ?? system.damage?.value),
+        tip(env, "Group", configLabel(env, "weaponGroups", system.weaponGroup?.value)),
+        system.isRanged
+          ? tip(env, "Range", system.Range || system.range?.value)
+          : tip(env, "Reach", configLabel(env, "weaponReaches", system.reach?.value)),
+        tip(env, "Skill", system.skillToUse ? `${system.skillToUse.name} (${system.skillToUse.system?.total?.value ?? "?"})` : undefined),
+        tip(env, "Qualities", properties(weapon, "qualities")),
+        tip(env, "Flaws", properties(weapon, "flaws")),
+        tip(env, "ItemDamage", damaged ? system.damageToItem.value : undefined)
+      ],
       cssClass: damaged ? "wfrp4e-action-hud-damaged" : undefined,
       info2: damaged ? { text: `-${system.damageToItem.value}`, title: env.localize("WFRP4E_HUD.Info.Damage") } : undefined
     });
@@ -120,7 +171,18 @@ export function buildArmour(actor, env) {
     .sort(byName)
     .map((armour) => {
       const damage = Object.values(armour.system?.APdamage ?? {}).reduce((sum, v) => sum + (Number(v) || 0), 0);
+      const ap = Object.entries(armour.system?.AP ?? {})
+        .filter(([, value]) => Number(value) > 0)
+        .map(([location, value]) => `${configLabel(env, "locations", location) ?? location} ${value}`)
+        .join(", ");
       return itemAction(armour, T.armour, {
+        tooltip: plainDescription(armour) || undefined,
+        details: [
+          tip(env, "AP", ap),
+          tip(env, "Qualities", properties(armour, "qualities")),
+          tip(env, "Flaws", properties(armour, "flaws")),
+          tip(env, "ItemDamage", damage > 0 ? damage : undefined)
+        ],
         cssClass: damage > 0 ? "wfrp4e-action-hud-damaged" : undefined,
         info1: damage > 0 ? { text: `-${damage}`, title: env.localize("WFRP4E_HUD.Info.Damage") } : undefined
       });
@@ -137,6 +199,17 @@ export function buildTraits(actor, env) {
     }));
 }
 
+/** Zasięg, cel i czas trwania czaru albo modlitwy (system trzyma je jako tekst, czasem z formułą). */
+function castingDetails(item, env, cn) {
+  const system = item.system ?? {};
+  return [
+    tip(env, "CN", cn || undefined),
+    tip(env, "Range", system.range?.value),
+    tip(env, "Target", system.target?.value),
+    tip(env, "Duration", system.duration?.value)
+  ];
+}
+
 /** Czary: Magia Prosta osobno; reszta z nazwą tradycji. Splatanie osobno: w 4e według czaru, w 5e według Wiatru. */
 export function buildSpells(actor, env) {
   const petty = [];
@@ -148,10 +221,11 @@ export function buildSpells(actor, env) {
     const tooltip = plainDescription(spell) || undefined;
     const isPetty = lores.includes("petty");
     const info1 = cn ? { text: String(cn), title: env.localize("WFRP4E_HUD.Info.CN") } : undefined;
-    (isPetty ? petty : spells).push(itemAction(spell, T.spell, { info1, tooltip }));
+    const details = castingDetails(spell, env, cn);
+    (isPetty ? petty : spells).push(itemAction(spell, T.spell, { info1, tooltip, details }));
     if (!isPetty && cn && env.edition !== "5e") {
       channelling.push({
-        ...itemAction(spell, T.channel, { info1, tooltip }),
+        ...itemAction(spell, T.channel, { info1, tooltip, details }),
         id: `${T.channel}-${spell.id}`
       });
     }
@@ -171,18 +245,18 @@ export function buildSpells(actor, env) {
   return { petty, spells, channelling };
 }
 
-export function buildPrayers(actor) {
+export function buildPrayers(actor, env = NO_ENV) {
   const blessings = [];
   const miracles = [];
   for (const prayer of [...items(actor, "prayer")].sort(byName)) {
-    const action = itemAction(prayer, T.prayer, { tooltip: plainDescription(prayer) || undefined });
+    const action = itemAction(prayer, T.prayer, { tooltip: plainDescription(prayer) || undefined, details: castingDetails(prayer, env) });
     (prayer.system?.type?.value === "miracle" ? miracles : blessings).push(action);
   }
   return { blessings, miracles };
 }
 
 /** Talenty: jeden wpis na nazwę, z liczbą wykupień. */
-export function buildTalents(actor) {
+export function buildTalents(actor, env = NO_ENV) {
   const byTalentName = new Map();
   for (const talent of items(actor, "talent")) {
     const entry = byTalentName.get(talent.name);
@@ -193,14 +267,19 @@ export function buildTalents(actor) {
     .sort((a, b) => byName(a.talent, b.talent))
     .map(({ talent, count }) => itemAction(talent, T.talent, {
       info1: count > 1 ? { text: `×${count}` } : undefined,
-      tooltip: plainDescription(talent) || undefined
+      tooltip: plainDescription(talent) || undefined,
+      details: [tip(env, "Taken", count > 1 ? count : undefined), tip(env, "Tests", talent.system?.tests?.value)]
     }));
 }
 
-export function buildExtendedTests(actor) {
+export function buildExtendedTests(actor, env = NO_ENV) {
   return [...items(actor, "extendedTest")].sort(byName).map((test) => {
     const sl = test.system?.SL ?? {};
-    return itemAction(test, T.extended, { info1: { text: `${sl.current ?? 0}/${sl.target ?? 0}` } });
+    return itemAction(test, T.extended, {
+      info1: { text: `${sl.current ?? 0}/${sl.target ?? 0}` },
+      tooltip: plainDescription(test) || undefined,
+      details: [tip(env, "Test", test.system?.test?.value), tip(env, "SL", `${sl.current ?? 0} / ${sl.target ?? 0}`)]
+    });
   });
 }
 
@@ -250,7 +329,8 @@ export function buildConditions(actor, env) {
       img: status?.img,
       encodedValue: encodeAction(T.condition, key),
       cssClass: value ? "toggle active" : "toggle",
-      info1: value && numbered.has(key) ? { text: String(value) } : undefined
+      info1: value && numbered.has(key) ? { text: String(value) } : undefined,
+      tooltip: plain(env.localize(env.config?.conditionDescriptions?.[key] ?? "")) || undefined
     };
   });
 }
@@ -287,6 +367,7 @@ export function buildAdvantageActions(actor, env) {
       name: action.name,
       encodedValue: encodeAction(T.advantageAction, index),
       tooltip: [plain(action.description), plain(action.effect)].filter(Boolean).join(" — "),
+      details: [tip(env, "Cost", cost || undefined)],
       ...costView(cost, current)
     };
   });
@@ -300,7 +381,8 @@ export function buildGangOrders(actor, env) {
     id: `${T.gangOrder}-${order.id}`,
     name: order.name,
     encodedValue: encodeAction(T.gangOrder, order.id),
-    tooltip: [order.executor ? `${order.executor}:` : "", plain(order.description), plain(order.effect)].filter(Boolean).join(" "),
+    tooltip: [plain(order.description), plain(order.effect)].filter(Boolean).join(" — "),
+    details: [tip(env, "Cost", Number(order.cost) || undefined), tip(env, "Executor", order.executor)],
     ...costView(Number(order.cost) || 0, current)
   }));
 }

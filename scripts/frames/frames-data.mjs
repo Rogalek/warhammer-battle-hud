@@ -44,3 +44,22 @@ export function clampPosition({ left, top }, width, height, viewportWidth, viewp
     top: Math.max(0, Math.min(top, Math.max(0, viewportHeight - height)))
   };
 }
+
+/**
+ * Postacie, które gracz może wybrać do ramek. W trybie drużyny także postacie graczy bez przypisania,
+ * żeby dało się je dodać; w pozostałych trybach – to, co tryb i tak pokazuje.
+ */
+export function candidateActors({ mode, users = [], actors = [], partyTypes, ...rest }) {
+  const shown = pickActors({ mode, users, actors, partyTypes, ...rest });
+  if (mode !== "party") return shown;
+  return unique([...shown, ...actors.filter((a) => a.hasPlayerOwner && partyTypes.includes(a.type))]);
+}
+
+/**
+ * Wybór gracza (uuid → true/false) nakłada się na domyślną listę trybu:
+ * bez wyboru postać jest widoczna, jeśli tryb ją pokazuje.
+ */
+export function applyChoice(defaults, candidates, choice = {}) {
+  const shown = new Set(defaults.map((a) => a.uuid));
+  return candidates.filter((a) => choice[a.uuid] ?? shown.has(a.uuid));
+}
