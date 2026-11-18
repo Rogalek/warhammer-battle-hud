@@ -34,7 +34,7 @@ export const GROUP_IDS = Object.freeze({
 const MAX_TOOLTIP = 500;
 
 /** Bez HTML i skrócone – do podpowiedzi. */
-const plain = (html) => {
+export const plain = (html) => {
   const text = String(html ?? "")
     .replace(/<\/?(strong|em|b|i|span|a)\b[^>]*>/g, "")
     .replace(/<[^>]*>/g, " ")

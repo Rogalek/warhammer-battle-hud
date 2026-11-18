@@ -125,7 +125,9 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!tabs.some((tab) => tab.id === this.openTab)) this.openTab = null;
     return {
       actionTabs: tabs.map((tab) => ({ ...tab, active: tab.id === this.openTab })),
-      actionPanel: this.openTab ? actions.groups(actor, this.openTab) : null
+      actionPanel: this.openTab ? actions.groups(actor, this.openTab) : null,
+      // Zakładka może prosić o układ w kolumnach (np. umiejętności The Old World: 8 cech po 2)
+      actionColumns: tabs.find((tab) => tab.id === this.openTab)?.columns ?? null
     };
   }
 

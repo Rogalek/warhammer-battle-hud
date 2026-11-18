@@ -663,3 +663,25 @@
   object-fit: cover;
   object-position: top;
 }
+
+/* Rany nieopatrzone i przepełniona pula Miscastów */
+.whb-action.untreated span,
+.whb-action.untreated small {
+  color: #e05050;
+}
+
+/* Panel w kolumnach: krótkie grupy obok siebie zamiast długiej listy z paskiem przewijania */
+.whb-panel.whb-columns {
+  display: grid;
+  grid-template-columns: repeat(var(--whb-columns, 4), auto);
+  gap: 0.4rem 0.8rem;
+}
+
+.whb-panel.whb-columns .whb-actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.whb-panel.whb-columns .whb-action {
+  justify-content: space-between;
+}

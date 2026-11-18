@@ -80,7 +80,9 @@
       "encumbrance": "Encumbrance",
       "fate": "Fate",
       "resilience": "Resilience",
-      "wrath": "Wrath"
+      "wrath": "Wrath",
+      "untreated": "Untreated wounds",
+      "miscasts": "Miscast pool"
     },
     "Settings": {
       "ShowFramesName": "Show the party frames",
@@ -168,7 +170,17 @@
       "Test": "Test",
       "SL": "SL",
       "Cost": "Advantage cost",
-      "Executor": "Carried out by"
+      "Executor": "Carried out by",
+      "Improvement": "Improvement",
+      "Dice": "Dice",
+      "Grip": "Grip",
+      "Traits": "Traits",
+      "Loaded": "Loaded",
+      "Resilience": "Resilience",
+      "Progress": "Accumulated power",
+      "Lore": "Lore",
+      "Healing": "Healing",
+      "Treated": "Treated"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -180,6 +192,63 @@
       "Counter": "Click: +1 · Right-click: −1",
       "AdvantageAction": "Click: spend the Advantage and use it",
       "GangOrder": "Click: open the order dialog"
+    }
+  },
+  "WHB_TOW": {
+    "Reload": "Reload",
+    "Cast": "Cast",
+    "MiscastDispose": "Dispose of Miscasts",
+    "MiscastRoll": "Roll Miscast",
+    "Favour": "Favour",
+    "Miracle": "Perform a Miracle",
+    "RegainMiracle": "Regain the Miracle",
+    "Fate": "Fate",
+    "FateRefresh": "Restore Fate",
+    "FateRestored": "Fate restored to {max}.",
+    "Tabs": {
+      "combat": "Combat",
+      "skills": "Skills",
+      "magic": "Magic",
+      "religion": "Faith",
+      "talents": "Talents",
+      "status": "Status"
+    },
+    "Groups": {
+      "Actions": "Actions",
+      "Melee": "Melee weapons",
+      "Ranged": "Ranged weapons",
+      "Reload": "Reloading",
+      "Attacks": "Attacks",
+      "Armour": "Armour and shields",
+      "Casting": "Casting",
+      "Spells": "Spells",
+      "Miscasts": "Miscasts",
+      "Blessing": "Blessing",
+      "Talents": "Talents",
+      "Abilities": "Abilities",
+      "Lores": "Lores",
+      "Fate": "Fate",
+      "Conditions": "Conditions",
+      "Wounds": "Wounds"
+    },
+    "Hint": {
+      "Action": "Click: take the action",
+      "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
+      "Attack": "Click: attack · Right-click: open the item · Alt: skip the dialog",
+      "Unloaded": "Not loaded – reload first · Right-click: open the item",
+      "Reload": "Click: +1 reload step · Right-click: −1",
+      "Shield": "Click: Defence test with the shield · Right-click: open the item",
+      "Sheet": "Click or right-click: open the item",
+      "Cast": "Click: casting test · Right-click: open the spell · Alt: skip the dialog",
+      "MiscastDispose": "Click: dispose of Miscast dice (one in combat, all outside it)",
+      "MiscastRoll": "Click: roll the Miscast table and empty the pool",
+      "Blessing": "Click: call on the blessing",
+      "RegainMiracle": "Click: the Miracle can be used again",
+      "Use": "Click: use · Right-click: open the item",
+      "Counter": "Click: +1 · Right-click: −1",
+      "FateRefresh": "Click: restore Fate to its maximum",
+      "Condition": "Click: add or remove · Right-click: remove",
+      "Wound": "Click: mark as treated or untreated · Right-click: open the wound"
     }
   }
 }

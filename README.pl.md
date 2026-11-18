@@ -28,7 +28,7 @@ Pierwsza zakładka panelu akcji, **Przewaga**, pokazuje, na co postać może ter
 
 ## ⚔️ Panel akcji
 
-Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W WFRP: cechy, umiejętności, walka, magia, religia, talenty, stany i Przewaga. W pozostałych systemach: testy systemu z wartościami postaci.
+Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W WFRP: cechy, umiejętności, walka, magia, religia, talenty, stany i Przewaga. W The Old World: walka (akcje walki systemu z wariantami Manewru, założona broń, przeładowanie, zdolności ataku, tarcze i pancerz), umiejętności według cech z liczbą kości, magia (rzucanie z tradycji, zaklęcia z WR i zgromadzoną mocą, pula Miscastów), wiara (Łaska, modlitwy, cud), talenty, zdolności i wiedze oraz stan (Los, stany, rany). W pozostałych systemach: testy systemu z wartościami postaci.
 
 * **Lewy klik**: rzut, dodanie stanu lub Przewagi, talent na czat.
 * **Prawy klik**: arkusz przedmiotu, zdjęcie stanu lub Przewagi.

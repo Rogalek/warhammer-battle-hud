@@ -96,3 +96,14 @@ describe("wybór widocznych postaci", () => {
     expect(candidateActors({ ...base, mode: "combat", combatants: [anna, rat], actors: [bruno] })).toEqual([anna, rat]);
   });
 });
+
+describe("The Old World: ramki", () => {
+  it("nieopatrzone rany i pula Miscastów maga", () => {
+    const actor = { itemTypes: { wound: [{ system: { treated: true } }, { system: { treated: false } }] }, system: { resilience: { value: 5 }, magic: { level: 2, miscasts: 1 } } };
+    expect(ADAPTERS.whtow.stats(actor).map((s) => [s.key, s.value, s.max])).toEqual([["wounds", 2, undefined], ["untreated", 1, undefined], ["resilience", 5, undefined], ["miscasts", 1, 2]]);
+  });
+  it("bez magii nie ma puli Miscastów", () => {
+    const actor = { itemTypes: { wound: [] }, system: { magic: { level: 0, miscasts: 0 } } };
+    expect(ADAPTERS.whtow.stats(actor).map((s) => s.key)).toEqual(["wounds"]);
+  });
+});

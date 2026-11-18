@@ -26,10 +26,16 @@ export const ADAPTERS = {
   whtow: {
     partyTypes: ["character"],
     bars: (a) => present([{ key: "fate", kind: "resource", value: a.system.fate?.current, max: a.system.fate?.max }]),
-    stats: (a) => present([
-      { key: "wounds", icon: "fa-droplet", value: a.itemTypes.wound?.length },
-      { key: "resilience", icon: "fa-shield", value: a.system.resilience?.value }
-    ])
+    stats: (a) => {
+      const wounds = a.itemTypes.wound ?? [];
+      const magic = a.system.magic ?? {};
+      return present([
+        { key: "wounds", icon: "fa-droplet", value: a.itemTypes.wound ? wounds.length : undefined },
+        { key: "untreated", icon: "fa-kit-medical", value: wounds.filter((w) => !w.system?.treated).length || undefined },
+        { key: "resilience", icon: "fa-shield", value: a.system.resilience?.value },
+        { key: "miscasts", icon: "fa-wand-sparkles", value: magic.level > 0 ? magic.miscasts ?? 0 : undefined, max: magic.level || undefined }
+      ]);
+    }
   },
 
   impmal: {
