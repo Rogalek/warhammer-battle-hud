@@ -1,6 +1,6 @@
 {
   "WHAMMO": {
-    "Title": "Warhammer Battle HUD",
+    "Title": "TomWa Warhammer HUD",
     "NoAmmo": "No matching ammunition.",
     "NoneSelected": "No ammunition",
     "ChooseAmmo": "Choose ammunition",
@@ -52,7 +52,7 @@
     }
   },
   "WHFRAMES": {
-    "Title": "Warhammer Battle HUD",
+    "Title": "TomWa Warhammer HUD",
     "Empty": "No characters to show.",
     "Hint": "Click: target. Double-click: go to the token. Right-click: open the sheet.",
     "ChangeMode": "Change which characters are shown",

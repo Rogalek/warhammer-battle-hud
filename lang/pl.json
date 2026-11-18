@@ -1,6 +1,6 @@
 {
   "WHAMMO": {
-    "Title": "Warhammer Battle HUD",
+    "Title": "TomWa Warhammer HUD",
     "NoAmmo": "Brak pasującej amunicji.",
     "NoneSelected": "Brak amunicji",
     "ChooseAmmo": "Wybierz amunicję",
@@ -52,7 +52,7 @@
     }
   },
   "WHFRAMES": {
-    "Title": "Warhammer Battle HUD",
+    "Title": "TomWa Warhammer HUD",
     "Empty": "Brak postaci do pokazania.",
     "Hint": "Klik: cel. Podwójny klik: przejście do tokena. Prawy klik: karta postaci.",
     "ChangeMode": "Zmień, które postacie są pokazywane",

@@ -1,5 +1,5 @@
 /**
- * Warhammer Battle HUD
+ * TomWa Warhammer HUD
  * Ramki drużyny, pasek akcji i amunicji oraz szybkie testy dla systemów Warhammera.
  */
 
