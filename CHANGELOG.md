@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.1
 - Screenshots of every system in the README.
 - The Old World spell tooltips show "CV" instead of a raw translation key, and a test now checks every tooltip row has a translation.
 - Column layouts (skills) may use more of the screen, so Imperium Maledictum's nine characteristics fit without scrolling; Soulbound's skills use four columns.
