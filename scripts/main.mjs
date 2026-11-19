@@ -26,6 +26,8 @@ Hooks.once("init", () => {
   const frames = framesFor(game.system.id);
   if (!frames) return log.info(`system ${game.system.id} nie jest obsługiwany`);
   supported = true;
+  // Kolory HUD-a i ramek dopasowane do kart postaci systemu (styles: body.whb-system-<id>)
+  document.body.classList.add(`whb-system-${game.system.id}`);
   PartyFrames.adapter = frames;
   BattleBar.adapter = ammoFor(game.system.id);
   registerFrameSettings(refreshFrames);

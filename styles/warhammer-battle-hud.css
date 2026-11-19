@@ -1,5 +1,133 @@
-/* TomWa Warhammer HUD – pasek */
-/* Klasy modułu mają prefiks wham-, żeby nie kolidowały z systemami. */
+/* TomWa Warhammer HUD – motywy systemów */
+/* Kolory pochodzą z kart postaci danego systemu; moduł dodaje do <body> klasę whb-system-<id>. */
+
+:root {
+  /* HUD (pasek, panel akcji, licznik Przewagi) */
+  --whb-bg: rgba(0, 0, 0, 0.78);
+  --whb-bg-strong: rgba(0, 0, 0, 0.88);
+  --whb-border: #555;
+  --whb-text: #eee;
+  --whb-muted: #aaa;
+  --whb-accent: #7a2b1d;
+  --whb-highlight: #c9a227;
+  --whb-highlight-strong: #f0cf5a;
+  --whb-highlight-dark: #7a5a10;
+  --whb-badge-from: #5a1f14;
+  --whb-badge-to: #2a0d08;
+  --whb-badge-text: #f3e3b5;
+  /* Ramki drużyny w wyglądzie „systemu” */
+  --whb-frame-bg: rgba(233, 220, 190, 0.95);
+  --whb-frame-text: #2b1d0e;
+  --whb-frame-border: #6b4f2a;
+  --whb-frame-track: rgba(60, 40, 20, 0.3);
+  --whb-frame-accent: #8a5a00;
+}
+
+/* WFRP: pergamin, ciemna czerwień i złoto */
+body.whb-system-wfrp4e {
+  --whb-bg: rgba(38, 14, 10, 0.86);
+  --whb-bg-strong: rgba(30, 10, 8, 0.93);
+  --whb-border: #6b4f2a;
+  --whb-text: #f1ede9;
+  --whb-muted: #b5aeac;
+  --whb-accent: #7a1c12;
+}
+
+/* The Old World: krem, karmazyn i stara żółć */
+body.whb-system-whtow {
+  --whb-bg: rgba(32, 30, 29, 0.88);
+  --whb-bg-strong: rgba(26, 24, 23, 0.94);
+  --whb-border: #a39d8b;
+  --whb-text: #e8e0d6;
+  --whb-muted: #a39d8b;
+  --whb-accent: #b21a22;
+  --whb-highlight: #c6b869;
+  --whb-highlight-strong: #e6d98a;
+  --whb-highlight-dark: #a58b24;
+  --whb-badge-from: #771c18;
+  --whb-badge-to: #2a0d0b;
+  --whb-badge-text: #e8e0d6;
+  --whb-frame-bg: rgba(232, 224, 214, 0.96);
+  --whb-frame-text: #2a2420;
+  --whb-frame-border: #771c18;
+  --whb-frame-track: rgba(119, 28, 24, 0.2);
+  --whb-frame-accent: #b21a22;
+}
+
+/* Imperium Maledictum: granat, morski turkus i pomarańcz */
+body.whb-system-impmal {
+  --whb-bg: rgba(28, 49, 50, 0.9);
+  --whb-bg-strong: rgba(20, 36, 37, 0.95);
+  --whb-border: #065c63;
+  --whb-text: #dddddd;
+  --whb-muted: #95a0a2;
+  --whb-accent: #065c63;
+  --whb-highlight: #cf9742;
+  --whb-highlight-strong: #e6b46a;
+  --whb-highlight-dark: #8a5f22;
+  --whb-badge-from: #065c63;
+  --whb-badge-to: #10201f;
+  --whb-badge-text: #e6e6e6;
+  --whb-frame-bg: rgba(28, 49, 50, 0.95);
+  --whb-frame-text: #dddddd;
+  --whb-frame-border: #065c63;
+  --whb-frame-track: rgba(255, 255, 255, 0.15);
+  --whb-frame-accent: #cf9742;
+}
+
+/* Wrath & Glory: imperialna czerwień na grafitowym tle */
+body.whb-system-wrath-and-glory {
+  --whb-bg: rgba(24, 30, 31, 0.9);
+  --whb-bg-strong: rgba(18, 22, 23, 0.95);
+  --whb-border: #8b8d90;
+  --whb-text: #e6e5e3;
+  --whb-muted: #8b8d90;
+  --whb-accent: #8a2e2a;
+  --whb-highlight: #c9a24a;
+  --whb-highlight-strong: #e6c36a;
+  --whb-highlight-dark: #752322;
+  --whb-badge-from: #8a2e2a;
+  --whb-badge-to: #3a002c;
+  --whb-badge-text: #e6e5e3;
+  --whb-frame-bg: rgba(230, 229, 227, 0.96);
+  --whb-frame-text: #191813;
+  --whb-frame-border: #8a2e2a;
+  --whb-frame-track: rgba(25, 24, 19, 0.2);
+  --whb-frame-accent: #8a2e2a;
+}
+
+/* Soulbound: granat Azyru i złoto Sigmara */
+body.whb-system-age-of-sigmar-soulbound {
+  --whb-bg: rgba(24, 48, 81, 0.9);
+  --whb-bg-strong: rgba(16, 33, 56, 0.95);
+  --whb-border: #806b3a;
+  --whb-text: #f0ead6;
+  --whb-muted: #a19e78;
+  --whb-accent: #806b3a;
+  --whb-highlight: #d8c48a;
+  --whb-highlight-strong: #f0dfa6;
+  --whb-highlight-dark: #806b3a;
+  --whb-badge-from: #183051;
+  --whb-badge-to: #0b1626;
+  --whb-badge-text: #f0ead6;
+  --whb-frame-bg: rgba(240, 234, 214, 0.96);
+  --whb-frame-text: #183051;
+  --whb-frame-border: #806b3a;
+  --whb-frame-track: rgba(24, 48, 81, 0.2);
+  --whb-frame-accent: #183051;
+}
+
+/* Ramki drużyny w kolorach systemu */
+.whf-root.whf-skin-system {
+  --whf-bg: var(--whb-frame-bg);
+  --whf-text: var(--whb-frame-text);
+  --whf-border: var(--whb-frame-border);
+  --whf-track: var(--whb-frame-track);
+  --whf-accent: var(--whb-frame-accent);
+}
+
+
+/* Pasek – klasy mają prefiks wham-/whb-, żeby nie kolidowały z systemami */
 
 #warhammer-battle-hud-bar {
   position: fixed;
@@ -17,7 +145,7 @@
   align-items: flex-end;
   gap: 0.5rem;
   max-width: 60vw;
-  color: var(--color-text-light-1, #eee);
+  color: var(--whb-text);
 }
 
 .wham-weapon {
@@ -26,8 +154,8 @@
   align-items: center;
   gap: 2px;
   padding: 2px;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid #555;
+  background: var(--whb-bg);
+  border: 1px solid var(--whb-border);
   border-radius: 4px;
 }
 
@@ -49,7 +177,7 @@
 }
 
 .wham-bar button:hover {
-  border-color: #c9a227;
+  border-color: var(--whb-highlight);
 }
 
 .wham-bar img {
@@ -82,8 +210,8 @@
   display: flex;
   gap: 2px;
   padding: 2px;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid #555;
+  background: var(--whb-bg);
+  border: 1px solid var(--whb-border);
   border-radius: 4px;
 }
 
@@ -96,7 +224,7 @@
 }
 
 .wham-gear .wham-icon.equipped {
-  border-color: #c9a227;
+  border-color: var(--whb-highlight);
 }
 
 .wham-list {
@@ -107,8 +235,8 @@
   margin: 0 0 2px;
   padding: 2px;
   list-style: none;
-  background: rgba(0, 0, 0, 0.9);
-  border: 1px solid #555;
+  background: var(--whb-bg-strong);
+  border: 1px solid var(--whb-border);
   border-radius: 4px;
 }
 
@@ -119,7 +247,7 @@
 }
 
 .wham-list button.current {
-  border-color: #c9a227;
+  border-color: var(--whb-highlight);
 }
 
 .wham-list strong {
@@ -151,17 +279,17 @@
   justify-content: center;
   width: 1rem;
   min-height: 2.5rem;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid #555;
+  background: var(--whb-bg);
+  border: 1px solid var(--whb-border);
   border-radius: 4px;
-  color: #aaa;
+  color: var(--whb-muted);
   cursor: grab;
   touch-action: none;
 }
 
 .whb-grip:hover {
-  border-color: #c9a227;
-  color: #c9a227;
+  border-color: var(--whb-highlight);
+  color: var(--whb-highlight);
 }
 
 #warhammer-battle-hud-bar.dragging,
@@ -181,11 +309,11 @@
   width: 4.75rem;
   height: 4.75rem;
   padding: 0.2rem;
-  background: radial-gradient(circle at 50% 35%, #5a1f14 0%, #2a0d08 70%);
-  border: 2px solid #c9a227;
+  background: radial-gradient(circle at 50% 35%, var(--whb-badge-from) 0%, var(--whb-badge-to) 70%);
+  border: 2px solid var(--whb-highlight);
   border-radius: 50%;
   box-shadow: 0 0 0 1px #000, 0 0 12px 2px var(--whb-adv-glow), inset 0 0 8px rgba(0, 0, 0, 0.8);
-  color: #f3e3b5;
+  color: var(--whb-badge-text);
   line-height: 1;
   text-shadow: 0 0 3px #000;
   cursor: pointer;
@@ -193,7 +321,7 @@
 }
 
 .whb-advantage:hover {
-  border-color: #f0cf5a;
+  border-color: var(--whb-highlight-strong);
 }
 
 .whb-advantage-label {
@@ -225,7 +353,7 @@
 
 .whb-advantage.high {
   --whb-adv-glow: rgba(240, 190, 60, 0.75);
-  border-color: #f0cf5a;
+  border-color: var(--whb-highlight-strong);
 }
 
 .whb-advantage.max {
@@ -265,8 +393,8 @@
   display: flex;
   gap: 2px;
   padding: 2px;
-  background: rgba(0, 0, 0, 0.75);
-  border: 1px solid #555;
+  background: var(--whb-bg);
+  border: 1px solid var(--whb-border);
   border-radius: 4px;
 }
 
@@ -280,7 +408,7 @@
 }
 
 .whb-tabs button.active {
-  background: #7a2b1d;
+  background: var(--whb-accent);
   color: #fff;
 }
 
@@ -292,10 +420,10 @@
   max-height: 40vh;
   padding: 0.4rem;
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.85);
-  border: 1px solid #555;
+  background: var(--whb-bg-strong);
+  border: 1px solid var(--whb-border);
   border-radius: 4px;
-  color: var(--color-text-light-1, #eee);
+  color: var(--whb-text);
 }
 
 .whb-panel h4 {
@@ -336,7 +464,7 @@
 }
 
 .whb-action.toggle.active {
-  background: #7a2b1d;
+  background: var(--whb-accent);
   color: #fff;
 }
 
@@ -550,17 +678,17 @@
 
 /* Zakładka Przewagi – wyróżniona, bo jej akcje zależą od licznika */
 .whb-tabs button[data-tab="advantage"] {
-  color: #f0cf5a;
+  color: var(--whb-highlight-strong);
   font-weight: bold;
 }
 
 .whb-tabs button[data-tab="advantage"].active {
-  background: #7a5a10;
+  background: var(--whb-highlight-dark);
   color: #fff;
 }
 
 .whb-action.advantage-cost small {
-  color: #f0cf5a;
+  color: var(--whb-highlight-strong);
   opacity: 1;
   font-weight: bold;
 }
