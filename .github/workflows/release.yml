@@ -13,6 +13,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Token z formularza paczki na foundryvtt.com (Package Release Token); bez niego krok publikacji jest pomijany
+      FOUNDRY_RELEASE_TOKEN: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -48,3 +51,29 @@ jobs:
           files: |
             module.json
             module.zip
+
+      # Zgłasza wersję na liście paczek Foundry (https://foundryvtt.com/article/package-release-api/).
+      # Manifest musi wskazywać na tę konkretną wersję, nie na "latest". Zmienna repozytorium
+      # FOUNDRY_DRY_RUN=true sprawdza zgłoszenie bez zapisywania.
+      - name: Publish the version on foundryvtt.com
+        if: ${{ env.FOUNDRY_RELEASE_TOKEN != '' }}
+        env:
+          DRY_RUN: ${{ vars.FOUNDRY_DRY_RUN == 'true' }}
+        run: |
+          jq -n --slurpfile m module.json \
+            --arg manifest "https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/module.json" \
+            --arg notes "https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}" \
+            --argjson dry "$DRY_RUN" \
+            '{id: $m[0].id, "dry-run": $dry, release: {version: $m[0].version, manifest: $manifest, notes: $notes, compatibility: $m[0].compatibility}}' \
+            > foundry-release.json
+          cat foundry-release.json
+          status=$(curl -sS -o response.json -w "%{http_code}" -X POST "https://foundryvtt.com/_api/packages/release_version/" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $FOUNDRY_RELEASE_TOKEN" \
+            --data @foundry-release.json)
+          cat response.json
+          echo
+          if [ "$status" != "200" ]; then
+            echo "::error::foundryvtt.com answered HTTP $status"
+            exit 1
+          fi
