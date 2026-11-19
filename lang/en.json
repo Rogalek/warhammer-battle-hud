@@ -206,7 +206,8 @@
       "DN": "DN",
       "Activation": "Activation",
       "Training": "Training",
-      "Focus": "Focus"
+      "Focus": "Focus",
+      "CV": "CV"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
