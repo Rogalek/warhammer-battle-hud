@@ -12,8 +12,8 @@
     "AdvantageHint": "Klik: +1 Przewagi. Prawy klik: −1.",
     "Drag": "Przeciągnij, aby przesunąć HUD. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
-      "ShowAdvantageName": "Pokazuj licznik Przewagi",
-      "ShowAdvantageHint": "Duży licznik z przodu HUD-a. Klik dodaje punkt, prawy klik odejmuje.",
+      "ShowAdvantageName": "Pokazuj duży licznik walki",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum. Klik dodaje punkt, prawy klik odejmuje.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
@@ -49,7 +49,10 @@
     },
     "Tab": {
       "Tests": "Testy"
-    }
+    },
+    "Superiority": "Przewaga",
+    "SuperiorityHint": "Przewaga drużyny. Klik: +1. Prawy klik: −1.",
+    "SuperiorityReadOnly": "Przewaga drużyny (zmienia ją tylko MG)."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -181,7 +184,14 @@
       "Progress": "Zgromadzona moc",
       "Lore": "Tradycja",
       "Healing": "Leczenie",
-      "Treated": "Opatrzona"
+      "Treated": "Opatrzona",
+      "Magazine": "Magazynek",
+      "Ammo": "Amunicja",
+      "Locations": "Lokacje",
+      "WarpRating": "Wartość Spaczni",
+      "Difficulty": "Trudność",
+      "Discipline": "Dyscyplina",
+      "Overt": "Jawna"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -250,6 +260,57 @@
       "FateRefresh": "Klik: odnów Los do maksimum",
       "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
       "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany"
+    }
+  },
+  "WHB_IM": {
+    "Reload": "Przeładuj",
+    "Dodge": "Unik",
+    "Initiative": "Inicjatywa",
+    "WarpCharge": "Ładunek Spaczni",
+    "Purge": "Oczyszczenie",
+    "Fate": "Przeznaczenie",
+    "Major": "Poważny",
+    "Minor": "Drobny",
+    "Tabs": {
+      "combat": "Walka",
+      "characteristics": "Cechy",
+      "skills": "Umiejętności",
+      "psychic": "Psionika",
+      "talents": "Talenty",
+      "status": "Stan"
+    },
+    "Groups": {
+      "Actions": "Akcje",
+      "Melee": "Broń do walki wręcz",
+      "Ranged": "Broń dystansowa",
+      "Reload": "Przeładowanie",
+      "Defence": "Obrona",
+      "Traits": "Cechy szczególne",
+      "Protection": "Ochrona",
+      "Characteristics": "Cechy",
+      "Skills": "Umiejętności i specjalizacje",
+      "Powers": "Moce psioniczne",
+      "Warp": "Spacznia",
+      "Talents": "Talenty",
+      "Corruption": "Zepsucie",
+      "Fate": "Przeznaczenie",
+      "Conditions": "Stany",
+      "Injuries": "Urazy i rany krytyczne"
+    },
+    "Hint": {
+      "Action": "Klik: wybierz to jako akcję w tej turze",
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Empty": "Pusty magazynek – najpierw przeładuj · Prawy klik: karta przedmiotu",
+      "Reload": "Klik: przeładuj z wybranej amunicji · Prawy klik: karta broni",
+      "Initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Power": "Klik: test Panowania nad Spacznią dla mocy · Prawy klik: karta mocy",
+      "Warp": "Klik: test Panowania nad Spacznią",
+      "Purge": "Klik: oczyść Ładunek Spaczni (w walce test Dyscypliny)",
+      "Use": "Klik: użyj · Prawy klik: karta przedmiotu",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij"
     }
   }
 }

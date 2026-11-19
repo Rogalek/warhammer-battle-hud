@@ -813,3 +813,9 @@ body.whb-system-age-of-sigmar-soulbound {
 .whb-panel.whb-columns .whb-action {
   justify-content: space-between;
 }
+
+/* Specjalizacja umiejętności (Imperium Maledictum) – wcięta pod swoją umiejętnością */
+.whb-action.specialisation span {
+  padding-left: 0.6rem;
+  font-style: italic;
+}
