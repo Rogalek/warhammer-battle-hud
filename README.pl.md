@@ -20,15 +20,19 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 HUD (Przewaga, panel akcji i amunicja) unosi się nad sceną. Przeciągnij go za uchwyt po lewej; położenie zapisuje się przy koncie gracza, więc działa na każdym komputerze. **Podwójny klik** na uchwycie przywraca go nad pasek makr.
 
+## 🎨 Kolory systemów
+
+HUD i ramki drużyny przyjmują kolory karty postaci aktywnego systemu: pergamin i ciemna czerwień w WFRP, krem i karmazyn w The Old World, granat, morski turkus i pomarańcz w Imperium Maledictum, imperialna czerwień na grafitowym tle w Wrath & Glory oraz granat Azyru ze złotem w Soulbound. Wygląd ramek można w ustawieniach przełączyć na Pergamin albo Imperium.
+
 ## ⚡ Przewaga (WFRP)
 
-Duży licznik z przodu HUD-a pokazuje Przewagę postaci i świeci mocniej, im jest jej więcej, aż do maksimum. **Klik**: +1, **prawy klik**: −1. Ramki drużyny też ją wyróżniają. Można go ukryć w ustawieniach.
+Duży licznik z przodu HUD-a zależy od systemu: Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound (zmienia je MG, a gracze też, gdy system na to pozwala). W WFRP duży licznik pokazuje Przewagę postaci i świeci mocniej, im jest jej więcej, aż do maksimum. **Klik**: +1, **prawy klik**: −1. Ramki drużyny też ją wyróżniają. Można go ukryć w ustawieniach.
 
 Pierwsza zakładka panelu akcji, **Przewaga**, pokazuje, na co postać może teraz wydać Przewagę, z kosztem (⚡1, ⚡2): użycia Przewagi z systemu (z Up in Arms: Grzmotnięcie, Sztuczka, Dodatkowy wysiłek, Ucieczka przed zagrożeniem, Dodatkowa Akcja), a z modułem **Underworld** (`wfrp4e-underworld`) także rozkazy taktyczne, które może wykonać Świta Herszta. Akcje, na które jeszcze brakuje Przewagi, są przygaszone. Klik na użyciu Przewagi odejmuje koszt, wysyła opis na czat i rzuca test, tak jak przycisk na karcie postaci; klik na rozkazie szajki otwiera okno rozkazu z Underworld.
 
 ## ⚔️ Panel akcji
 
-Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W WFRP: cechy, umiejętności, walka, magia, religia, talenty, stany i Przewaga. W The Old World: walka (akcje walki systemu z wariantami Manewru, założona broń, przeładowanie, zdolności ataku, tarcze i pancerz), umiejętności według cech z liczbą kości, magia (rzucanie z tradycji, zaklęcia z WR i zgromadzoną mocą, pula Miscastów), wiara (Łaska, modlitwy, cud), talenty, zdolności i wiedze oraz stan (Los, stany, rany). W pozostałych systemach: testy systemu z wartościami postaci.
+Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W WFRP: cechy, umiejętności, walka, magia, religia, talenty, stany i Przewaga. W The Old World: walka (akcje walki systemu z wariantami Manewru, założona broń, przeładowanie, zdolności ataku, tarcze i pancerz), umiejętności według cech z liczbą kości, magia (rzucanie z tradycji, zaklęcia z WR i zgromadzoną mocą, pula Miscastów), wiara (Łaska, modlitwy, cud), talenty, zdolności i wiedze oraz stan (Los, stany, rany). W Imperium Maledictum: walka (akcje tury, broń z magazynkiem i przeładowaniem, Unik, Inicjatywa, cechy ataku, ochrona), cechy, umiejętności ze specjalizacjami według cech, moce psioniczne z Ładunkiem Spaczni i oczyszczeniem, talenty i cechy szczególne oraz stan (Przeznaczenie, stany drobne i poważne, urazy i rany krytyczne). W Wrath & Glory: walka (broń z obrażeniami, KO, PP i salwą, testy Determinacji, Hartu ducha i Przekonania, Inicjatywa, pancerz), atrybuty, umiejętności według atrybutów, moce psioniczne, zdolności, talenty i słowa kluczowe oraz stan (Gniew, Wiara, Spaczenie, stany, urazy i mutacje). W Soulbound: walka (broń, Inicjatywa, Hart, pancerz), atrybuty i umiejętności z pulą kości i skupieniem, czary i cuda, talenty i stany.
 
 * **Lewy klik**: rzut, dodanie stanu lub Przewagi, talent na czat.
 * **Prawy klik**: arkusz przedmiotu, zdjęcie stanu lub Przewagi.

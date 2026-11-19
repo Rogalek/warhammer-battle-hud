@@ -3,8 +3,7 @@
  * (te same metody, których używa karta postaci).
  */
 import * as B from "./tow-builders.mjs";
-import { tooltipHtml } from "./tooltip.mjs";
-import { t, log } from "./constants.mjs";
+import { finishPanel, systemActions, testContext } from "./system-panel.mjs";
 
 const TOW = B.TOW;
 
@@ -34,24 +33,7 @@ export function towPanel(actor, e = env()) {
     { id: "talents", groups: [group("Talents", usable.talents), group("Abilities", usable.abilities), group("Lores", usable.lores)] },
     { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions), group("Wounds", status.wounds)] }
   ];
-  const view = (action) => ({
-    name: action.name,
-    img: action.img,
-    value: action.value,
-    detail: action.detail ?? "",
-    cssClass: action.cssClass ?? "",
-    tooltip: tooltipHtml({ name: action.name, ...action.tooltip })
-  });
-  return tabs
-    .map((tab) => ({ id: tab.id, columns: tab.columns, label: label(`Tabs.${tab.id}`), groups: tab.groups.filter((g) => g.actions.length).map((g) => ({ ...g, actions: g.actions.map(view) })) }))
-    .filter((tab) => tab.groups.length);
-}
-
-/** Okno rzutu: Alt pomija je (albo pokazuje, gdy pomijanie jest domyślne), Shift daje tajny rzut MG. */
-function testContext(mods, settings) {
-  const context = { skipDialog: mods.alt !== Boolean(settings.skipDialogByDefault) };
-  if (mods.shift && settings.blindOnShift) context.fields = { rollMode: "blindroll" };
-  return context;
+  return finishPanel(tabs, label);
 }
 
 async function openSheet(uuid) {
@@ -119,20 +101,4 @@ async function perform(actor, { type, id, extra }, mods, settings) {
   }
 }
 
-export function towActions(getSetting) {
-  const settings = () => ({ blindOnShift: getSetting("blindOnShift"), skipDialogByDefault: getSetting("skipDialogByDefault") });
-  return {
-    tabs: (actor) => towPanel(actor).map(({ id, label: name, columns }) => ({ id, label: name, columns })),
-    groups: (actor, tabId) => towPanel(actor).find((tab) => tab.id === tabId)?.groups ?? [],
-    async perform(actor, value, mods) {
-      const action = B.readTowValue(value);
-      if (!action) return;
-      try {
-        await perform(actor, action, mods, settings());
-      } catch (err) {
-        log.error(`The Old World: ${value}`, err);
-        ui.notifications.error(t("Notify.ActionFailed"));
-      }
-    }
-  };
-}
+export const towActions = (getSetting) => systemActions(getSetting, { panel: towPanel, types: TOW, perform, name: "The Old World" });

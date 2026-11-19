@@ -12,8 +12,8 @@
     "AdvantageHint": "Klik: +1 Przewagi. Prawy klik: −1.",
     "Drag": "Przeciągnij, aby przesunąć HUD. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
-      "ShowAdvantageName": "Pokazuj licznik Przewagi",
-      "ShowAdvantageHint": "Duży licznik z przodu HUD-a. Klik dodaje punkt, prawy klik odejmuje.",
+      "ShowAdvantageName": "Pokazuj duży licznik walki",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Klik dodaje punkt, prawy klik odejmuje.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
@@ -49,7 +49,16 @@
     },
     "Tab": {
       "Tests": "Testy"
-    }
+    },
+    "Superiority": "Przewaga",
+    "SuperiorityHint": "Przewaga drużyny. Klik: +1. Prawy klik: −1.",
+    "SuperiorityReadOnly": "Przewaga drużyny (zmienia ją tylko MG).",
+    "Glory": "Chwała",
+    "GloryHint": "Chwała drużyny. Klik: +1. Prawy klik: −1.",
+    "GloryReadOnly": "Chwała drużyny (wydawana w testach; MG decyduje, czy gracze zmieniają ją ręcznie).",
+    "Soulfire": "Ogień Duszy",
+    "SoulfireHint": "Ogień Duszy drużyny. Klik: +1. Prawy klik: −1.",
+    "SoulfireReadOnly": "Ogień Duszy drużyny (MG decyduje, czy gracze zmieniają go ręcznie)."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -64,6 +73,7 @@
       "selected": "Zaznaczone tokeny"
     },
     "Skin": {
+      "system": "Kolory systemu",
       "parchment": "Pergamin",
       "imperium": "Imperium"
     },
@@ -180,7 +190,23 @@
       "Progress": "Zgromadzona moc",
       "Lore": "Tradycja",
       "Healing": "Leczenie",
-      "Treated": "Opatrzona"
+      "Treated": "Opatrzona",
+      "Magazine": "Magazynek",
+      "Ammo": "Amunicja",
+      "Locations": "Lokacje",
+      "WarpRating": "Wartość Spaczni",
+      "Difficulty": "Trudność",
+      "Discipline": "Dyscyplina",
+      "Overt": "Jawna",
+      "Rating": "Ranga",
+      "ED": "KO",
+      "Salvo": "Salwa",
+      "AR": "Ochrona pancerza",
+      "Invulnerable": "Niezniszczalny",
+      "DN": "ST",
+      "Activation": "Aktywacja",
+      "Training": "Wyszkolenie",
+      "Focus": "Skupienie"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -249,6 +275,136 @@
       "FateRefresh": "Klik: odnów Los do maksimum",
       "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
       "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany"
+    }
+  },
+  "WHB_IM": {
+    "Reload": "Przeładuj",
+    "Dodge": "Unik",
+    "Initiative": "Inicjatywa",
+    "WarpCharge": "Ładunek Spaczni",
+    "Purge": "Oczyszczenie",
+    "Fate": "Przeznaczenie",
+    "Major": "Poważny",
+    "Minor": "Drobny",
+    "Tabs": {
+      "combat": "Walka",
+      "characteristics": "Cechy",
+      "skills": "Umiejętności",
+      "psychic": "Psionika",
+      "talents": "Talenty",
+      "status": "Stan"
+    },
+    "Groups": {
+      "Actions": "Akcje",
+      "Melee": "Broń do walki wręcz",
+      "Ranged": "Broń dystansowa",
+      "Reload": "Przeładowanie",
+      "Defence": "Obrona",
+      "Traits": "Cechy szczególne",
+      "Protection": "Ochrona",
+      "Characteristics": "Cechy",
+      "Skills": "Umiejętności i specjalizacje",
+      "Powers": "Moce psioniczne",
+      "Warp": "Spacznia",
+      "Talents": "Talenty",
+      "Corruption": "Zepsucie",
+      "Fate": "Przeznaczenie",
+      "Conditions": "Stany",
+      "Injuries": "Urazy i rany krytyczne"
+    },
+    "Hint": {
+      "Action": "Klik: wybierz to jako akcję w tej turze",
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Empty": "Pusty magazynek – najpierw przeładuj · Prawy klik: karta przedmiotu",
+      "Reload": "Klik: przeładuj z wybranej amunicji · Prawy klik: karta broni",
+      "Initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Power": "Klik: test Panowania nad Spacznią dla mocy · Prawy klik: karta mocy",
+      "Warp": "Klik: test Panowania nad Spacznią",
+      "Purge": "Klik: oczyść Ładunek Spaczni (w walce test Dyscypliny)",
+      "Use": "Klik: użyj · Prawy klik: karta przedmiotu",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij"
+    }
+  },
+  "WHB_WNG": {
+    "Wrath": "Gniew",
+    "Faith": "Wiara",
+    "determination": "Determinacja",
+    "resolve": "Hart ducha",
+    "conviction": "Przekonanie",
+    "corruption": "Spaczenie",
+    "initiative": "Inicjatywa",
+    "Tabs": {
+      "combat": "Walka",
+      "attributes": "Atrybuty",
+      "skills": "Umiejętności",
+      "powers": "Psionika",
+      "abilities": "Zdolności",
+      "status": "Stan"
+    },
+    "Groups": {
+      "Melee": "Broń do walki wręcz",
+      "Ranged": "Broń dystansowa",
+      "Tests": "Testy obronne",
+      "Armour": "Pancerz",
+      "Attributes": "Atrybuty",
+      "Powers": "Moce psioniczne",
+      "Abilities": "Zdolności",
+      "Talents": "Talenty",
+      "Keywords": "Słowa kluczowe",
+      "Resources": "Zasoby",
+      "Conditions": "Stany",
+      "Injuries": "Urazy i mutacje"
+    },
+    "Hint": {
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Reload": "Wymaga przeładowania · Prawy klik: karta przedmiotu",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Power": "Klik: test Panowania nad Spacznią dla mocy · Prawy klik: karta mocy",
+      "Ability": "Klik: użyj (test albo opis na czacie) · Prawy klik: karta przedmiotu",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
+      "determination": "Klik: rzut na Determinację, by zignorować obrażenia",
+      "resolve": "Klik: test Hartu ducha",
+      "conviction": "Klik: test Przekonania",
+      "corruption": "Klik: test Spaczenia",
+      "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)"
+    }
+  },
+  "WHB_SB": {
+    "Initiative": "Inicjatywa",
+    "Mettle": "Hart",
+    "Tabs": {
+      "combat": "Walka",
+      "skills": "Umiejętności",
+      "powers": "Moce",
+      "talents": "Talenty",
+      "conditions": "Stany"
+    },
+    "Groups": {
+      "Melee": "Broń do walki wręcz",
+      "Ranged": "Broń dystansowa",
+      "Combat": "Walka",
+      "Armour": "Pancerz",
+      "Attributes": "Atrybuty",
+      "Spells": "Czary",
+      "Miracles": "Cuda",
+      "Talents": "Talenty",
+      "Conditions": "Stany"
+    },
+    "Hint": {
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "Spell": "Klik: rzuć czar · Prawy klik: karta czaru",
+      "Miracle": "Klik: przywołaj cud · Prawy klik: karta cudu",
+      "Ability": "Klik: użyj (test albo opis na czacie) · Prawy klik: karta przedmiotu",
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij"
     }
   }
 }

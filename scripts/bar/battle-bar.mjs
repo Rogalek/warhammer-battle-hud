@@ -6,7 +6,8 @@
 import { MODULE_ID, t, log } from "./constants.mjs";
 import { getSetting, hasSetting, setSetting } from "./settings.mjs";
 import { ammoState } from "./ammo-data.mjs";
-import { advantageOf, clampAnchor, isAnchor } from "./hud-data.mjs";
+import { advantageLevel, clampAnchor, isAnchor } from "./hud-data.mjs";
+import { counterFor } from "./counters.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -40,10 +41,20 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     return selected?.actor ?? game.user.character ?? null;
   }
 
-  /** Przewaga do pokazania na HUD-zie albo `null` (inny system, ustawienie wyłączone, brak postaci). */
+  /** Licznik systemu (Przewaga, Przewaga Taktyczna…) albo `null` (brak licznika, wyłączony, brak postaci). */
   static advantage(actor) {
-    if (!actor || !hasSetting("showAdvantage") || !getSetting("showAdvantage")) return null;
-    return advantageOf(actor);
+    const counter = counterFor(game.system.id);
+    if (!actor || !counter || !hasSetting("showAdvantage") || !getSetting("showAdvantage")) return null;
+    const data = counter.read(actor);
+    if (!data) return null;
+    const editable = Boolean(counter.canEdit(actor));
+    return {
+      ...data,
+      level: advantageLevel(data.value, data.max),
+      editable,
+      label: game.i18n.localize(counter.label),
+      hint: game.i18n.localize(editable || !counter.readOnlyHint ? counter.hint : counter.readOnlyHint)
+    };
   }
 
   /** Pokazuje, odświeża albo chowa pasek zależnie od bieżącej postaci. */
@@ -162,8 +173,10 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
   async #changeAdvantage(delta) {
     const actor = this.constructor.actor;
     if (!actor) return ui.notifications.warn(t("NoActor"));
+    const counter = counterFor(game.system.id);
+    if (!counter?.canEdit(actor)) return;
     try {
-      await actor.modifyAdvantage(delta);
+      await counter.change(actor, delta);
     } catch (err) {
       log.error(actor.name, err);
       ui.notifications.error(typeof err === "string" ? err : t("Failed"));

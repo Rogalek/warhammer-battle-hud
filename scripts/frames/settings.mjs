@@ -7,7 +7,7 @@ import { MODULE_ID, I18N } from "./constants.mjs";
 export function registerSettings(onChange) {
   const visible = {
     showFrames: { scope: "client", type: Boolean, default: true },
-    skin: { scope: "client", type: String, default: "parchment", choices: { parchment: `${I18N}.Skin.parchment`, imperium: `${I18N}.Skin.imperium` } },
+    skin: { scope: "client", type: String, default: "system", choices: { system: `${I18N}.Skin.system`, parchment: `${I18N}.Skin.parchment`, imperium: `${I18N}.Skin.imperium` } },
     playersSeeAll: { scope: "world", type: Boolean, default: true }
   };
   for (const [key, data] of Object.entries(visible)) {
