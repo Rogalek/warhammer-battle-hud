@@ -20,15 +20,19 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 The HUD (Advantage, action panel and ammunition) floats over the scene. Drag it by the handle on its left; the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
 
+## 🎨 System colours
+
+The HUD and the party frames take the colours of the active system's character sheet: parchment and dark red in WFRP, cream and crimson in The Old World, navy, teal and orange in Imperium Maledictum, Imperial red on graphite in Wrath & Glory, and Azyr blue with gold in Soulbound. The frames' look can be switched back to Parchment or Imperium in the settings.
+
 ## ⚡ Advantage (WFRP)
 
-A large counter at the front of the HUD shows the character's Advantage and glows brighter as it grows, up to the maximum. **Click**: +1, **right-click**: −1. The party frames highlight it too. It can be hidden in the settings.
+The big counter at the front of the HUD follows the system: the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound (the GM changes them, or players too when the system allows it). In WFRP, the large counter shows the character's Advantage and glows brighter as it grows, up to the maximum. **Click**: +1, **right-click**: −1. The party frames highlight it too. It can be hidden in the settings.
 
 The first tab of the action panel, **Advantage**, lists what the character can spend Advantage on right now, each with its cost (⚡1, ⚡2): the system's Advantage actions (with Up in Arms: Batter, Trick, Additional Effort, Flee from Harm, Additional Action) and, with **Underworld Crew** (`wfrp4e-underworld`), the tactical orders the Chief's retinue can carry out. Actions the character cannot afford yet are dimmed. Clicking an Advantage action spends the cost, posts it to chat and rolls its test, just like the button on the character sheet; clicking a crew order opens Underworld's order dialog.
 
 ## ⚔️ Action panel
 
-Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In The Old World: combat (the system's combat actions with the Manoeuvre variants, equipped weapons, reloading, attack abilities, shields and armour), skills grouped by characteristic with their dice, magic (casting by lore, spells with CV and accumulated power, the Miscast pool), faith (Favour, prayers, the Miracle), talents, abilities and lores, and status (Fate, conditions, wounds). In the other systems: the system's tests with the character's values.
+Tabs above the hotbar for the selected token, or your assigned character. In WFRP: characteristics, skills, combat, magic, religion, talents, conditions and Advantage. In The Old World: combat (the system's combat actions with the Manoeuvre variants, equipped weapons, reloading, attack abilities, shields and armour), skills grouped by characteristic with their dice, magic (casting by lore, spells with CV and accumulated power, the Miscast pool), faith (Favour, prayers, the Miracle), talents, abilities and lores, and status (Fate, conditions, wounds). In Imperium Maledictum: combat (the turn's actions, weapons with magazines and reloading, Dodge, Initiative, attack traits, protection), characteristics, skills with specialisations by characteristic, psychic powers with the Warp Charge and purging, talents and traits, and status (Fate, minor and major conditions, injuries and criticals). In Wrath & Glory: combat (weapons with damage, ED, AP and salvo, Determination, Resolve and Conviction tests, Initiative, armour), attributes, skills by attribute, psychic powers, abilities, talents and keywords, and status (Wrath, Faith, Corruption, conditions, injuries and mutations). In Soulbound: combat (weapons, Initiative, Mettle, armour), attributes and skills with the dice pool and focus, spells and miracles, talents and conditions.
 
 * **Left click**: roll, add a condition or Advantage, post a talent to chat.
 * **Hover** (WFRP): a tooltip with the key numbers (e.g. a weapon's damage, group and reach, a skill's characteristic and advances, armour points, a spell's CN, range and duration), the description and a reminder of the controls.

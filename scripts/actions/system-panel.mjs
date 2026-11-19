@@ -34,7 +34,7 @@ export function finishPanel(tabs, label) {
 
 /** Okno rzutu: Alt pomija je (albo pokazuje, gdy pomijanie jest domyślne), Shift daje tajny rzut MG. */
 export function testContext(mods, settings) {
-  const context = { skipDialog: mods.alt !== Boolean(settings.skipDialogByDefault) };
+  const context = { skipDialog: Boolean(mods.alt) !== Boolean(settings.skipDialogByDefault) };
   if (mods.shift && settings.blindOnShift) context.fields = { rollMode: "blindroll" };
   return context;
 }

@@ -3,8 +3,8 @@
  * (te same metody, których używa karta postaci).
  */
 import * as B from "./im-builders.mjs";
-import { tooltipHtml } from "./tooltip.mjs";
-import { t, log } from "./constants.mjs";
+import { finishPanel, systemActions, testContext } from "./system-panel.mjs";
+import { t } from "./constants.mjs";
 
 const IM = B.IM;
 
@@ -34,24 +34,7 @@ export function imPanel(actor, e = env()) {
     { id: "talents", groups: [group("Talents", talents.talents), group("Traits", talents.traits), group("Corruption", talents.corruption)] },
     { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions), group("Injuries", status.injuries)] }
   ];
-  const view = (action) => ({
-    name: action.name,
-    img: action.img,
-    value: action.value,
-    detail: action.detail ?? "",
-    cssClass: action.cssClass ?? "",
-    tooltip: tooltipHtml({ name: action.name, ...action.tooltip })
-  });
-  return tabs
-    .map((tab) => ({ id: tab.id, columns: tab.columns, label: label(`Tabs.${tab.id}`), groups: tab.groups.filter((g) => g.actions.length).map((g) => ({ ...g, actions: g.actions.map(view) })) }))
-    .filter((tab) => tab.groups.length);
-}
-
-/** Okno rzutu: Alt pomija je (albo pokazuje, gdy pomijanie jest domyślne), Shift daje tajny rzut MG. */
-function testContext(mods, settings) {
-  const context = { skipDialog: mods.alt !== Boolean(settings.skipDialogByDefault) };
-  if (mods.shift && settings.blindOnShift) context.fields = { rollMode: "blindroll" };
-  return context;
+  return finishPanel(tabs, label);
 }
 
 async function perform(actor, { type, id, extra }, mods, settings) {
@@ -90,20 +73,4 @@ async function perform(actor, { type, id, extra }, mods, settings) {
   }
 }
 
-export function imActions(getSetting) {
-  const settings = () => ({ blindOnShift: getSetting("blindOnShift"), skipDialogByDefault: getSetting("skipDialogByDefault") });
-  return {
-    tabs: (actor) => imPanel(actor).map(({ id, label: name, columns }) => ({ id, label: name, columns })),
-    groups: (actor, tabId) => imPanel(actor).find((tab) => tab.id === tabId)?.groups ?? [],
-    async perform(actor, value, mods) {
-      const action = B.readImValue(value);
-      if (!action) return;
-      try {
-        await perform(actor, action, mods, settings());
-      } catch (err) {
-        log.error(`Imperium Maledictum: ${value}`, err);
-        ui.notifications.error(t("Notify.ActionFailed"));
-      }
-    }
-  };
-}
+export const imActions = (getSetting) => systemActions(getSetting, { panel: imPanel, types: IM, perform, name: "Imperium Maledictum" });
