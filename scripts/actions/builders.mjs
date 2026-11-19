@@ -28,7 +28,9 @@ export const GROUP_IDS = Object.freeze({
   conditions: "conditions",
   advantage: "advantage",
   advantageActions: "advantage-actions",
-  gangOrders: "gang-orders"
+  gangOrders: "gang-orders",
+  downtime: "downtime",
+  channelledReset: "channelled-reset"
 });
 
 const MAX_TOOLTIP = 500;
@@ -220,12 +222,17 @@ export function buildSpells(actor, env) {
     const cn = spell.system?.cn?.value;
     const tooltip = plainDescription(spell) || undefined;
     const isPetty = lores.includes("petty");
-    const info1 = cn ? { text: String(cn), title: env.localize("WFRP4E_HUD.Info.CN") } : undefined;
-    const details = castingDetails(spell, env, cn);
-    (isPetty ? petty : spells).push(itemAction(spell, T.spell, { info1, tooltip, details }));
+    // 4e: Poziomy Sukcesu splatania zbierają się w zaklęciu (cn.SL) aż do rzucenia albo porażki
+    const channelled = env.edition !== "5e" ? Number(spell.system?.cn?.SL) || 0 : 0;
+    const info1 = channelled > 0
+      ? { text: `${channelled}/${cn}`, title: env.localize("WFRP4E_HUD.Tip.Channelled") }
+      : cn ? { text: String(cn), title: env.localize("WFRP4E_HUD.Info.CN") } : undefined;
+    const details = [...castingDetails(spell, env, cn), tip(env, "Channelled", channelled > 0 ? `${channelled} / ${cn}` : undefined)];
+    const cssClass = channelled > 0 ? "channelled" : undefined;
+    (isPetty ? petty : spells).push(itemAction(spell, T.spell, { info1, tooltip, details, cssClass }));
     if (!isPetty && cn && env.edition !== "5e") {
       channelling.push({
-        ...itemAction(spell, T.channel, { info1, tooltip, details }),
+        ...itemAction(spell, T.channel, { info1, tooltip, details, cssClass }),
         id: `${T.channel}-${spell.id}`
       });
     }
@@ -238,7 +245,10 @@ export function buildSpells(actor, env) {
         name: env.localize(data.label),
         img: data.img,
         encodedValue: encodeAction(T.channelWind, wind),
-        info1: status.wind === wind && status.value > 0 ? { text: String(status.value) } : undefined
+        // 5e: zebrana moc należy do postaci i do jednego Wiatru naraz
+        info1: status.wind === wind && status.value > 0 ? { text: String(status.value), title: env.localize("WFRP4E_HUD.Tip.Channelled") } : undefined,
+        cssClass: status.wind === wind && status.value > 0 ? "channelled" : undefined,
+        details: [tip(env, "Channelled", status.wind === wind && status.value > 0 ? status.value : undefined)]
       });
     }
   }
@@ -385,4 +395,56 @@ export function buildGangOrders(actor, env) {
     details: [tip(env, "Cost", Number(order.cost) || undefined), tip(env, "Executor", order.executor)],
     ...costView(Number(order.cost) || 0, current)
   }));
+}
+
+/**
+ * Zebrane splatanie: zaklęcia z Poziomami Sukcesu (4e) albo Wiatr z mocą (5e), do wyczyszczenia,
+ * gdy mag przestaje się skupiać (np. zostaje rozproszony).
+ */
+export function buildChannelledReset(actor, env) {
+  const spells = items(actor, "spell").filter((s) => Number(s.system?.cn?.SL) > 0);
+  const status = actor?.system?.status?.channelling;
+  const total = env.edition === "5e" ? Number(status?.value) || 0 : spells.reduce((sum, s) => sum + Number(s.system.cn.SL), 0);
+  if (!(total > 0)) return [];
+  return [{
+    id: `${T.channelReset}`,
+    name: env.localize("WFRP4E_HUD.ChannelledReset"),
+    encodedValue: encodeAction(T.channelReset),
+    info1: { text: String(total) },
+    cssClass: "channelled",
+    tooltip: env.edition === "5e" ? "" : spells.map((s) => `${s.name}: ${s.system.cn.SL}/${s.system.cn.value}`).join(" · ")
+  }];
+}
+
+/** Między przygodami: dochód z bieżącej kariery, odpoczynek i przedsięwzięcia (strony dziennika). */
+export function buildDowntime(actor, env) {
+  if (!["character", "npc"].includes(actor?.type)) return [];
+  const out = [];
+  const career = items(actor, "career").find((c) => c.system?.current?.value);
+  const path = items(actor, "careerPath")[0];
+  const status = actor.system?.details?.status;
+  if (career || path) {
+    out.push({
+      id: T.income,
+      name: env.localize("WFRP4E_HUD.Income"),
+      encodedValue: encodeAction(T.income),
+      info1: status?.value ? { text: String(status.value) } : undefined,
+      details: [tip(env, "Career", (career ?? path).name), tip(env, "Status", status?.value)]
+    });
+  }
+  out.push({
+    id: T.rest,
+    name: env.localize("WFRP4E_HUD.Rest"),
+    encodedValue: encodeAction(T.rest),
+    details: [tip(env, "Test", env.localize(actor.itemTypes?.skill?.some((s) => s.name === env.localize("NAME.Endurance")) ? "NAME.Endurance" : "CHAR.T"))]
+  });
+  for (const page of env.endeavours ?? []) {
+    out.push({
+      id: `${T.endeavour}-${page.uuid}`,
+      name: page.name,
+      encodedValue: encodeAction(T.endeavour, page.uuid),
+      tooltip: plain(page.text?.content) || undefined
+    });
+  }
+  return out;
 }

@@ -23,7 +23,9 @@ export const GROUPS = {
   [G.conditions]: "WFRP4E_HUD.Groups.Conditions",
   [G.advantage]: "WFRP4E_HUD.Groups.Advantage",
   [G.advantageActions]: "WFRP4E_HUD.Groups.AdvantageActions",
-  [G.gangOrders]: "WFRP4E_HUD.Groups.GangOrders"
+  [G.gangOrders]: "WFRP4E_HUD.Groups.GangOrders",
+  [G.downtime]: "WFRP4E_HUD.Groups.Downtime",
+  [G.channelledReset]: "WFRP4E_HUD.Groups.ChannelledReset"
 };
 
 /** Zakładki: id → klucz tłumaczenia i grupy w kolejności. */
@@ -33,8 +35,9 @@ export const LAYOUT = [
   { id: "characteristics", name: "WFRP4E_HUD.Tabs.Characteristics", groups: [G.characteristics] },
   { id: "skills", name: "WFRP4E_HUD.Tabs.Skills", groups: [G.skillsBasic, G.skillsAdvanced] },
   { id: "combat", name: "WFRP4E_HUD.Tabs.Combat", groups: [G.weaponsMelee, G.weaponsRanged, G.armour, G.traits] },
-  { id: "magic", name: "WFRP4E_HUD.Tabs.Magic", groups: [G.petty, G.spells, G.channelling] },
+  { id: "magic", name: "WFRP4E_HUD.Tabs.Magic", groups: [G.channelledReset, G.petty, G.spells, G.channelling] },
   { id: "religion", name: "WFRP4E_HUD.Tabs.Religion", groups: [G.blessings, G.miracles] },
   { id: "talents", name: "WFRP4E_HUD.Tabs.Talents", groups: [G.talents, G.extended, G.effects] },
-  { id: "conditions", name: "WFRP4E_HUD.Tabs.Conditions", groups: [G.conditions] }
+  { id: "conditions", name: "WFRP4E_HUD.Tabs.Conditions", groups: [G.conditions] },
+  { id: "downtime", name: "WFRP4E_HUD.Tabs.Downtime", groups: [G.downtime] }
 ];

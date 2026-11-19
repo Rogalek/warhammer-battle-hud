@@ -24,7 +24,8 @@ export const TOW = Object.freeze({
   condition: "condition",
   fate: "fate",
   fateRefresh: "fateRefresh",
-  wound: "wound"
+  wound: "wound",
+  endeavour: "endeavour"
 });
 
 /** Wartość przycisku i jej odczyt; identyfikatory UUID nie zawierają „|”. */
@@ -294,4 +295,25 @@ export function buildStatus(actor, env) {
     }
   }));
   return { fate: fateActions, conditions, wounds };
+}
+
+/**
+ * Przedsięwzięcia między przygodami: strony dziennika z flagą systemu. Te z samym testem umiejętności
+ * HUD wykonuje od razu dla tej postaci; skrypty i wybór umiejętności zostają na stronie przedsięwzięcia.
+ */
+export function buildEndeavours(env) {
+  return (env.endeavours ?? []).map((page) => {
+    const data = page.flags?.whtow?.endeavour ?? {};
+    const direct = Boolean(data.test?.skill) && !data.script && !data.chooseSkill;
+    return {
+      name: page.name,
+      value: towValue(TOW.endeavour, page.uuid),
+      detail: direct ? env.config?.skills?.[data.test.skill] ?? data.test.skill : "",
+      tooltip: {
+        details: [tip(env, "Test", direct ? env.config?.skills?.[data.test.skill] : undefined)],
+        text: plain(page.text?.content),
+        hint: hint(env, direct ? "EndeavourTest" : "EndeavourPage")
+      }
+    };
+  });
 }

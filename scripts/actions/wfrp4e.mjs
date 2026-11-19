@@ -42,6 +42,8 @@ export function actionsByGroup(actor, env) {
     [G.conditions]: B.buildConditions(actor, env),
     [G.advantage]: B.buildAdvantage(actor, env),
     [G.advantageActions]: B.buildAdvantageActions(actor, env),
+    [G.downtime]: B.buildDowntime(actor, env),
+    [G.channelledReset]: B.buildChannelledReset(actor, env),
     [G.gangOrders]: B.buildGangOrders(actor, env)
   };
 }
@@ -64,7 +66,11 @@ const HINTS = {
   [T.condition]: "Counter",
   [T.advantage]: "Counter",
   [T.advantageAction]: "AdvantageAction",
-  [T.gangOrder]: "GangOrder"
+  [T.gangOrder]: "GangOrder",
+  [T.income]: "Income",
+  [T.rest]: "Rest",
+  [T.endeavour]: "Endeavour",
+  [T.channelReset]: "ChannelReset"
 };
 
 function hintFor(action, env) {
@@ -109,6 +115,8 @@ export function wfrpActions(getSetting) {
     localize: (key) => game.i18n.localize(key),
     edition: getEdition(),
     settings: settings(),
+    // Przedsięwzięcia: strony dziennika świata z flagą systemu (np. z dodatków z zasadami 5e)
+    endeavours: game.journal.contents.flatMap((j) => j.pages.contents).filter((p) => p.getFlag("wfrp4e", "endeavour") && p.testUserPermission(game.user, "OBSERVER")),
     // Rozkazy szajki z Underworld (starsze wersje modułu nie mają tego API)
     gangOrders: (actor) => (typeof game.underworld?.tacticalOrders === "function" ? game.underworld.tacticalOrders(actor) : []),
     conditionValue: (actor, key) => {

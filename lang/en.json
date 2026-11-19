@@ -123,7 +123,8 @@
       "Magic": "Magic",
       "Religion": "Religion",
       "Talents": "Talents",
-      "Conditions": "Conditions"
+      "Conditions": "Conditions",
+      "Downtime": "Downtime"
     },
     "Groups": {
       "Characteristics": "Characteristics",
@@ -144,7 +145,9 @@
       "Conditions": "Conditions",
       "Advantage": "Advantage",
       "AdvantageActions": "Use Advantage",
-      "GangOrders": "Gang orders"
+      "GangOrders": "Gang orders",
+      "Downtime": "Between adventures",
+      "ChannelledReset": "Channelled power"
     },
     "Info": {
       "Damage": "Damage to the item",
@@ -155,7 +158,8 @@
       "ItemMissing": "This item no longer exists on the actor.",
       "EffectMissing": "This effect script is no longer available.",
       "ActionFailed": "The action failed. See the console (F12) for details.",
-      "NotEnoughAdvantage": "Not enough Advantage: costs {cost}, you have {current}."
+      "NotEnoughAdvantage": "Not enough Advantage: costs {cost}, you have {current}.",
+      "NoCareer": "This character has no current career."
     },
     "Tip": {
       "Initial": "Initial",
@@ -207,7 +211,10 @@
       "Activation": "Activation",
       "Training": "Training",
       "Focus": "Focus",
-      "CV": "CV"
+      "CV": "CV",
+      "Channelled": "Channelled SL",
+      "Career": "Career",
+      "Status": "Status"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -218,8 +225,15 @@
       "Effect": "Click: run the script · Right-click: open the effect",
       "Counter": "Click: +1 · Right-click: −1",
       "AdvantageAction": "Click: spend the Advantage and use it",
-      "GangOrder": "Click: open the order dialog"
-    }
+      "GangOrder": "Click: open the order dialog",
+      "Income": "Click: Income test with the current career's earning skill",
+      "Rest": "Click: rest – Endurance test to recover Wounds",
+      "Endeavour": "Click: open the endeavour (its page has the Perform button)",
+      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)"
+    },
+    "Income": "Income",
+    "Rest": "Rest",
+    "ChannelledReset": "Lose the channelled power"
   },
   "WHB_TOW": {
     "Reload": "Reload",
@@ -238,7 +252,8 @@
       "magic": "Magic",
       "religion": "Faith",
       "talents": "Talents",
-      "status": "Status"
+      "status": "Status",
+      "downtime": "Downtime"
     },
     "Groups": {
       "Actions": "Actions",
@@ -256,7 +271,8 @@
       "Lores": "Lores",
       "Fate": "Fate",
       "Conditions": "Conditions",
-      "Wounds": "Wounds"
+      "Wounds": "Wounds",
+      "Endeavours": "Endeavours"
     },
     "Hint": {
       "Action": "Click: take the action",
@@ -275,7 +291,9 @@
       "Counter": "Click: +1 · Right-click: −1",
       "FateRefresh": "Click: restore Fate to its maximum",
       "Condition": "Click: add or remove · Right-click: remove",
-      "Wound": "Click: mark as treated or untreated · Right-click: open the wound"
+      "Wound": "Click: mark as treated or untreated · Right-click: open the wound",
+      "EndeavourTest": "Click: the endeavour's test for this character",
+      "EndeavourPage": "Click: open the endeavour (its page has the Perform button)"
     }
   },
   "WHB_IM": {
@@ -343,7 +361,8 @@
       "skills": "Skills",
       "powers": "Psychic",
       "abilities": "Abilities",
-      "status": "Status"
+      "status": "Status",
+      "downtime": "Downtime"
     },
     "Groups": {
       "Melee": "Melee weapons",
@@ -357,7 +376,8 @@
       "Keywords": "Keywords",
       "Resources": "Resources",
       "Conditions": "Conditions",
-      "Injuries": "Injuries and mutations"
+      "Injuries": "Injuries and mutations",
+      "Social": "Influence and Wealth"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -372,8 +392,11 @@
       "resolve": "Click: Resolve test",
       "conviction": "Click: Conviction test",
       "corruption": "Click: Corruption test",
-      "initiative": "Click: roll Initiative (adds you to the combat)"
-    }
+      "initiative": "Click: roll Initiative (adds you to the combat)",
+      "influence": "Click: Influence test"
+    },
+    "Wealth": "Wealth",
+    "influence": "Influence"
   },
   "WHB_SB": {
     "Initiative": "Initiative",

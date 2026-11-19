@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+- WFRP: a Downtime tab with Income (the current career's earning test, as on the sheet), Rest (Endurance, or Toughness without the skill) and the world's endeavour pages.
+- WFRP: channelled SL is shown where it builds up – on the spell ("2/4") in 4e and on the Wind in 5e, with a tooltip row – and "Lose the channelled power" at the top of the Magic tab clears it.
+- The Old World: the world's endeavours in a Downtime tab; those with a plain skill test roll straight away for the HUD's character, the others open their page.
+- Wrath & Glory: a Downtime tab with the Influence test and Wealth (+/−).
+- Imperium Maledictum already shows its Warp Charge and The Old World the accumulated casting power; Soulbound and Imperium Maledictum have no player income or endeavours to add.
+
 ## 0.6.1
 - Screenshots of every system in the README.
 - The Old World spell tooltips show "CV" instead of a raw translation key, and a test now checks every tooltip row has a translation.
