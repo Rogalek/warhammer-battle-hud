@@ -13,7 +13,7 @@
     "Drag": "Przeciągnij, aby przesunąć HUD. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
       "ShowAdvantageName": "Pokazuj duży licznik walki",
-      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory. Klik dodaje punkt, prawy klik odejmuje.",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Klik dodaje punkt, prawy klik odejmuje.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
@@ -55,7 +55,10 @@
     "SuperiorityReadOnly": "Przewaga drużyny (zmienia ją tylko MG).",
     "Glory": "Chwała",
     "GloryHint": "Chwała drużyny. Klik: +1. Prawy klik: −1.",
-    "GloryReadOnly": "Chwała drużyny (wydawana w testach; MG decyduje, czy gracze zmieniają ją ręcznie)."
+    "GloryReadOnly": "Chwała drużyny (wydawana w testach; MG decyduje, czy gracze zmieniają ją ręcznie).",
+    "Soulfire": "Ogień Duszy",
+    "SoulfireHint": "Ogień Duszy drużyny. Klik: +1. Prawy klik: −1.",
+    "SoulfireReadOnly": "Ogień Duszy drużyny (MG decyduje, czy gracze zmieniają go ręcznie)."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -201,7 +204,9 @@
       "AR": "Ochrona pancerza",
       "Invulnerable": "Niezniszczalny",
       "DN": "ST",
-      "Activation": "Aktywacja"
+      "Activation": "Aktywacja",
+      "Training": "Wyszkolenie",
+      "Focus": "Skupienie"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -367,6 +372,39 @@
       "conviction": "Klik: test Przekonania",
       "corruption": "Klik: test Spaczenia",
       "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)"
+    }
+  },
+  "WHB_SB": {
+    "Initiative": "Inicjatywa",
+    "Mettle": "Hart",
+    "Tabs": {
+      "combat": "Walka",
+      "skills": "Umiejętności",
+      "powers": "Moce",
+      "talents": "Talenty",
+      "conditions": "Stany"
+    },
+    "Groups": {
+      "Melee": "Broń do walki wręcz",
+      "Ranged": "Broń dystansowa",
+      "Combat": "Walka",
+      "Armour": "Pancerz",
+      "Attributes": "Atrybuty",
+      "Spells": "Czary",
+      "Miracles": "Cuda",
+      "Talents": "Talenty",
+      "Conditions": "Stany"
+    },
+    "Hint": {
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "Spell": "Klik: rzuć czar · Prawy klik: karta czaru",
+      "Miracle": "Klik: przywołaj cud · Prawy klik: karta cudu",
+      "Ability": "Klik: użyj (test albo opis na czacie) · Prawy klik: karta przedmiotu",
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij"
     }
   }
 }

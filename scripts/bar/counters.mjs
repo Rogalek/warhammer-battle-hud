@@ -2,7 +2,8 @@
  * Duży licznik z przodu HUD-a: zasób, który w danym systemie rozstrzyga o walce.
  *  - WFRP: Przewaga postaci (zmienia właściciel postaci),
  *  - Imperium Maledictum: Przewaga Taktyczna drużyny (ustawienie świata, zmienia MG – jak w trackerze walki),
- *  - Wrath & Glory: Chwała drużyny (licznik systemu; gracze zmieniają ją, gdy MG na to pozwala).
+ *  - Wrath & Glory: Chwała drużyny (licznik systemu; gracze zmieniają ją, gdy MG na to pozwala),
+ *  - Soulbound: Ogień Duszy drużyny (jak wyżej).
  * Systemy bez wpisu nie mają licznika.
  */
 import { advantageOf } from "./hud-data.mjs";
@@ -35,6 +36,15 @@ const COUNTERS = {
     // Jak licznik systemu: gracze zmieniają Chwałę ręcznie tylko wtedy, gdy MG na to pozwala
     canEdit: () => game.user.isGM || game.settings.get("wrath-and-glory", "playerCounterEdit"),
     change: (_actor, delta) => game.wng.RuinGloryCounter.changeCounter(delta, "glory"),
+    hooks: ["updateSetting"]
+  },
+  "age-of-sigmar-soulbound": {
+    label: "WHAMMO.Soulfire",
+    hint: "WHAMMO.SoulfireHint",
+    readOnlyHint: "WHAMMO.SoulfireReadOnly",
+    read: () => ({ value: Number(game.settings.get("age-of-sigmar-soulbound", "soulfire")) || 0, max: 0 }),
+    canEdit: () => game.user.isGM || game.settings.get("age-of-sigmar-soulbound", "playerCounterEdit"),
+    change: (_actor, delta) => game.counter.constructor.changeCounter(delta, "soulfire"),
     hooks: ["updateSetting"]
   }
 };

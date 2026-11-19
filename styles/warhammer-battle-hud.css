@@ -819,3 +819,41 @@ body.whb-system-age-of-sigmar-soulbound {
   padding-left: 0.6rem;
   font-style: italic;
 }
+
+/* Przyciski HUD-a w kolorach motywu – systemy (np. Soulbound) nadpisują styl przycisków Foundry */
+#warhammer-battle-hud-bar {
+  --button-text-color: var(--whb-text);
+  --button-background-color: rgba(255, 255, 255, 0.06);
+  --button-border-color: var(--whb-border);
+  --button-hover-text-color: var(--whb-text);
+  --button-hover-background-color: rgba(255, 255, 255, 0.14);
+  --button-hover-border-color: var(--whb-highlight);
+}
+
+#warhammer-battle-hud-bar .whb-tabs button,
+#warhammer-battle-hud-bar .whb-action {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  color: var(--whb-text);
+  text-shadow: none;
+}
+
+#warhammer-battle-hud-bar .whb-tabs button:hover,
+#warhammer-battle-hud-bar .whb-action:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--whb-highlight);
+}
+
+#warhammer-battle-hud-bar .whb-tabs button.active,
+#warhammer-battle-hud-bar .whb-action.toggle.active {
+  background: var(--whb-accent);
+  color: #fff;
+}
+
+#warhammer-battle-hud-bar .whb-tabs button[data-tab="advantage"] {
+  color: var(--whb-highlight-strong);
+}
+
+#warhammer-battle-hud-bar .whb-panel h4 {
+  color: var(--whb-highlight);
+}

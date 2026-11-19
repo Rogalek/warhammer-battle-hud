@@ -58,7 +58,9 @@ export function systemActions(getSetting, { panel, types, perform, name }) {
         await perform(actor, action, mods, settings());
       } catch (err) {
         log.error(`${name}: ${value}`, err);
-        ui.notifications.error(typeof err === "string" ? err : t("Notify.ActionFailed"));
+        // Systemy zgłaszają zasady zwykłym Error („Not enough Mettle!”) – jego treść jest dla gracza; błędy kodu (TypeError…) nie
+        const rule = typeof err === "string" ? err : err?.constructor === Error ? err.message : "";
+        ui.notifications.error(rule || t("Notify.ActionFailed"));
       }
     }
   };

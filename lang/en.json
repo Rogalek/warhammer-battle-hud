@@ -13,7 +13,7 @@
     "Drag": "Drag to move the HUD. Double-click: back above the hotbar.",
     "Settings": {
       "ShowAdvantageName": "Show the big combat counter",
-      "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP, the party's Superiority in Imperium Maledictum and Glory in Wrath & Glory. Click adds one, right-click removes one.",
+      "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP, the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. Click adds one, right-click removes one.",
       "ShowBarName": "Show the ammunition row",
       "ShowBarHint": "For this user only.",
       "OnlyEquippedName": "Only equipped ranged weapons",
@@ -55,7 +55,10 @@
     "SuperiorityReadOnly": "The party's Superiority (only the GM changes it).",
     "Glory": "Glory",
     "GloryHint": "The party's Glory. Click: +1. Right-click: −1.",
-    "GloryReadOnly": "The party's Glory (spent in tests; the GM decides whether players change it by hand)."
+    "GloryReadOnly": "The party's Glory (spent in tests; the GM decides whether players change it by hand).",
+    "Soulfire": "Soulfire",
+    "SoulfireHint": "The party's Soulfire. Click: +1. Right-click: −1.",
+    "SoulfireReadOnly": "The party's Soulfire (the GM decides whether players change it by hand)."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -201,7 +204,9 @@
       "AR": "Armour Rating",
       "Invulnerable": "Invulnerable",
       "DN": "DN",
-      "Activation": "Activation"
+      "Activation": "Activation",
+      "Training": "Training",
+      "Focus": "Focus"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -367,6 +372,39 @@
       "conviction": "Click: Conviction test",
       "corruption": "Click: Corruption test",
       "initiative": "Click: roll Initiative (adds you to the combat)"
+    }
+  },
+  "WHB_SB": {
+    "Initiative": "Initiative",
+    "Mettle": "Mettle",
+    "Tabs": {
+      "combat": "Combat",
+      "skills": "Skills",
+      "powers": "Powers",
+      "talents": "Talents",
+      "conditions": "Conditions"
+    },
+    "Groups": {
+      "Melee": "Melee weapons",
+      "Ranged": "Ranged weapons",
+      "Combat": "Combat",
+      "Armour": "Armour",
+      "Attributes": "Attributes",
+      "Spells": "Spells",
+      "Miracles": "Miracles",
+      "Talents": "Talents",
+      "Conditions": "Conditions"
+    },
+    "Hint": {
+      "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
+      "Attack": "Click: attack · Right-click: open the item · Alt: skip the dialog",
+      "Sheet": "Click or right-click: open the item",
+      "Initiative": "Click: roll Initiative (adds you to the combat)",
+      "Counter": "Click: +1 · Right-click: −1",
+      "Spell": "Click: cast · Right-click: open the spell",
+      "Miracle": "Click: invoke · Right-click: open the miracle",
+      "Ability": "Click: use (test or post to chat) · Right-click: open the item",
+      "Condition": "Click: add or remove · Right-click: remove"
     }
   }
 }
