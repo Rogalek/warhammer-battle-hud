@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.0
 - Every system has its own colours, taken from its character sheet; the party frames use them by default (Parchment and Imperium stay available).
 - Imperium Maledictum, Wrath & Glory and Soulbound get full action panels like WFRP and The Old World, built from the same calls as their character sheets, with a tooltip on every action: weapons, defence tests, powers, talents, resources and conditions in each system's own terms.
 - The big counter now follows the system: the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound.
