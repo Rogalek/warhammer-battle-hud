@@ -13,7 +13,7 @@
     "Drag": "Przeciągnij, aby przesunąć HUD. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
       "ShowAdvantageName": "Pokazuj duży licznik walki",
-      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum. Klik dodaje punkt, prawy klik odejmuje.",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory. Klik dodaje punkt, prawy klik odejmuje.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
@@ -52,7 +52,10 @@
     },
     "Superiority": "Przewaga",
     "SuperiorityHint": "Przewaga drużyny. Klik: +1. Prawy klik: −1.",
-    "SuperiorityReadOnly": "Przewaga drużyny (zmienia ją tylko MG)."
+    "SuperiorityReadOnly": "Przewaga drużyny (zmienia ją tylko MG).",
+    "Glory": "Chwała",
+    "GloryHint": "Chwała drużyny. Klik: +1. Prawy klik: −1.",
+    "GloryReadOnly": "Chwała drużyny (wydawana w testach; MG decyduje, czy gracze zmieniają ją ręcznie)."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -191,7 +194,14 @@
       "WarpRating": "Wartość Spaczni",
       "Difficulty": "Trudność",
       "Discipline": "Dyscyplina",
-      "Overt": "Jawna"
+      "Overt": "Jawna",
+      "Rating": "Ranga",
+      "ED": "KO",
+      "Salvo": "Salwa",
+      "AR": "Ochrona pancerza",
+      "Invulnerable": "Niezniszczalny",
+      "DN": "ST",
+      "Activation": "Aktywacja"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -311,6 +321,52 @@
       "Use": "Klik: użyj · Prawy klik: karta przedmiotu",
       "Counter": "Klik: +1 · Prawy klik: −1",
       "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij"
+    }
+  },
+  "WHB_WNG": {
+    "Wrath": "Gniew",
+    "Faith": "Wiara",
+    "determination": "Determinacja",
+    "resolve": "Hart ducha",
+    "conviction": "Przekonanie",
+    "corruption": "Spaczenie",
+    "initiative": "Inicjatywa",
+    "Tabs": {
+      "combat": "Walka",
+      "attributes": "Atrybuty",
+      "skills": "Umiejętności",
+      "powers": "Psionika",
+      "abilities": "Zdolności",
+      "status": "Stan"
+    },
+    "Groups": {
+      "Melee": "Broń do walki wręcz",
+      "Ranged": "Broń dystansowa",
+      "Tests": "Testy obronne",
+      "Armour": "Pancerz",
+      "Attributes": "Atrybuty",
+      "Powers": "Moce psioniczne",
+      "Abilities": "Zdolności",
+      "Talents": "Talenty",
+      "Keywords": "Słowa kluczowe",
+      "Resources": "Zasoby",
+      "Conditions": "Stany",
+      "Injuries": "Urazy i mutacje"
+    },
+    "Hint": {
+      "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
+      "Attack": "Klik: atak · Prawy klik: karta przedmiotu · Alt: bez okna rzutu",
+      "Reload": "Wymaga przeładowania · Prawy klik: karta przedmiotu",
+      "Sheet": "Klik lub prawy klik: karta przedmiotu",
+      "Power": "Klik: test Panowania nad Spacznią dla mocy · Prawy klik: karta mocy",
+      "Ability": "Klik: użyj (test albo opis na czacie) · Prawy klik: karta przedmiotu",
+      "Counter": "Klik: +1 · Prawy klik: −1",
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
+      "determination": "Klik: rzut na Determinację, by zignorować obrażenia",
+      "resolve": "Klik: test Hartu ducha",
+      "conviction": "Klik: test Przekonania",
+      "corruption": "Klik: test Spaczenia",
+      "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)"
     }
   }
 }

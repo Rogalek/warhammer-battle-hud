@@ -15,6 +15,7 @@ import { PartyFrames } from "./frames/party-frames.mjs";
 import { wfrpActions } from "./actions/wfrp4e.mjs";
 import { towActions } from "./actions/tow.mjs";
 import { imActions } from "./actions/im.mjs";
+import { wngActions } from "./actions/wng.mjs";
 import { testsFor } from "./tests/index.mjs";
 import { testActions } from "./tests/actions.mjs";
 import { registerTokenTests } from "./tests/token-tests.mjs";
@@ -51,7 +52,7 @@ Hooks.once("ready", async () => {
   const tests = testsFor(game.system.id);
   const catalog = tests ? await tests.catalog(game, []) : [];
   // Systemy z własnym panelem akcji; pozostałe dostają zakładkę testów
-  const panels = { wfrp4e: wfrpActions, whtow: towActions, impmal: imActions };
+  const panels = { wfrp4e: wfrpActions, whtow: towActions, impmal: imActions, "wrath-and-glory": wngActions };
   BattleBar.actions = panels[game.system.id]?.(getSetting) ?? (tests ? testActions(tests, catalog) : null);
   if (tests && getSetting("showTokenTests")) registerTokenTests(tests, catalog);
   BattleBar.refresh();
