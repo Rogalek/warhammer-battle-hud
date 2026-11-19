@@ -8,6 +8,15 @@ Requires **Foundry VTT v14** and one of: **WFRP 4e / 5e** (`wfrp4e` 10.0+), **Th
 
 Don't enable it together with other modules that add party frames, track ammunition or add an action HUD: they would do the same job twice and get in each other's way.
 
+## 🖼️ Screenshots
+
+| | |
+|---|---|
+| ![WFRP: the Advantage counter and what Advantage can buy](docs/screenshots/wfrp-advantage.png)<br>WFRP: the Advantage counter and what Advantage can buy | ![WFRP: a weapon tooltip](docs/screenshots/wfrp-tooltip.png)<br>WFRP: a weapon tooltip |
+| ![The Old World: skills by characteristic](docs/screenshots/old-world-skills.png)<br>The Old World: skills by characteristic | ![The Old World: a spell tooltip](docs/screenshots/old-world-spell.png)<br>The Old World: a spell tooltip |
+| ![Imperium Maledictum: skills and specialisations, the party's Superiority](docs/screenshots/imperium-maledictum-skills.png)<br>Imperium Maledictum: skills and specialisations, the party's Superiority | ![Wrath & Glory: combat, a weapon tooltip and Glory](docs/screenshots/wrath-and-glory-combat.png)<br>Wrath & Glory: combat, a weapon tooltip and Glory |
+| ![Soulbound: attributes and skills with the dice pool, Soulfire](docs/screenshots/soulbound-skills.png)<br>Soulbound: attributes and skills with the dice pool, Soulfire | |
+
 ## 📥 Installation
 
 Paste into *Manifest URL* under **Add-on Modules → Install Module**:

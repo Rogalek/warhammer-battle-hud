@@ -857,3 +857,9 @@ body.whb-system-age-of-sigmar-soulbound {
 #warhammer-battle-hud-bar .whb-panel h4 {
   color: var(--whb-highlight);
 }
+
+/* Kolumny potrzebują więcej miejsca niż zwykły panel (np. 9 cech Imperium Maledictum) */
+.whb-panel.whb-columns {
+  max-width: 90vw;
+  max-height: 70vh;
+}

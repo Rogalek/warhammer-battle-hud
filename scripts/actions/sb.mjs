@@ -17,7 +17,7 @@ export function sbPanel(actor, e = env()) {
   const powers = B.buildPowers(actor, e);
   return finishPanel([
     { id: "combat", groups: [group("Melee", combat.melee), group("Ranged", combat.ranged), group("Combat", combat.other), group("Armour", combat.armour)] },
-    { id: "skills", columns: 3, groups: [group("Attributes", B.buildAttributes(actor, e)), ...B.buildSkillGroups(actor, e)] },
+    { id: "skills", columns: 4, groups: [group("Attributes", B.buildAttributes(actor, e)), ...B.buildSkillGroups(actor, e)] },
     { id: "powers", groups: [group("Spells", powers.spells), group("Miracles", powers.miracles)] },
     { id: "talents", groups: [group("Talents", B.buildTalents(actor, e))] },
     { id: "conditions", groups: [group("Conditions", B.buildConditions(actor, e))] }

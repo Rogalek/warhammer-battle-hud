@@ -8,6 +8,15 @@ Wymaga **Foundry VTT v14** i jednego z systemów: **WFRP 4e / 5e** (`wfrp4e` 10.
 
 Nie włączaj go razem z innymi modułami, które dodają ramki drużyny, śledzą amunicję albo dodają HUD akcji: robiłyby to samo podwójnie i przeszkadzały sobie nawzajem.
 
+## 🖼️ Zrzuty ekranu
+
+| | |
+|---|---|
+| ![WFRP: licznik Przewagi i to, na co można ją wydać](docs/screenshots/wfrp-advantage.png)<br>WFRP: licznik Przewagi i to, na co można ją wydać | ![WFRP: podpowiedź broni](docs/screenshots/wfrp-tooltip.png)<br>WFRP: podpowiedź broni |
+| ![The Old World: umiejętności według cech](docs/screenshots/old-world-skills.png)<br>The Old World: umiejętności według cech | ![The Old World: podpowiedź zaklęcia](docs/screenshots/old-world-spell.png)<br>The Old World: podpowiedź zaklęcia |
+| ![Imperium Maledictum: umiejętności ze specjalizacjami, Przewaga drużyny](docs/screenshots/imperium-maledictum-skills.png)<br>Imperium Maledictum: umiejętności ze specjalizacjami, Przewaga drużyny | ![Wrath & Glory: walka, podpowiedź broni i Chwała](docs/screenshots/wrath-and-glory-combat.png)<br>Wrath & Glory: walka, podpowiedź broni i Chwała |
+| ![Soulbound: atrybuty i umiejętności z pulą kości, Ogień Duszy](docs/screenshots/soulbound-skills.png)<br>Soulbound: atrybuty i umiejętności z pulą kości, Ogień Duszy | |
+
 ## 📥 Instalacja
 
 Wklej w *Manifest URL* w **Dodatki → Zainstaluj moduł**:

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+- Screenshots of every system in the README.
+- The Old World spell tooltips show "CV" instead of a raw translation key, and a test now checks every tooltip row has a translation.
+- Column layouts (skills) may use more of the screen, so Imperium Maledictum's nine characteristics fit without scrolling; Soulbound's skills use four columns.
+
 ## 0.6.0
 - Every system has its own colours, taken from its character sheet; the party frames use them by default (Parchment and Imperium stay available).
 - Imperium Maledictum, Wrath & Glory and Soulbound get full action panels like WFRP and The Old World, built from the same calls as their character sheets, with a tooltip on every action: weapons, defence tests, powers, talents, resources and conditions in each system's own terms.
