@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
 - WFRP: a Downtime tab with Income (the current career's earning test, as on the sheet), Rest (Endurance, or Toughness without the skill) and the world's endeavour pages.
 - WFRP: channelled SL is shown where it builds up – on the spell ("2/4") in 4e and on the Wind in 5e, with a tooltip row – and "Lose the channelled power" at the top of the Magic tab clears it.
 - The Old World: the world's endeavours in a Downtime tab; those with a plain skill test roll straight away for the HUD's character, the others open their page.
