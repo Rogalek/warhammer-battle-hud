@@ -466,7 +466,11 @@ body.whb-system-age-of-sigmar-soulbound {
   transition: box-shadow 0.25s, border-color 0.25s;
 }
 
-.whb-advantage:hover {
+.whb-advantage.readonly {
+  cursor: help;
+}
+
+.whb-advantage:hover:not(.readonly) {
   border-color: var(--whb-highlight-strong);
 }
 

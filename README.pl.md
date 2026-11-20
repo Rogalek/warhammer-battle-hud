@@ -41,7 +41,7 @@ HUD i ramki drużyny przyjmują kolory karty postaci aktywnego systemu: pergamin
 
 ## ⚡ Przewaga (WFRP)
 
-Duży licznik z przodu HUD-a zależy od systemu: Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound (zmienia je MG, a gracze też, gdy system na to pozwala). W WFRP duży licznik pokazuje Przewagę postaci i świeci mocniej, im jest jej więcej, aż do maksimum. **Klik**: +1, **prawy klik**: −1. Ramki drużyny też ją wyróżniają. Można go ukryć w ustawieniach.
+Duży licznik z przodu HUD-a zależy od systemu: Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. W WFRP duży licznik pokazuje Przewagę postaci i świeci mocniej, im jest jej więcej, aż do maksimum. Ręcznie zmienia licznik tylko MG: **klik** +1, **prawy klik** −1. Gracze widzą wartość i zasady w podpowiedzi. Ramki drużyny też ją wyróżniają. Można go ukryć w ustawieniach.
 
 Pierwsza zakładka panelu akcji, **Przewaga**, pokazuje, na co postać może teraz wydać Przewagę, z kosztem (⚡1, ⚡2): użycia Przewagi z systemu (z Up in Arms: Grzmotnięcie, Sztuczka, Dodatkowy wysiłek, Ucieczka przed zagrożeniem, Dodatkowa Akcja), a z modułem **Underworld** (`wfrp4e-underworld`) także rozkazy taktyczne, które może wykonać Świta Herszta. Akcje, na które jeszcze brakuje Przewagi, są przygaszone. Klik na użyciu Przewagi odejmuje koszt, wysyła opis na czat i rzuca test, tak jak przycisk na karcie postaci; klik na rozkazie szajki otwiera okno rozkazu z Underworld.
 
@@ -60,7 +60,7 @@ W systemach, które ją śledzą (WFRP, Imperium Maledictum, Wrath & Glory): wyb
 
 ## 🏃 Impet (WFRP, zasady 5. edycji)
 
-System WFRP działa na zasadach 4. edycji (domyślnie) albo 5. edycji (Edition Manager → Use 5e). W zasadach 5. edycji nie ma puli Przewagi, więc duży licznik pokazuje w jej miejsce **Impet**, tak jak karta postaci: **Jest** albo **Brak**. Impet daje +1 do Przewagi w testach Walki Wręcz; system przyznaje go za wygrany w walce test przeciwstawny wręcz albo szarżę i zdejmuje, gdy postać otrzyma obrażenia, przegra test przeciwstawny wręcz, dostanie stan albo walka się skończy. HUD pokazuje te zmiany na bieżąco. **Klik** daje albo zdejmuje Impet ręcznie, **prawy klik** go zdejmuje. Użycia Przewagi są tylko w 4. edycji, więc znikają z panelu akcji, a ramki drużyny pokazują Impet zamiast Przewagi.
+System WFRP działa na zasadach 4. edycji (domyślnie) albo 5. edycji (Edition Manager → Use 5e). W zasadach 5. edycji nie ma puli Przewagi, więc duży licznik pokazuje w jej miejsce **Impet**, tak jak karta postaci: **Jest** albo **Brak**. Impet daje +1 do Przewagi w testach Walki Wręcz; system przyznaje go za wygrany w walce test przeciwstawny wręcz albo szarżę i zdejmuje, gdy postać otrzyma obrażenia, przegra test przeciwstawny wręcz, dostanie stan albo walka się skończy. HUD pokazuje te zmiany na bieżąco. MG może też przyznać albo odebrać go ręcznie: **klik** przełącza, **prawy klik** odbiera. Gracze tylko go widzą. Użycia Przewagi są tylko w 4. edycji, więc znikają z panelu akcji, a ramki drużyny pokazują Impet zamiast Przewagi.
 
 ## 🖼️ Ramki drużyny
 

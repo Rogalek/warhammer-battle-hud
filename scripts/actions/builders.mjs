@@ -347,7 +347,7 @@ export function buildConditions(actor, env) {
 
 export function buildAdvantage(actor, env) {
   const advantage = actor?.system?.status?.advantage;
-  if (!advantage || env.edition === "5e") return [];
+  if (!advantage || env.edition === "5e" || env.isGM === false) return [];
   return [{
     id: `${T.advantage}`,
     name: env.localize("WFRP4E_HUD.Advantage"),

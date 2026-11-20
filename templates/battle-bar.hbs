@@ -2,7 +2,7 @@
   <div class="whb-side">
     <div class="whb-grip" data-tooltip="{{localize 'WHAMMO.Drag'}}" aria-label="{{localize 'WHAMMO.Drag'}}"><i class="fa-solid fa-grip-vertical" inert></i></div>
     {{#if advantage}}
-      <button type="button" class="whb-advantage {{advantage.level}} {{#if advantage.changed}}changed{{/if}}" data-action="gainAdvantage" data-tooltip="{{advantage.hint}}" aria-label="{{advantage.label}}: {{advantage.state}}">
+      <button type="button" class="whb-advantage {{advantage.level}} {{#if advantage.changed}}changed{{/if}} {{#unless advantage.editable}}readonly{{/unless}}" data-action="gainAdvantage" data-tooltip="{{advantage.hint}}" aria-label="{{advantage.label}}: {{advantage.state}}">
         <span class="whb-advantage-label">{{advantage.label}}</span>
         {{#if advantage.toggle}}
           <strong class="whb-advantage-value whb-momentum"><i class="fa-solid {{#if advantage.active}}fa-angles-right{{else}}fa-minus{{/if}}" inert></i></strong>

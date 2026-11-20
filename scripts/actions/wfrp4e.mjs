@@ -114,6 +114,7 @@ export function wfrpActions(getSetting) {
     config: game.wfrp4e?.config ?? {},
     localize: (key) => game.i18n.localize(key),
     edition: getEdition(),
+    isGM: game.user.isGM,
     settings: settings(),
     // Przedsięwzięcia: strony dziennika świata z flagą systemu (np. z dodatków z zasadami 5e)
     endeavours: game.journal.contents.flatMap((j) => j.pages.contents).filter((p) => p.getFlag("wfrp4e", "endeavour") && p.testUserPermission(game.user, "OBSERVER")),

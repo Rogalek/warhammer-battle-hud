@@ -68,4 +68,9 @@ describe("zasady 5e: bez puli Przewagi", () => {
     expect(B.buildAdvantageActions(actor5e, { config, localize, edition: "5e" })).toEqual([]);
     expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e" })).toHaveLength(1);
   });
+
+  it("licznik Przewagi w panelu widzi tylko MG", () => {
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e", isGM: false })).toEqual([]);
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e", isGM: true })).toHaveLength(1);
+  });
 });

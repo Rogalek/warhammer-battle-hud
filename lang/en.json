@@ -13,7 +13,7 @@
     "Drag": "Drag the HUD from anywhere to move it. Double-click: back above the hotbar.",
     "Settings": {
       "ShowAdvantageName": "Show the big combat counter",
-      "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP (Momentum with the 5th edition rules), the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. Click adds one, right-click removes one.",
+      "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP (Momentum with the 5th edition rules), the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. The GM changes it: click adds one, right-click removes one. Players only see it.",
       "ShowBarName": "Show the ammunition row",
       "ShowBarHint": "For this user only.",
       "OnlyEquippedName": "Only equipped ranged weapons",
@@ -57,10 +57,10 @@
     "SuperiorityReadOnly": "The party's Superiority (only the GM changes it).",
     "Glory": "Glory",
     "GloryHint": "The party's Glory. Click: +1. Right-click: −1.",
-    "GloryReadOnly": "The party's Glory (spent in tests; the GM decides whether players change it by hand).",
+    "GloryReadOnly": "The party's Glory (spent in tests; only the GM changes it by hand).",
     "Soulfire": "Soulfire",
     "SoulfireHint": "The party's Soulfire. Click: +1. Right-click: −1.",
-    "SoulfireReadOnly": "The party's Soulfire (the GM decides whether players change it by hand).",
+    "SoulfireReadOnly": "The party's Soulfire (only the GM changes it by hand).",
     "Hands": {
       "Label": "Hands",
       "Main": "Main hand",
@@ -82,7 +82,9 @@
     "Momentum": "Momentum",
     "MomentumOn": "Active",
     "MomentumOff": "None",
-    "MomentumHint": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. You gain it by winning a melee opposed test in combat or by charging, and lose it when you take damage, lose a melee opposed test, gain a condition, or combat ends. The system tracks this itself. Click: gain or lose it. Right-click: lose it."
+    "MomentumHint": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. The system tracks this itself. Click: give or take Momentum. Right-click: take it away.",
+    "AdvantageReadOnly": "The character's Advantage (only the GM changes it by hand).",
+    "MomentumReadOnly": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. Only the GM changes it by hand."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",

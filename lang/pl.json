@@ -13,7 +13,7 @@
     "Drag": "Przeciągnij HUD z dowolnego miejsca, aby go przesunąć. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
       "ShowAdvantageName": "Pokazuj duży licznik walki",
-      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP (Impet przy zasadach 5. edycji), Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Klik dodaje punkt, prawy klik odejmuje.",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP (Impet przy zasadach 5. edycji), Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Zmienia go MG: klik dodaje punkt, prawy klik odejmuje. Gracze tylko go widzą.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
@@ -57,10 +57,10 @@
     "SuperiorityReadOnly": "Przewaga drużyny (zmienia ją tylko MG).",
     "Glory": "Chwała",
     "GloryHint": "Chwała drużyny. Klik: +1. Prawy klik: −1.",
-    "GloryReadOnly": "Chwała drużyny (wydawana w testach; MG decyduje, czy gracze zmieniają ją ręcznie).",
+    "GloryReadOnly": "Chwała drużyny (wydawana w testach; ręcznie zmienia ją tylko MG).",
     "Soulfire": "Ogień Duszy",
     "SoulfireHint": "Ogień Duszy drużyny. Klik: +1. Prawy klik: −1.",
-    "SoulfireReadOnly": "Ogień Duszy drużyny (MG decyduje, czy gracze zmieniają go ręcznie).",
+    "SoulfireReadOnly": "Ogień Duszy drużyny (ręcznie zmienia go tylko MG).",
     "Hands": {
       "Label": "Ręce",
       "Main": "Ręka wiodąca",
@@ -82,7 +82,9 @@
     "Momentum": "Impet",
     "MomentumOn": "Jest",
     "MomentumOff": "Brak",
-    "MomentumHint": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywasz go, wygrywając w walce test przeciwstawny wręcz albo szarżując; tracisz, gdy otrzymasz obrażenia, przegrasz test przeciwstawny wręcz, dostaniesz stan albo walka się skończy. System śledzi to sam. Klik: zdobądź albo strać Impet. Prawy klik: strać go."
+    "MomentumHint": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. System śledzi to sam. Klik: przyznaj albo odbierz Impet. Prawy klik: odbierz go.",
+    "AdvantageReadOnly": "Przewaga postaci (ręcznie zmienia ją tylko MG).",
+    "MomentumReadOnly": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. Ręcznie zmienia go tylko MG."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",

@@ -41,7 +41,7 @@ The HUD and the party frames take the colours of the active system's character s
 
 ## ⚡ Advantage (WFRP)
 
-The big counter at the front of the HUD follows the system: the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound (the GM changes them, or players too when the system allows it). In WFRP, the large counter shows the character's Advantage and glows brighter as it grows, up to the maximum. **Click**: +1, **right-click**: −1. The party frames highlight it too. It can be hidden in the settings.
+The big counter at the front of the HUD follows the system: the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. In WFRP, the large counter shows the character's Advantage and glows brighter as it grows, up to the maximum. Only the GM changes the counter by hand: **click** +1, **right-click** −1. Players see the value and its rules in the tooltip. The party frames highlight it too. It can be hidden in the settings.
 
 The first tab of the action panel, **Advantage**, lists what the character can spend Advantage on right now, each with its cost (⚡1, ⚡2): the system's Advantage actions (with Up in Arms: Batter, Trick, Additional Effort, Flee from Harm, Additional Action) and, with **Underworld Crew** (`wfrp4e-underworld`), the tactical orders the Chief's retinue can carry out. Actions the character cannot afford yet are dimmed. Clicking an Advantage action spends the cost, posts it to chat and rolls its test, just like the button on the character sheet; clicking a crew order opens Underworld's order dialog.
 
@@ -59,7 +59,7 @@ In systems that track ammunition (WFRP, Imperium Maledictum, Wrath & Glory): cho
 
 ## 🏃 Momentum (WFRP, 5th edition rules)
 
-The WFRP system can run on the 4th edition rules (the default) or the 5th edition ones (Edition Manager → Use 5e). With the 5th edition rules there is no Advantage pool, so the big counter shows **Momentum** instead, as the character sheet does: **Active** or **None**. Momentum gives +1 Advantage on Weapon Skill tests; the system grants it for winning a melee opposed test in combat or charging, and removes it when the character takes damage, loses a melee opposed test, gains a condition, or combat ends. The HUD follows those changes. **Click** gains or drops it by hand, **right-click** drops it. The Advantage actions are 4th edition only, so they leave the action panel, and the party frames show Momentum in place of Advantage.
+The WFRP system can run on the 4th edition rules (the default) or the 5th edition ones (Edition Manager → Use 5e). With the 5th edition rules there is no Advantage pool, so the big counter shows **Momentum** instead, as the character sheet does: **Active** or **None**. Momentum gives +1 Advantage on Weapon Skill tests; the system grants it for winning a melee opposed test in combat or charging, and removes it when the character takes damage, loses a melee opposed test, gains a condition, or combat ends. The HUD follows those changes. The GM can also grant or take it by hand: **click** toggles it, **right-click** takes it away. Players only see it. The Advantage actions are 4th edition only, so they leave the action panel, and the party frames show Momentum in place of Advantage.
 
 ## 🖼️ Party frames
 
