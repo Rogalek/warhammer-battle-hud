@@ -13,7 +13,7 @@
     "Drag": "Drag the HUD from anywhere to move it. Double-click: back above the hotbar.",
     "Settings": {
       "ShowAdvantageName": "Show the big combat counter",
-      "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP, the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. Click adds one, right-click removes one.",
+      "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP (Momentum with the 5th edition rules), the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. Click adds one, right-click removes one.",
       "ShowBarName": "Show the ammunition row",
       "ShowBarHint": "For this user only.",
       "OnlyEquippedName": "Only equipped ranged weapons",
@@ -78,7 +78,11 @@
       "OffhandHintWfrp": "Attacks with this hand take the off-hand penalty (the system applies it). With Dual Wielder you can attack with both weapons.",
       "OffhandHintIm": "This is not the character's dominant hand; the system applies the off-hand rules to its tests.",
       "NoHands": "The character does not have enough hands for this weapon."
-    }
+    },
+    "Momentum": "Momentum",
+    "MomentumOn": "Active",
+    "MomentumOff": "None",
+    "MomentumHint": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. You gain it by winning a melee opposed test in combat or by charging, and lose it when you take damage, lose a melee opposed test, gain a condition, or combat ends. The system tracks this itself. Click: gain or lose it. Right-click: lose it."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -112,11 +116,12 @@
       "resilience": "Resilience",
       "wrath": "Wrath",
       "untreated": "Untreated wounds",
-      "miscasts": "Miscast pool"
+      "miscasts": "Miscast pool",
+      "momentum": "Momentum"
     },
     "Settings": {
       "ShowFramesName": "Show the party frames",
-      "ShowFramesHint": "For this user only.",
+      "ShowFramesHint": "For this user only. Off by default: turn them on here or with the party frames button in the token controls.",
       "SkinName": "Appearance",
       "SkinHint": "For this user only.",
       "PlayersSeeAllName": "Players see everyone's details",
@@ -144,7 +149,8 @@
       "Religion": "Religion",
       "Talents": "Talents",
       "Conditions": "Conditions",
-      "Downtime": "Downtime"
+      "Downtime": "Downtime",
+      "Momentum": "Momentum"
     },
     "Groups": {
       "Characteristics": "Characteristics",
@@ -167,7 +173,8 @@
       "AdvantageActions": "Use Advantage",
       "GangOrders": "Gang orders",
       "Downtime": "Between adventures",
-      "ChannelledReset": "Channelled power"
+      "ChannelledReset": "Channelled power",
+      "Momentum": "Momentum"
     },
     "Info": {
       "Damage": "Damage to the item",
@@ -249,11 +256,16 @@
       "Income": "Click: Income test with the current career's earning skill",
       "Rest": "Click: rest – Endurance test to recover Wounds",
       "Endeavour": "Click: open the endeavour (its page has the Perform button)",
-      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)"
+      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)",
+      "Momentum": "Click: gain or lose Momentum. Right-click: lose it."
     },
     "Income": "Income",
     "Rest": "Rest",
-    "ChannelledReset": "Lose the channelled power"
+    "ChannelledReset": "Lose the channelled power",
+    "Momentum": "Momentum",
+    "MomentumOn": "active",
+    "MomentumOff": "none",
+    "MomentumRules": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. You gain it by winning a melee opposed test in combat or by charging, and lose it when you take damage, lose a melee opposed test, gain a condition, or combat ends. The system tracks this itself."
   },
   "WHB_TOW": {
     "Reload": "Reload",

@@ -6,7 +6,8 @@
  *  - Soulbound: Ogień Duszy drużyny (jak wyżej).
  * Systemy bez wpisu nie mają licznika.
  */
-import { advantageOf } from "./hud-data.mjs";
+import { advantageOf, momentumOf } from "./hud-data.mjs";
+import { is5e } from "../actions/edition.mjs";
 
 const COUNTERS = {
   wfrp4e: {
@@ -49,4 +50,18 @@ const COUNTERS = {
   }
 };
 
-export const counterFor = (systemId) => COUNTERS[systemId] ?? null;
+/**
+ * WFRP z zasadami 5e nie ma puli Przewagi: karta postaci pokazuje Impet (tak/nie).
+ * Klik przełącza go, prawy klik zdejmuje; resztę (zdobycie po wygranym teście wręcz albo szarży,
+ * utrata po obrażeniach, przegranym teście, stanie, końcu walki) liczy sam system.
+ */
+const MOMENTUM = {
+  label: "WHAMMO.Momentum",
+  hint: "WHAMMO.MomentumHint",
+  toggle: true,
+  read: (actor) => momentumOf(actor),
+  canEdit: (actor) => actor.isOwner,
+  change: (actor, delta) => actor.update({ "system.status.momentum": delta > 0 ? !actor.system.status.momentum : false })
+};
+
+export const counterFor = (systemId) => (systemId === "wfrp4e" && is5e() ? MOMENTUM : COUNTERS[systemId] ?? null);

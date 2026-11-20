@@ -24,6 +24,7 @@ export const ACTION_TYPES = Object.freeze({
   effect: "effect",
   condition: "condition",
   advantage: "advantage",
+  momentum: "momentum",
   advantageAction: "advantageAction",
   gangOrder: "gangOrder",
   income: "income",

@@ -482,6 +482,12 @@ body.whb-system-age-of-sigmar-soulbound {
   font-weight: bold;
 }
 
+/* Impet (WFRP 5e): ikona zamiast liczby */
+.whb-advantage-value.whb-momentum {
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
 .whb-advantage-max {
   font-size: 0.7rem;
   opacity: 0.75;

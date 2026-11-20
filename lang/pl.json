@@ -13,7 +13,7 @@
     "Drag": "Przeciągnij HUD z dowolnego miejsca, aby go przesunąć. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
       "ShowAdvantageName": "Pokazuj duży licznik walki",
-      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Klik dodaje punkt, prawy klik odejmuje.",
+      "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP (Impet przy zasadach 5. edycji), Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Klik dodaje punkt, prawy klik odejmuje.",
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
@@ -78,7 +78,11 @@
       "OffhandHintWfrp": "Ataki tą ręką dostają karę za drugą rękę (nalicza ją system). Z talentem Walka Dwiema Brońmi możesz atakować obiema.",
       "OffhandHintIm": "To nie jest ręka wiodąca postaci; system stosuje do jej testów zasady drugiej ręki.",
       "NoHands": "Postać nie ma dość rąk na tę broń."
-    }
+    },
+    "Momentum": "Impet",
+    "MomentumOn": "Jest",
+    "MomentumOff": "Brak",
+    "MomentumHint": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywasz go, wygrywając w walce test przeciwstawny wręcz albo szarżując; tracisz, gdy otrzymasz obrażenia, przegrasz test przeciwstawny wręcz, dostaniesz stan albo walka się skończy. System śledzi to sam. Klik: zdobądź albo strać Impet. Prawy klik: strać go."
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -112,11 +116,12 @@
       "resilience": "Odporność",
       "wrath": "Gniew",
       "untreated": "Nieopatrzone rany",
-      "miscasts": "Pula Miscastów"
+      "miscasts": "Pula Miscastów",
+      "momentum": "Impet"
     },
     "Settings": {
       "ShowFramesName": "Pokazuj ramki drużyny",
-      "ShowFramesHint": "Tylko dla tego użytkownika.",
+      "ShowFramesHint": "Tylko dla tego użytkownika. Domyślnie wyłączone: włączysz je tutaj albo przyciskiem ramek drużyny w narzędziach tokenów.",
       "SkinName": "Wygląd",
       "SkinHint": "Tylko dla tego użytkownika.",
       "PlayersSeeAllName": "Gracze widzą szczegóły wszystkich postaci",
@@ -144,7 +149,8 @@
       "Religion": "Wiara",
       "Talents": "Talenty",
       "Conditions": "Stany",
-      "Downtime": "Poza walką"
+      "Downtime": "Poza walką",
+      "Momentum": "Impet"
     },
     "Groups": {
       "Characteristics": "Cechy",
@@ -167,7 +173,8 @@
       "AdvantageActions": "Użycie Przewagi",
       "GangOrders": "Rozkazy szajki",
       "Downtime": "Między przygodami",
-      "ChannelledReset": "Spleciona moc"
+      "ChannelledReset": "Spleciona moc",
+      "Momentum": "Impet"
     },
     "Info": {
       "Damage": "Uszkodzenie przedmiotu",
@@ -249,11 +256,16 @@
       "Income": "Klik: test Zarobkowania umiejętnością bieżącej kariery",
       "Rest": "Klik: odpoczynek – test Odporności na odzyskanie Żywotności",
       "Endeavour": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
-      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)"
+      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)",
+      "Momentum": "Klik: zdobądź albo strać Impet. Prawy klik: strać go."
     },
     "Income": "Dochód",
     "Rest": "Odpoczynek",
-    "ChannelledReset": "Utrata splecionej mocy"
+    "ChannelledReset": "Utrata splecionej mocy",
+    "Momentum": "Impet",
+    "MomentumOn": "jest",
+    "MomentumOff": "brak",
+    "MomentumRules": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywasz go, wygrywając w walce test przeciwstawny wręcz albo szarżując; tracisz, gdy otrzymasz obrażenia, przegrasz test przeciwstawny wręcz, dostaniesz stan albo walka się skończy. System śledzi to sam."
   },
   "WHB_TOW": {
     "Reload": "Przeładuj",

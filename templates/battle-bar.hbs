@@ -2,10 +2,15 @@
   <div class="whb-side">
     <div class="whb-grip" data-tooltip="{{localize 'WHAMMO.Drag'}}" aria-label="{{localize 'WHAMMO.Drag'}}"><i class="fa-solid fa-grip-vertical" inert></i></div>
     {{#if advantage}}
-      <button type="button" class="whb-advantage {{advantage.level}} {{#if advantage.changed}}changed{{/if}}" data-action="gainAdvantage" data-tooltip="{{advantage.hint}}" aria-label="{{advantage.label}}: {{advantage.value}}">
+      <button type="button" class="whb-advantage {{advantage.level}} {{#if advantage.changed}}changed{{/if}}" data-action="gainAdvantage" data-tooltip="{{advantage.hint}}" aria-label="{{advantage.label}}: {{advantage.state}}">
         <span class="whb-advantage-label">{{advantage.label}}</span>
-        <strong class="whb-advantage-value">{{advantage.value}}</strong>
-        {{#if advantage.max}}<span class="whb-advantage-max">/ {{advantage.max}}</span>{{/if}}
+        {{#if advantage.toggle}}
+          <strong class="whb-advantage-value whb-momentum"><i class="fa-solid {{#if advantage.active}}fa-angles-right{{else}}fa-minus{{/if}}" inert></i></strong>
+          <span class="whb-advantage-max">{{advantage.state}}</span>
+        {{else}}
+          <strong class="whb-advantage-value">{{advantage.value}}</strong>
+        {{/if}}
+        {{#if advantage.max}}{{#unless advantage.toggle}}<span class="whb-advantage-max">/ {{advantage.max}}</span>{{/unless}}{{/if}}
       </button>
     {{/if}}
     {{#if hands}}

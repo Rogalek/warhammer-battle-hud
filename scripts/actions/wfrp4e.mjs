@@ -42,6 +42,7 @@ export function actionsByGroup(actor, env) {
     [G.conditions]: B.buildConditions(actor, env),
     [G.advantage]: B.buildAdvantage(actor, env),
     [G.advantageActions]: B.buildAdvantageActions(actor, env),
+    [G.momentum]: B.buildMomentum(actor, env),
     [G.downtime]: B.buildDowntime(actor, env),
     [G.channelledReset]: B.buildChannelledReset(actor, env),
     [G.gangOrders]: B.buildGangOrders(actor, env)
@@ -65,6 +66,7 @@ const HINTS = {
   [T.effect]: "Effect",
   [T.condition]: "Counter",
   [T.advantage]: "Counter",
+  [T.momentum]: "Momentum",
   [T.advantageAction]: "AdvantageAction",
   [T.gangOrder]: "GangOrder",
   [T.income]: "Income",
@@ -96,7 +98,7 @@ export function buildPanel(actor, env) {
   });
   return LAYOUT.map((tab) => ({
     id: tab.id,
-    label: env.localize(tab.name),
+    label: env.localize(env.edition === "5e" && tab.name5e ? tab.name5e : tab.name),
     groups: tab.groups
       .filter((id) => byGroup[id]?.length)
       .map((id) => ({ label: env.localize(GROUPS[id]), actions: byGroup[id].map(view) }))

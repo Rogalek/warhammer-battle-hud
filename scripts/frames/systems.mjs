@@ -4,6 +4,8 @@
  * Brakujące dane pomijamy, bo wrogowie i stworzenia często mają tylko część pól.
  */
 
+import { is5e } from "../actions/edition.mjs";
+
 const present = (entries) => entries.filter((e) => e.value !== undefined && e.value !== null);
 const pool = (data) => ({ value: data?.value, max: data?.max });
 
@@ -14,7 +16,8 @@ export const ADAPTERS = {
     stats: (a) => {
       const s = a.system.status ?? {};
       return present([
-        { key: "advantage", icon: "fa-angles-up", value: s.advantage?.value },
+        // Zasady 5e: zamiast Przewagi widać Impet (tylko gdy postać go ma)
+        is5e() ? { key: "momentum", icon: "fa-angles-right", value: s.momentum ? "✓" : undefined } : { key: "advantage", icon: "fa-angles-up", value: s.advantage?.value },
         { key: "fortune", icon: "fa-clover", value: s.fortune?.value },
         { key: "resolve", icon: "fa-shield-heart", value: s.resolve?.value },
         { key: "corruption", icon: "fa-skull", ...pool(s.corruption) },

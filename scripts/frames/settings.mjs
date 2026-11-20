@@ -6,7 +6,8 @@ import { MODULE_ID, I18N } from "./constants.mjs";
 
 export function registerSettings(onChange) {
   const visible = {
-    showFrames: { scope: "client", type: Boolean, default: true },
+    // Ramki są domyślnie ukryte; włącza się je przyciskiem w narzędziach tokenów albo w ustawieniach
+    showFrames: { scope: "client", type: Boolean, default: false },
     skin: { scope: "client", type: String, default: "system", choices: { system: `${I18N}.Skin.system`, parchment: `${I18N}.Skin.parchment`, imperium: `${I18N}.Skin.imperium` } },
     playersSeeAll: { scope: "world", type: Boolean, default: true }
   };

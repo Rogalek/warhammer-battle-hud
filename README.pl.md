@@ -58,9 +58,13 @@ Zakładki nad paskiem makr dla zaznaczonego tokena albo przypisanej postaci. W W
 
 W systemach, które ją śledzą (WFRP, Imperium Maledictum, Wrath & Glory): wybór amunicji, przeładowanie i zakładanie broni lub tarczy jednym kliknięciem. Licznik robi się bursztynowy przy małej ilości i czerwony przy braku.
 
+## 🏃 Impet (WFRP, zasady 5. edycji)
+
+System WFRP działa na zasadach 4. edycji (domyślnie) albo 5. edycji (Edition Manager → Use 5e). W zasadach 5. edycji nie ma puli Przewagi, więc duży licznik pokazuje w jej miejsce **Impet**, tak jak karta postaci: **Jest** albo **Brak**. Impet daje +1 do Przewagi w testach Walki Wręcz; system przyznaje go za wygrany w walce test przeciwstawny wręcz albo szarżę i zdejmuje, gdy postać otrzyma obrażenia, przegra test przeciwstawny wręcz, dostanie stan albo walka się skończy. HUD pokazuje te zmiany na bieżąco. **Klik** daje albo zdejmuje Impet ręcznie, **prawy klik** go zdejmuje. Pierwsza zakładka panelu akcji staje się zakładką **Impet** (użycia Przewagi są tylko w 4. edycji), a ramki drużyny pokazują Impet zamiast Przewagi.
+
 ## 🖼️ Ramki drużyny
 
-Portret, zdrowie, zasoby systemu i stany każdej postaci. **Klik** wskazuje cel, **podwójny klik** przechodzi do tokena, **prawy klik** otwiera kartę. Nagłówek przełącza Drużynę, Walkę i Zaznaczone tokeny, zwija ramki i przesuwa je po przeciągnięciu.
+Na starcie ramki są ukryte: włączysz je przyciskiem ramek drużyny w narzędziach tokenów (albo w ustawieniach). Portret, zdrowie, zasoby systemu i stany każdej postaci. **Klik** wskazuje cel, **podwójny klik** przechodzi do tokena, **prawy klik** otwiera kartę. Nagłówek przełącza Drużynę, Walkę i Zaznaczone tokeny, zwija ramki i przesuwa je po przeciągnięciu.
 
 * **Wybierz postacie** (ikona postaci w nagłówku): okno z listą postaci trybu, w którym zaznaczasz, kogo widać. W trybie Drużyny możesz też dodać postać gracza, która nie jest nikomu przypisana. Liczba przy ikonie mówi, ile postaci ukryto. Wybór należy do Ciebie i działa na każdym Twoim komputerze.
 * **×** na ramce (po najechaniu) ukrywa tę jedną postać.

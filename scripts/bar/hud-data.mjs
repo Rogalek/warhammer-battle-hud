@@ -27,6 +27,14 @@ export function advantageLevel(value, max) {
   return value / (max > 0 ? max : DEFAULT_SCALE) >= 0.5 ? "high" : "low";
 }
 
+/** Impet postaci (WFRP z zasadami 5e) albo `null`, gdy postać go nie ma. */
+export function momentumOf(actor) {
+  const status = actor?.system?.status;
+  if (!status || !("momentum" in status)) return null;
+  const active = Boolean(status.momentum);
+  return { value: active ? 1 : 0, max: 0, active, level: active ? "high" : "none" };
+}
+
 /** Przewaga postaci (WFRP 4e) albo `null`, gdy postać jej nie ma lub system nie pozwala jej zmieniać. */
 export function advantageOf(actor) {
   const data = actor?.system?.status?.advantage;

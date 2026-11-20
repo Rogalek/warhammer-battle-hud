@@ -28,6 +28,7 @@ export const GROUP_IDS = Object.freeze({
   conditions: "conditions",
   advantage: "advantage",
   advantageActions: "advantage-actions",
+  momentum: "momentum",
   gangOrders: "gang-orders",
   downtime: "downtime",
   channelledReset: "channelled-reset"
@@ -347,12 +348,28 @@ export function buildConditions(actor, env) {
 
 export function buildAdvantage(actor, env) {
   const advantage = actor?.system?.status?.advantage;
-  if (!advantage) return [];
+  if (!advantage || env.edition === "5e") return [];
   return [{
     id: `${T.advantage}`,
     name: env.localize("WFRP4E_HUD.Advantage"),
     encodedValue: encodeAction(T.advantage),
     info1: { text: `${advantage.value ?? 0}${advantage.max ? `/${advantage.max}` : ""}` }
+  }];
+}
+
+/** Impet (zasady 5e zamiast puli Przewagi): przełącznik jak na karcie postaci. */
+export function buildMomentum(actor, env) {
+  const status = actor?.system?.status;
+  if (env.edition !== "5e" || !status || !("momentum" in status)) return [];
+  const active = Boolean(status.momentum);
+  return [{
+    id: `${T.momentum}`,
+    name: env.localize("WFRP4E_HUD.Momentum"),
+    img: "systems/wfrp4e/icons/conditions/momentum.png",
+    encodedValue: encodeAction(T.momentum),
+    info1: { text: env.localize(active ? "WFRP4E_HUD.MomentumOn" : "WFRP4E_HUD.MomentumOff") },
+    cssClass: active ? "toggle active" : "toggle",
+    tooltip: env.localize("WFRP4E_HUD.MomentumRules")
   }];
 }
 
@@ -368,7 +385,7 @@ const currentAdvantage = (actor) => Number(actor?.system?.status?.advantage?.val
 
 /** Użycia Przewagi z konfiguracji systemu (np. Grzmotnięcie, Sztuczka z Up in Arms), z kosztem. */
 export function buildAdvantageActions(actor, env) {
-  if (!actor?.system?.status?.advantage) return [];
+  if (!actor?.system?.status?.advantage || env.edition === "5e") return [];
   const current = currentAdvantage(actor);
   return (env.config?.groupAdvantageActions ?? []).map((action, index) => {
     const cost = Number(action.cost) || 0;

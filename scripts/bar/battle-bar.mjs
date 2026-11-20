@@ -68,7 +68,9 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const editable = Boolean(counter.canEdit(actor));
     return {
       ...data,
-      level: advantageLevel(data.value, data.max),
+      level: data.level ?? advantageLevel(data.value, data.max),
+      toggle: Boolean(counter.toggle),
+      state: counter.toggle ? game.i18n.localize(data.active ? "WHAMMO.MomentumOn" : "WHAMMO.MomentumOff") : data.value,
       editable,
       label: game.i18n.localize(counter.label),
       hint: game.i18n.localize(editable || !counter.readOnlyHint ? counter.hint : counter.readOnlyHint)

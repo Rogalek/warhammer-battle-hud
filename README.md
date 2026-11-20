@@ -57,9 +57,13 @@ Tabs above the hotbar for the selected token, or your assigned character. In WFR
 
 In systems that track ammunition (WFRP, Imperium Maledictum, Wrath & Glory): choose the ammunition, reload, and equip weapons or shields with one click. The count turns amber when low and red when gone.
 
+## 🏃 Momentum (WFRP, 5th edition rules)
+
+The WFRP system can run on the 4th edition rules (the default) or the 5th edition ones (Edition Manager → Use 5e). With the 5th edition rules there is no Advantage pool, so the big counter shows **Momentum** instead, as the character sheet does: **Active** or **None**. Momentum gives +1 Advantage on Weapon Skill tests; the system grants it for winning a melee opposed test in combat or charging, and removes it when the character takes damage, loses a melee opposed test, gains a condition, or combat ends. The HUD follows those changes. **Click** gains or drops it by hand, **right-click** drops it. The first tab of the action panel becomes **Momentum** (the Advantage actions are 4th edition only), and the party frames show Momentum in place of Advantage.
+
 ## 🖼️ Party frames
 
-Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
+The frames are hidden at first: turn them on with the party frames button in the token controls (or in the settings). Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
 
 * **Choose characters** (the person icon in the header): a list of the mode's characters where you tick who is shown. In Party mode you can also add a player character that isn't assigned to anyone. The number next to the icon says how many are hidden. The choice is yours and follows you to any computer.
 * **×** on a frame (on hover) hides that one character.
