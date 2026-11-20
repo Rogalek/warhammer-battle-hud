@@ -1,8 +1,10 @@
 # Changelog
 
 ## Unreleased
-- WFRP with the 5th edition rules: the big counter shows Momentum (Active/None) instead of Advantage, as the character sheet does, and follows the system gaining and losing it. Click gains or drops it, right-click drops it. The first tab becomes Momentum (the Advantage actions are 4th edition only) and the party frames show Momentum instead of Advantage.
+- WFRP with the 5th edition rules: the big counter shows Momentum (Active/None) instead of Advantage, as the character sheet does, and follows the system gaining and losing it. Click gains or drops it, right-click drops it. The Advantage actions (4th edition only) leave the action panel and the party frames show Momentum instead of Advantage.
 - The party frames start hidden; turn them on with the button in the token controls or in the settings.
+- Party mode of the party frames shows only the characters of players who are logged in.
+- While Hands are shown, the small group of weapon icons is left out (Hands do the same job).
 - Hands (WFRP, Imperium Maledictum): a slot for each hand next to the big counter shows what it holds and how many hands are in use. Click a hand to put a weapon in it (two-handed weapons take both, whatever was there is put away), right-click to empty it. In WFRP the off hand is marked and the number of hands follows the character's equip points.
 - The HUD can be dragged from anywhere on it, not only by the handle. A plain click still uses the buttons, and releasing a drag over a button does not press it.
 

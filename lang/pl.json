@@ -19,7 +19,7 @@
       "OnlyEquippedName": "Tylko założona broń dystansowa",
       "OnlyEquippedHint": "Odłożona broń dystansowa trafia do małej grupy ekwipunku.",
       "ShowGearName": "Pokazuj pozostałą broń",
-      "ShowGearHint": "Mała grupa ikon do zakładania broni białej i tarcz jednym kliknięciem.",
+      "ShowGearHint": "Mała grupa ikon do zakładania broni białej i tarcz jednym kliknięciem. Znika, gdy widać Ręce.",
       "LowAmmoName": "Ostrzeżenie o małej ilości amunicji",
       "LowAmmoHint": "Przy tej liczbie lub mniejszej licznik zmienia kolor na bursztynowy.",
       "ShowHandsName": "Pokaż ręce",
@@ -149,8 +149,7 @@
       "Religion": "Wiara",
       "Talents": "Talenty",
       "Conditions": "Stany",
-      "Downtime": "Poza walką",
-      "Momentum": "Impet"
+      "Downtime": "Poza walką"
     },
     "Groups": {
       "Characteristics": "Cechy",
@@ -173,8 +172,7 @@
       "AdvantageActions": "Użycie Przewagi",
       "GangOrders": "Rozkazy szajki",
       "Downtime": "Między przygodami",
-      "ChannelledReset": "Spleciona moc",
-      "Momentum": "Impet"
+      "ChannelledReset": "Spleciona moc"
     },
     "Info": {
       "Damage": "Uszkodzenie przedmiotu",
@@ -256,16 +254,11 @@
       "Income": "Klik: test Zarobkowania umiejętnością bieżącej kariery",
       "Rest": "Klik: odpoczynek – test Odporności na odzyskanie Żywotności",
       "Endeavour": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
-      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)",
-      "Momentum": "Klik: zdobądź albo strać Impet. Prawy klik: strać go."
+      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)"
     },
     "Income": "Dochód",
     "Rest": "Odpoczynek",
-    "ChannelledReset": "Utrata splecionej mocy",
-    "Momentum": "Impet",
-    "MomentumOn": "jest",
-    "MomentumOff": "brak",
-    "MomentumRules": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywasz go, wygrywając w walce test przeciwstawny wręcz albo szarżując; tracisz, gdy otrzymasz obrażenia, przegrasz test przeciwstawny wręcz, dostaniesz stan albo walka się skończy. System śledzi to sam."
+    "ChannelledReset": "Utrata splecionej mocy"
   },
   "WHB_TOW": {
     "Reload": "Przeładuj",

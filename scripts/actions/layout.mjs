@@ -23,7 +23,6 @@ export const GROUPS = {
   [G.conditions]: "WFRP4E_HUD.Groups.Conditions",
   [G.advantage]: "WFRP4E_HUD.Groups.Advantage",
   [G.advantageActions]: "WFRP4E_HUD.Groups.AdvantageActions",
-  [G.momentum]: "WFRP4E_HUD.Groups.Momentum",
   [G.gangOrders]: "WFRP4E_HUD.Groups.GangOrders",
   [G.downtime]: "WFRP4E_HUD.Groups.Downtime",
   [G.channelledReset]: "WFRP4E_HUD.Groups.ChannelledReset"
@@ -32,8 +31,8 @@ export const GROUPS = {
 /** Zakładki: id → klucz tłumaczenia i grupy w kolejności. */
 export const LAYOUT = [
   // Przewaga pierwsza: to, co można za nią teraz zrobić, jest w walce najważniejsze
-  // W zasadach 5e zamiast Przewagi jest Impet (nazwa zakładki z `name5e`)
-  { id: "advantage", name: "WFRP4E_HUD.Tabs.Advantage", name5e: "WFRP4E_HUD.Tabs.Momentum", groups: [G.momentum, G.advantageActions, G.gangOrders, G.advantage] },
+  // W zasadach 5e nie ma puli Przewagi; Impet jest na dużym liczniku, więc zostają tu tylko rozkazy szajki
+  { id: "advantage", name: "WFRP4E_HUD.Tabs.Advantage", groups: [G.advantageActions, G.gangOrders, G.advantage] },
   { id: "characteristics", name: "WFRP4E_HUD.Tabs.Characteristics", groups: [G.characteristics] },
   { id: "skills", name: "WFRP4E_HUD.Tabs.Skills", groups: [G.skillsBasic, G.skillsAdvanced] },
   { id: "combat", name: "WFRP4E_HUD.Tabs.Combat", groups: [G.weaponsMelee, G.weaponsRanged, G.armour, G.traits] },

@@ -33,7 +33,7 @@ The HUD (Advantage, action panel and ammunition) floats over the scene. Hold the
 
 Next to the big counter, **Hands** shows what each hand holds and how many are in use (2/2). A two-handed weapon fills both hands; the other hand is marked **Off**, and its tooltip explains the off-hand penalty the system applies. **Click** a hand to pick a weapon for it: whatever was there is put away, a two-handed weapon clears both hands, and a weapon already held moves to the chosen hand. **Right-click** empties the hand.
 
-In WFRP the number of hands is the character's equip points (2, or more for creatures with extra arms) and the system's limit on equipped weapons still applies. In Imperium Maledictum it is the left and right hand, with the dominant one as the main hand; a hand that cannot be used (an injury) is crossed out. It can be hidden in the settings.
+In WFRP the number of hands is the character's equip points (2, or more for creatures with extra arms) and the system's limit on equipped weapons still applies. In Imperium Maledictum it is the left and right hand, with the dominant one as the main hand; a hand that cannot be used (an injury) is crossed out. While Hands are shown, the small group of weapon icons in the ammunition row is left out, since Hands do the same job. It can be hidden in the settings.
 
 ## 🎨 System colours
 
@@ -59,11 +59,11 @@ In systems that track ammunition (WFRP, Imperium Maledictum, Wrath & Glory): cho
 
 ## 🏃 Momentum (WFRP, 5th edition rules)
 
-The WFRP system can run on the 4th edition rules (the default) or the 5th edition ones (Edition Manager → Use 5e). With the 5th edition rules there is no Advantage pool, so the big counter shows **Momentum** instead, as the character sheet does: **Active** or **None**. Momentum gives +1 Advantage on Weapon Skill tests; the system grants it for winning a melee opposed test in combat or charging, and removes it when the character takes damage, loses a melee opposed test, gains a condition, or combat ends. The HUD follows those changes. **Click** gains or drops it by hand, **right-click** drops it. The first tab of the action panel becomes **Momentum** (the Advantage actions are 4th edition only), and the party frames show Momentum in place of Advantage.
+The WFRP system can run on the 4th edition rules (the default) or the 5th edition ones (Edition Manager → Use 5e). With the 5th edition rules there is no Advantage pool, so the big counter shows **Momentum** instead, as the character sheet does: **Active** or **None**. Momentum gives +1 Advantage on Weapon Skill tests; the system grants it for winning a melee opposed test in combat or charging, and removes it when the character takes damage, loses a melee opposed test, gains a condition, or combat ends. The HUD follows those changes. **Click** gains or drops it by hand, **right-click** drops it. The Advantage actions are 4th edition only, so they leave the action panel, and the party frames show Momentum in place of Advantage.
 
 ## 🖼️ Party frames
 
-The frames are hidden at first: turn them on with the party frames button in the token controls (or in the settings). Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
+The frames are hidden at first: turn them on with the party frames button in the token controls (or in the settings). In Party mode they show the characters of the players who are logged in right now (a player's assigned character, or the characters they own); players who log out drop off. Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
 
 * **Choose characters** (the person icon in the header): a list of the mode's characters where you tick who is shown. In Party mode you can also add a player character that isn't assigned to anyone. The number next to the icon says how many are hidden. The choice is yours and follows you to any computer.
 * **×** on a frame (on hover) hides that one character.

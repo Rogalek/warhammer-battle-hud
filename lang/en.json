@@ -19,7 +19,7 @@
       "OnlyEquippedName": "Only equipped ranged weapons",
       "OnlyEquippedHint": "Put-away ranged weapons move to the small gear group.",
       "ShowGearName": "Show the other weapons",
-      "ShowGearHint": "A small group of icons for equipping melee weapons and shields with one click.",
+      "ShowGearHint": "A small group of icons for equipping melee weapons and shields with one click. Left out while Hands are shown.",
       "LowAmmoName": "Low ammunition warning",
       "LowAmmoHint": "The count turns amber at this number or below.",
       "ShowHandsName": "Show the hands",
@@ -149,8 +149,7 @@
       "Religion": "Religion",
       "Talents": "Talents",
       "Conditions": "Conditions",
-      "Downtime": "Downtime",
-      "Momentum": "Momentum"
+      "Downtime": "Downtime"
     },
     "Groups": {
       "Characteristics": "Characteristics",
@@ -173,8 +172,7 @@
       "AdvantageActions": "Use Advantage",
       "GangOrders": "Gang orders",
       "Downtime": "Between adventures",
-      "ChannelledReset": "Channelled power",
-      "Momentum": "Momentum"
+      "ChannelledReset": "Channelled power"
     },
     "Info": {
       "Damage": "Damage to the item",
@@ -256,16 +254,11 @@
       "Income": "Click: Income test with the current career's earning skill",
       "Rest": "Click: rest – Endurance test to recover Wounds",
       "Endeavour": "Click: open the endeavour (its page has the Perform button)",
-      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)",
-      "Momentum": "Click: gain or lose Momentum. Right-click: lose it."
+      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)"
     },
     "Income": "Income",
     "Rest": "Rest",
-    "ChannelledReset": "Lose the channelled power",
-    "Momentum": "Momentum",
-    "MomentumOn": "active",
-    "MomentumOff": "none",
-    "MomentumRules": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. You gain it by winning a melee opposed test in combat or by charging, and lose it when you take damage, lose a melee opposed test, gain a condition, or combat ends. The system tracks this itself."
+    "ChannelledReset": "Lose the channelled power"
   },
   "WHB_TOW": {
     "Reload": "Reload",

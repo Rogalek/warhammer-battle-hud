@@ -181,8 +181,6 @@ export async function performAction(actor, action, intent) {
       case "decrease": {
         const up = intent.intent === "increase";
         if (action.type === T.advantage) return await actor.modifyAdvantage(up ? 1 : -1);
-        // Impet: klik przełącza, prawy klik zawsze go zdejmuje
-        if (action.type === T.momentum) return await actor.update({ "system.status.momentum": up ? !actor.system.status.momentum : false });
         return await toggleCondition(actor, action.id, up);
       }
     }

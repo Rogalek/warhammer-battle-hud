@@ -140,7 +140,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           options: list.map((item) => ({ ...entry(item), current: item.id === ammo?.id }))
         };
       }),
-      gear: getSetting("showGear") ? all.filter((w) => !ranged.includes(w)).map((w) => ({ id: w.id, name: w.name, img: w.img, equipped: adapter.isEquipped(w) })) : []
+      // Ręce zakładają broń same, więc przy nich mała grupa ikon byłaby dublem
+      gear: getSetting("showGear") && !this.constructor.showsHands(actor) ? all.filter((w) => !ranged.includes(w)).map((w) => ({ id: w.id, name: w.name, img: w.img, equipped: adapter.isEquipped(w) })) : []
     });
   }
 

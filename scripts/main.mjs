@@ -62,7 +62,7 @@ Hooks.once("ready", async () => {
 
   // Wszystko, co zmienia zawartość ramek
   for (const hook of [
-    "updateActor", "createActor", "deleteActor", "updateUser",
+    "updateActor", "createActor", "deleteActor", "updateUser", "userConnected",
     "createActiveEffect", "updateActiveEffect", "deleteActiveEffect", "createItem", "deleteItem",
     "controlToken", "targetToken", "createToken", "deleteToken", "canvasReady",
     "createCombat", "updateCombat", "deleteCombat", "createCombatant", "deleteCombatant"

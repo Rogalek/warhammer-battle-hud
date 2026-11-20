@@ -55,30 +55,17 @@ describe("sterowanie i układ", () => {
   });
 
   it("zakładka Przewagi jest pierwsza", () => {
-    expect(LAYOUT[0]).toMatchObject({ id: "advantage", groups: [B.GROUP_IDS.momentum, B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage], name5e: "WFRP4E_HUD.Tabs.Momentum" });
+    expect(LAYOUT[0]).toMatchObject({ id: "advantage", groups: [B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage] });
   });
 });
 
-describe("Impet (zasady 5e)", () => {
+describe("zasady 5e: bez puli Przewagi", () => {
   const localize = (key) => key;
-  const withMomentum = (momentum) => ({ type: "character", system: { status: { momentum, advantage: { value: 0, max: 10 } } } });
+  const actor5e = { type: "character", system: { status: { momentum: false, advantage: { value: 0, max: 10 } } } };
 
-  it("w 5e zastępuje Przewagę i jej użycia", () => {
-    const env = { config, localize, edition: "5e" };
-    expect(B.buildAdvantage(withMomentum(false), env)).toEqual([]);
-    expect(B.buildAdvantageActions(withMomentum(false), env)).toEqual([]);
-    const [momentum] = B.buildMomentum(withMomentum(true), env);
-    expect(momentum).toMatchObject({ encodedValue: "momentum", cssClass: "toggle active", info1: { text: "WFRP4E_HUD.MomentumOn" } });
-    expect(B.buildMomentum(withMomentum(false), env)[0].cssClass).toBe("toggle");
-  });
-
-  it("w 4e go nie ma", () => {
-    expect(B.buildMomentum(withMomentum(true), { config, localize, edition: "4e" })).toEqual([]);
-    expect(B.buildAdvantage(withMomentum(false), { config, localize, edition: "4e" })).toHaveLength(1);
-  });
-
-  it("klik przełącza, prawy klik zdejmuje", () => {
-    expect(resolveIntent("momentum", {})).toEqual({ intent: "increase" });
-    expect(resolveIntent("momentum", { right: true })).toEqual({ intent: "decrease" });
+  it("licznik Przewagi i jej użycia znikają (Impet jest na dużym liczniku)", () => {
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "5e" })).toEqual([]);
+    expect(B.buildAdvantageActions(actor5e, { config, localize, edition: "5e" })).toEqual([]);
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e" })).toHaveLength(1);
   });
 });

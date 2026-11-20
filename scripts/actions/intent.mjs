@@ -38,7 +38,7 @@ export function resolveIntent(type, mods = {}, settings = {}) {
 
   if (ctrl && DAMAGEABLE.has(type)) return { intent: right ? "damage" : "repair" };
 
-  if (type === T.condition || type === T.advantage || type === T.momentum) return { intent: right ? "decrease" : "increase" };
+  if (type === T.condition || type === T.advantage) return { intent: right ? "decrease" : "increase" };
 
   if (type === T.effect) return { intent: right ? "sheet" : "run" };
 
