@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.0
 - Only the GM changes the big counter by hand (Advantage, Momentum, Superiority, Glory, Soulfire); players see the value and the rules in its tooltip. The Advantage counter in the action panel is GM-only too. Spending Advantage on its actions still works for players, as on the sheet.
 - WFRP with the 5th edition rules: the big counter shows Momentum (Active/None) instead of Advantage, as the character sheet does, and follows the system gaining and losing it. The GM grants or takes it with a click, right-click takes it away. The Advantage actions (4th edition only) leave the action panel and the party frames show Momentum instead of Advantage.
 - The party frames start hidden; turn them on with the button in the token controls or in the settings.
