@@ -27,7 +27,7 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 ## 🧭 Floating HUD
 
-The HUD (Advantage, action panel and ammunition) floats over the scene. Drag it by the handle on its left; the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
+The HUD (Advantage, action panel and ammunition) floats over the scene. Hold the mouse button anywhere on it and drag (a plain click still uses the buttons); the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
 
 ## 🎨 System colours
 

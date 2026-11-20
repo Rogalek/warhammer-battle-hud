@@ -1,7 +1,7 @@
 /**
  * Pasek walki: licznik Przewagi, panel akcji postaci oraz amunicja, przeładowanie i szybka zmiana broni.
  * Pokazuje zaznaczoną postać, a bez zaznaczenia postać przypisaną do gracza.
- * HUD przesuwa się za uchwyt; podwójny klik na uchwycie wraca na miejsce nad paskiem makr.
+ * HUD przesuwa się po przytrzymaniu myszy w dowolnym miejscu; podwójny klik na uchwycie wraca na miejsce nad paskiem makr.
  */
 import { MODULE_ID, t, log } from "./constants.mjs";
 import { getSetting, hasSetting, setSetting } from "./settings.mjs";
@@ -10,6 +10,18 @@ import { advantageLevel, clampAnchor, isAnchor } from "./hud-data.mjs";
 import { counterFor } from "./counters.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+/** Tyle pikseli ruchu odróżnia przeciąganie od kliknięcia. */
+const DRAG_THRESHOLD = 5;
+
+/** Kliknięcie w pasek przewijania panelu ma przewijać, nie przesuwać HUD-a. */
+function onScrollbar(event) {
+  const el = event.target;
+  if (!(el instanceof HTMLElement)) return false;
+  const rect = el.getBoundingClientRect();
+  return (el.scrollHeight > el.clientHeight && event.clientX > rect.left + el.clientLeft + el.clientWidth)
+    || (el.scrollWidth > el.clientWidth && event.clientY > rect.top + el.clientTop + el.clientHeight);
+}
 
 export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
   /** Adapter amunicji; `null` w systemach, które jej nie śledzą. */
@@ -203,29 +215,49 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     Object.assign(style, { left: `${x}px`, bottom: `${bottom}px` });
   }
 
-  /** HUD przesuwa się za uchwyt; położenie zapisujemy po puszczeniu, i tylko gdy faktycznie się ruszył. */
+  /**
+   * HUD przesuwa się, gdy przytrzymamy przycisk myszy gdziekolwiek na nim i pociągniemy.
+   * Na przyciskach przeciąganie rusza dopiero po kilku pikselach, więc zwykłe kliknięcie dalej działa,
+   * a kliknięcie kończące przeciąganie jest tłumione. Położenie zapisujemy po puszczeniu.
+   */
   #onDragStart(event) {
-    if (!event.target.closest(".whb-grip") || event.button !== 0) return;
-    event.preventDefault();
+    if (event.button !== 0 || event.target.closest("input, select, textarea, [contenteditable]") || onScrollbar(event)) return;
+    const onGrip = Boolean(event.target.closest(".whb-grip"));
+    if (onGrip) event.preventDefault();
     const { element } = this;
+    const start = { x: event.clientX, y: event.clientY };
     const box = element.getBoundingClientRect();
     const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY };
     let moved = false;
     const move = (e) => {
-      moved = true;
+      if (!moved) {
+        if (!onGrip && Math.hypot(e.clientX - start.x, e.clientY - start.y) < DRAG_THRESHOLD) return;
+        moved = true;
+        element.classList.add("dragging");
+        window.getSelection()?.removeAllRanges();
+        game.tooltip?.deactivate?.();
+      }
       this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y) });
     };
     const stop = () => {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", stop);
+      window.removeEventListener("pointercancel", stop);
       element.classList.remove("dragging");
       if (!moved) return;
+      // Puszczenie myszy nad przyciskiem nie może go wcisnąć
+      const swallow = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      };
+      window.addEventListener("click", swallow, { capture: true, once: true });
+      setTimeout(() => window.removeEventListener("click", swallow, { capture: true }), 0);
       const { left, width, bottom } = element.getBoundingClientRect();
       setSetting("hudPosition", { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom) });
     };
-    element.classList.add("dragging");
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
   }
 
   /** Pozycje z paska dotyczą zawsze aktualnej postaci, a błędy systemu nie mogą zostawiać kliknięcia bez odpowiedzi. */

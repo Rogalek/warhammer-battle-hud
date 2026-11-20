@@ -293,7 +293,7 @@ body.whb-system-age-of-sigmar-soulbound {
 }
 
 #warhammer-battle-hud-bar.dragging,
-#warhammer-battle-hud-bar.dragging .whb-grip {
+#warhammer-battle-hud-bar.dragging * {
   cursor: grabbing;
   user-select: none;
 }

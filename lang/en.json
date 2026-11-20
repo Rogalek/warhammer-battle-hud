@@ -10,7 +10,7 @@
     "Empty": "{name}: last one used.",
     "Advantage": "Advantage",
     "AdvantageHint": "Click: +1 Advantage. Right-click: −1.",
-    "Drag": "Drag to move the HUD. Double-click: back above the hotbar.",
+    "Drag": "Drag the HUD from anywhere to move it. Double-click: back above the hotbar.",
     "Settings": {
       "ShowAdvantageName": "Show the big combat counter",
       "ShowAdvantageHint": "A large counter at the front of the HUD: Advantage in WFRP, the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. Click adds one, right-click removes one.",

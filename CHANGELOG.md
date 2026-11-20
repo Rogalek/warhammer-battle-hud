@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- The HUD can be dragged from anywhere on it, not only by the handle. A plain click still uses the buttons, and releasing a drag over a button does not press it.
+
 ## 0.7.0
 - WFRP: a Downtime tab with Income (the current career's earning test, as on the sheet), Rest (Endurance, or Toughness without the skill) and the world's endeavour pages.
 - WFRP: channelled SL is shown where it builds up – on the spell ("2/4") in 4e and on the Wind in 5e, with a tooltip row – and "Lose the channelled power" at the top of the Magic tab clears it.

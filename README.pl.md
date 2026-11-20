@@ -27,7 +27,7 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 ## 🧭 Pływający HUD
 
-HUD (Przewaga, panel akcji i amunicja) unosi się nad sceną. Przeciągnij go za uchwyt po lewej; położenie zapisuje się przy koncie gracza, więc działa na każdym komputerze. **Podwójny klik** na uchwycie przywraca go nad pasek makr.
+HUD (Przewaga, panel akcji i amunicja) unosi się nad sceną. Przytrzymaj przycisk myszy w dowolnym miejscu HUD-a i przeciągnij (zwykłe kliknięcie dalej uruchamia przyciski); położenie zapisuje się przy koncie gracza, więc działa na każdym komputerze. **Podwójny klik** na uchwycie przywraca go nad pasek makr.
 
 ## 🎨 Kolory systemów
 

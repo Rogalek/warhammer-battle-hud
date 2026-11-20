@@ -10,7 +10,7 @@
     "Empty": "{name}: zużyto ostatnią sztukę.",
     "Advantage": "Przewaga",
     "AdvantageHint": "Klik: +1 Przewagi. Prawy klik: −1.",
-    "Drag": "Przeciągnij, aby przesunąć HUD. Podwójny klik: powrót nad pasek makr.",
+    "Drag": "Przeciągnij HUD z dowolnego miejsca, aby go przesunąć. Podwójny klik: powrót nad pasek makr.",
     "Settings": {
       "ShowAdvantageName": "Pokazuj duży licznik walki",
       "ShowAdvantageHint": "Duży licznik z przodu HUD-a: Przewaga w WFRP, Przewaga drużyny w Imperium Maledictum, Chwała w Wrath & Glory i Ogień Duszy w Soulbound. Klik dodaje punkt, prawy klik odejmuje.",
