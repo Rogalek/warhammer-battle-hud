@@ -1,15 +1,30 @@
 /**
  * Pasek walki: licznik Przewagi, panel akcji postaci oraz amunicja, przeładowanie i szybka zmiana broni.
  * Pokazuje zaznaczoną postać, a bez zaznaczenia postać przypisaną do gracza.
- * HUD przesuwa się za uchwyt; podwójny klik na uchwycie wraca na miejsce nad paskiem makr.
+ * HUD przesuwa się po przytrzymaniu myszy w dowolnym miejscu; podwójny klik na uchwycie wraca na miejsce nad paskiem makr.
  */
 import { MODULE_ID, t, log } from "./constants.mjs";
 import { getSetting, hasSetting, setSetting } from "./settings.mjs";
 import { ammoState } from "./ammo-data.mjs";
 import { advantageLevel, clampAnchor, isAnchor } from "./hud-data.mjs";
 import { counterFor } from "./counters.mjs";
+import { handsFor } from "./hands.mjs";
+import { groupSlots, handsUsed } from "./hands-data.mjs";
+import { tooltipHtml } from "../actions/tooltip.mjs";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+/** Tyle pikseli ruchu odróżnia przeciąganie od kliknięcia. */
+const DRAG_THRESHOLD = 5;
+
+/** Kliknięcie w pasek przewijania panelu ma przewijać, nie przesuwać HUD-a. */
+function onScrollbar(event) {
+  const el = event.target;
+  if (!(el instanceof HTMLElement)) return false;
+  const rect = el.getBoundingClientRect();
+  return (el.scrollHeight > el.clientHeight && event.clientX > rect.left + el.clientLeft + el.clientWidth)
+    || (el.scrollWidth > el.clientWidth && event.clientY > rect.top + el.clientTop + el.clientHeight);
+}
 
 export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
   /** Adapter amunicji; `null` w systemach, które jej nie śledzą. */
@@ -29,7 +44,10 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
       toggleEquip: BattleBar.#onToggleEquip,
       openTab: BattleBar.#onOpenTab,
       runAction: BattleBar.#onRunAction,
-      gainAdvantage: BattleBar.#onGainAdvantage
+      gainAdvantage: BattleBar.#onGainAdvantage,
+      toggleHand: BattleBar.#onToggleHand,
+      holdWeapon: BattleBar.#onHoldWeapon,
+      emptyHand: BattleBar.#onEmptyHand
     }
   };
 
@@ -50,11 +68,19 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const editable = Boolean(counter.canEdit(actor));
     return {
       ...data,
-      level: advantageLevel(data.value, data.max),
+      level: data.level ?? advantageLevel(data.value, data.max),
+      toggle: Boolean(counter.toggle),
+      state: counter.toggle ? game.i18n.localize(data.active ? "WHAMMO.MomentumOn" : "WHAMMO.MomentumOff") : data.value,
       editable,
       label: game.i18n.localize(counter.label),
       hint: game.i18n.localize(editable || !counter.readOnlyHint ? counter.hint : counter.readOnlyHint)
     };
+  }
+
+  /** Czy HUD pokazuje ręce tej postaci (system z zasadami rąk, postać z bronią, którą gracz może zmieniać). */
+  static showsHands(actor) {
+    const hands = handsFor(game.system.id);
+    return Boolean(actor?.isOwner && hands && hasSetting("showHands") && getSetting("showHands") && hands.supports(actor) && actor.itemTypes.weapon?.length);
   }
 
   /** Pokazuje, odświeża albo chowa pasek zależnie od bieżącej postaci. */
@@ -62,7 +88,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#instance ??= new this();
     const actor = this.actor;
     const ammo = this.adapter && getSetting("showBar") && actor && this.adapter.allWeapons(actor).length > 0;
-    const visible = ammo || (actor && this.actions && getSetting("showActions")) || this.advantage(actor);
+    const visible = ammo || (actor && this.actions && getSetting("showActions")) || this.advantage(actor) || this.showsHands(actor);
     if (visible) this.#instance.render({ force: true });
     else if (this.#instance.rendered) this.#instance.close();
   }
@@ -75,6 +101,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** Lista broni, dla której otwarto wybór amunicji. */
   openList = null;
+  /** Ręka, dla której otwarto wybór broni. */
+  openHand = null;
   /** Zakładka panelu akcji, która jest rozwinięta. */
   openTab = null;
   /** Ostatnio pokazana Przewaga („uuid:wartość”) – zmiana wartości uruchamia animację licznika. */
@@ -89,7 +117,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const { adapter } = this;
     const actor = this.constructor.actor;
     if (!actor) return context;
-    Object.assign(context, this.#actionContext(actor), { advantage: this.#advantageContext(actor) });
+    Object.assign(context, this.#actionContext(actor), { advantage: this.#advantageContext(actor), hands: this.#handsContext(actor) });
     if (!adapter || !getSetting("showBar")) return Object.assign(context, { weapons: [], gear: [] });
     const low = getSetting("lowAmmo");
     const onlyEquipped = getSetting("onlyEquipped");
@@ -112,7 +140,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           options: list.map((item) => ({ ...entry(item), current: item.id === ammo?.id }))
         };
       }),
-      gear: getSetting("showGear") ? all.filter((w) => !ranged.includes(w)).map((w) => ({ id: w.id, name: w.name, img: w.img, equipped: adapter.isEquipped(w) })) : []
+      // Ręce zakładają broń same, więc przy nich mała grupa ikon byłaby dublem
+      gear: getSetting("showGear") && !this.constructor.showsHands(actor) ? all.filter((w) => !ranged.includes(w)).map((w) => ({ id: w.id, name: w.name, img: w.img, equipped: adapter.isEquipped(w) })) : []
     });
   }
 
@@ -127,6 +156,47 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const changed = Boolean(this.#shownAdvantage?.startsWith(`${actor.uuid}:`)) && this.#shownAdvantage !== key;
     this.#shownAdvantage = key;
     return { ...advantage, changed };
+  }
+
+  /** Ręce: slot na rękę (broń dwuręczna zajmuje dwa), pod kliknięciem lista broni do wzięcia w tę rękę. */
+  #handsContext(actor) {
+    if (!this.constructor.showsHands(actor)) return null;
+    const hands = handsFor(game.system.id);
+    const slots = hands.slots(actor);
+    if (!slots.length) return null;
+    const options = hands.options(actor);
+    const anyUseless = slots.some((slot) => slot.useless);
+    const label = (key) => game.i18n.localize(`WHAMMO.Hands.${key}`);
+    const groups = groupSlots(slots);
+    if (!groups.some((group) => group.key === this.openHand)) this.openHand = null;
+    return {
+      used: handsUsed(slots),
+      total: slots.filter((slot) => !slot.over).length,
+      label: label("Label"),
+      slots: groups.map((group) => {
+        const role = group.span > 1 ? label("Both") : label(group.over ? "Over" : { main: "Main", off: "Off", extra: "Extra" }[group.role]);
+        const open = this.openHand === group.key && !group.useless;
+        return {
+          key: group.key,
+          span: group.span,
+          role: group.role,
+          item: group.item,
+          useless: group.useless,
+          over: group.over,
+          open,
+          tooltip: tooltipHtml({
+            name: role,
+            details: [
+              { label: label("Holds"), value: group.item?.name ?? label("Empty") },
+              { label: label("TwoHanded"), value: group.item?.twoHanded ? game.i18n.localize("Yes") : undefined }
+            ],
+            text: group.useless ? label("Useless") : group.role === "off" && group.span === 1 ? game.i18n.localize(hands.offhandHint) : "",
+            hint: group.useless ? "" : label("Hint")
+          }),
+          options: open ? options.map((o) => ({ ...o, current: o.id === group.item?.id, disabled: o.twoHanded && anyUseless })) : []
+        };
+      })
+    };
   }
 
   #actionContext(actor) {
@@ -147,6 +217,11 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     super._onFirstRender(context, options);
     const root = this.element;
     root.addEventListener("contextmenu", (event) => {
+      const hand = event.target.closest(".whb-hand[data-hand]");
+      if (hand) {
+        event.preventDefault();
+        return this.#emptyHand(hand.dataset.hand);
+      }
       if (event.target.closest(".whb-advantage")) {
         event.preventDefault();
         return this.#changeAdvantage(-1);
@@ -203,29 +278,49 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     Object.assign(style, { left: `${x}px`, bottom: `${bottom}px` });
   }
 
-  /** HUD przesuwa się za uchwyt; położenie zapisujemy po puszczeniu, i tylko gdy faktycznie się ruszył. */
+  /**
+   * HUD przesuwa się, gdy przytrzymamy przycisk myszy gdziekolwiek na nim i pociągniemy.
+   * Na przyciskach przeciąganie rusza dopiero po kilku pikselach, więc zwykłe kliknięcie dalej działa,
+   * a kliknięcie kończące przeciąganie jest tłumione. Położenie zapisujemy po puszczeniu.
+   */
   #onDragStart(event) {
-    if (!event.target.closest(".whb-grip") || event.button !== 0) return;
-    event.preventDefault();
+    if (event.button !== 0 || event.target.closest("input, select, textarea, [contenteditable]") || onScrollbar(event)) return;
+    const onGrip = Boolean(event.target.closest(".whb-grip"));
+    if (onGrip) event.preventDefault();
     const { element } = this;
+    const start = { x: event.clientX, y: event.clientY };
     const box = element.getBoundingClientRect();
     const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY };
     let moved = false;
     const move = (e) => {
-      moved = true;
+      if (!moved) {
+        if (!onGrip && Math.hypot(e.clientX - start.x, e.clientY - start.y) < DRAG_THRESHOLD) return;
+        moved = true;
+        element.classList.add("dragging");
+        window.getSelection()?.removeAllRanges();
+        game.tooltip?.deactivate?.();
+      }
       this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y) });
     };
     const stop = () => {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", stop);
+      window.removeEventListener("pointercancel", stop);
       element.classList.remove("dragging");
       if (!moved) return;
+      // Puszczenie myszy nad przyciskiem nie może go wcisnąć
+      const swallow = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      };
+      window.addEventListener("click", swallow, { capture: true, once: true });
+      setTimeout(() => window.removeEventListener("click", swallow, { capture: true }), 0);
       const { left, width, bottom } = element.getBoundingClientRect();
       setSetting("hudPosition", { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom) });
     };
-    element.classList.add("dragging");
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
   }
 
   /** Pozycje z paska dotyczą zawsze aktualnej postaci, a błędy systemu nie mogą zostawiać kliknięcia bez odpowiedzi. */
@@ -270,6 +365,46 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static #onReload(_event, target) {
     return this.#withWeapon(target, (actor, weapon) => this.adapter.reload(actor, weapon));
+  }
+
+  static #onToggleHand(_event, target) {
+    const key = target.closest("[data-hand]")?.dataset.hand;
+    this.openHand = this.openHand === key ? null : key;
+    this.render();
+  }
+
+  static #onHoldWeapon(_event, target) {
+    const key = target.closest("[data-hand]")?.dataset.hand;
+    this.openHand = null;
+    return this.#withHands(async (actor, hands) => {
+      const result = await hands.hold(actor, key, target.dataset.weapon);
+      if (result?.error) ui.notifications.warn(t(`Hands.${result.error}`));
+    });
+  }
+
+  static #onEmptyHand(_event, target) {
+    this.openHand = null;
+    return this.#emptyHand(target.closest("[data-hand]")?.dataset.hand);
+  }
+
+  #emptyHand(key) {
+    if (key === undefined) return;
+    return this.#withHands((actor, hands) => hands.empty(actor, key));
+  }
+
+  /** Zmiana rąk zawsze dla aktualnej postaci; błędy reguł systemu (limit, niesprawna ręka) system już pokazał. */
+  async #withHands(action) {
+    const actor = this.constructor.actor;
+    const hands = handsFor(game.system.id);
+    if (!actor || !hands) return;
+    try {
+      await action(actor, hands);
+    } catch (err) {
+      log.error("hands", err);
+      if (!(err instanceof Error && err.message)) ui.notifications.error(typeof err === "string" ? err : t("Failed"));
+    } finally {
+      if (this.rendered) this.render();
+    }
   }
 
   static #onToggleEquip(_event, target) {

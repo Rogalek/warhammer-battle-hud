@@ -293,9 +293,155 @@ body.whb-system-age-of-sigmar-soulbound {
 }
 
 #warhammer-battle-hud-bar.dragging,
-#warhammer-battle-hud-bar.dragging .whb-grip {
+#warhammer-battle-hud-bar.dragging * {
   cursor: grabbing;
   user-select: none;
+}
+
+/* Ręce: slot na rękę, broń dwuręczna zajmuje dwa; nad slotem lista broni do wzięcia */
+.whb-hands {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 3px;
+  background: var(--whb-bg);
+  border: 1px solid var(--whb-border);
+  border-radius: 4px;
+  color: var(--whb-text);
+}
+
+.whb-hands-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--whb-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.whb-hands-label strong {
+  color: var(--whb-text);
+}
+
+.whb-hand-slots {
+  display: flex;
+  gap: 3px;
+}
+
+.whb-hand {
+  position: relative;
+  /* broń dwuręczna: szerokość dwóch slotów z odstępem */
+  width: calc(var(--whb-span, 1) * 2.75rem + (var(--whb-span, 1) - 1) * 3px);
+}
+
+.whb-hand-slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2.75rem;
+  margin: 0;
+  padding: 2px;
+  background: var(--whb-bg-strong);
+  border: 1px dashed var(--whb-border);
+  border-radius: 4px;
+  color: var(--whb-muted);
+  font-size: 1.1rem;
+}
+
+.whb-hand.held .whb-hand-slot {
+  border-style: solid;
+  border-color: var(--whb-highlight);
+  color: var(--whb-text);
+}
+
+.whb-hand-slot:hover:not(:disabled) {
+  border-color: var(--whb-highlight-strong);
+  color: var(--whb-highlight);
+}
+
+.whb-hand-slot img {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  object-fit: contain;
+}
+
+.whb-hand.useless .whb-hand-slot {
+  border-color: #a03030;
+  color: #e05050;
+  cursor: not-allowed;
+}
+
+.whb-hand.over .whb-hand-slot {
+  border-color: #e0a030;
+}
+
+.whb-hand-mark,
+.whb-two-handed {
+  position: absolute;
+  bottom: 1px;
+  padding: 0 2px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--whb-highlight);
+  font-size: 0.55rem;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.whb-hand-mark {
+  left: 1px;
+}
+
+.whb-two-handed {
+  right: 1px;
+}
+
+.whb-hand-list {
+  z-index: 2;
+  min-width: 12rem;
+}
+
+.whb-hand-list button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2rem;
+  padding: 0 0.3rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--whb-text);
+  font-size: 0.8rem;
+}
+
+.whb-hand-list button:hover:not(:disabled) {
+  border-color: var(--whb-highlight);
+}
+
+.whb-hand-list img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  object-fit: contain;
+}
+
+.whb-hand-list .whb-two-handed {
+  position: static;
+}
+
+.whb-hand-list .fa-hand {
+  margin-left: auto;
+  color: var(--whb-highlight);
+}
+
+.whb-hand-list button:disabled {
+  opacity: 0.45;
 }
 
 /* Przewaga – kluczowa w walce, więc duża i zawsze na wierzchu */
@@ -320,7 +466,11 @@ body.whb-system-age-of-sigmar-soulbound {
   transition: box-shadow 0.25s, border-color 0.25s;
 }
 
-.whb-advantage:hover {
+.whb-advantage.readonly {
+  cursor: help;
+}
+
+.whb-advantage:hover:not(.readonly) {
   border-color: var(--whb-highlight-strong);
 }
 
@@ -334,6 +484,12 @@ body.whb-system-age-of-sigmar-soulbound {
 .whb-advantage-value {
   font-size: 2.1rem;
   font-weight: bold;
+}
+
+/* Impet (WFRP 5e): ikona zamiast liczby */
+.whb-advantage-value.whb-momentum {
+  font-size: 1.6rem;
+  line-height: 1.2;
 }
 
 .whb-advantage-max {

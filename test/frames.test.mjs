@@ -8,12 +8,18 @@ describe("wybór postaci", () => {
   const bruno = actor("b");
   const rat = actor("r", "npc", false);
   const base = { partyTypes: ["character"], isGM: true };
-  it("drużyna: postacie przypisane graczom, bez powtórzeń i bez MG", () => {
-    const users = [{ isGM: true, character: rat }, { isGM: false, character: anna }, { isGM: false, character: anna }, { isGM: false, character: null }];
+  it("drużyna: postacie zalogowanych graczy, bez powtórzeń i bez MG", () => {
+    const users = [{ isGM: true, active: true, character: rat }, { isGM: false, active: true, character: anna }, { isGM: false, active: true, character: anna }, { isGM: false, active: false, character: bruno }];
     expect(pickActors({ ...base, mode: "party", users, actors: [anna, bruno] })).toEqual([anna]);
   });
-  it("drużyna bez przypisań: postacie należące do graczy", () => {
-    expect(pickActors({ ...base, mode: "party", users: [], actors: [anna, bruno, rat] })).toEqual([anna, bruno]);
+  it("drużyna: gracz bez przypisanej postaci pokazuje te, których jest właścicielem", () => {
+    const users = [{ id: "u1", isGM: false, active: true, character: null }];
+    const owns = (a, u) => u.id === "u1" && a.uuid === "b";
+    expect(pickActors({ ...base, mode: "party", users, actors: [anna, bruno, rat], owns })).toEqual([bruno]);
+  });
+  it("drużyna: bez zalogowanych graczy ramki są puste", () => {
+    const users = [{ isGM: false, active: false, character: anna }];
+    expect(pickActors({ ...base, mode: "party", users, actors: [anna, bruno] })).toEqual([]);
   });
   it("walka: MG widzi wszystkich, gracz tylko postacie graczy", () => {
     expect(pickActors({ ...base, mode: "combat", combatants: [anna, rat, null] })).toEqual([anna, rat]);
@@ -79,7 +85,7 @@ describe("wybór widocznych postaci", () => {
   const base = { partyTypes: ["character"], isGM: true };
 
   it("w trybie drużyny można dodać postać gracza bez przypisania", () => {
-    const users = [{ isGM: false, character: anna }];
+    const users = [{ isGM: false, active: true, character: anna }];
     const input = { ...base, mode: "party", users, actors: [anna, bruno, rat] };
     expect(candidateActors(input)).toEqual([anna, bruno]);
   });

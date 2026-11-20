@@ -4,9 +4,10 @@
  */
 import { MODULE_ID, I18N } from "./constants.mjs";
 
-export function registerSettings(hasAmmo, onChange, hasAdvantage = false) {
+export function registerSettings(hasAmmo, onChange, hasAdvantage = false, hasHands = false) {
   const definitions = {
     ...(hasAdvantage ? { showAdvantage: { scope: "client", type: Boolean, default: true } } : {}),
+    ...(hasHands ? { showHands: { scope: "client", type: Boolean, default: true } } : {}),
     showActions: { scope: "client", type: Boolean, default: true },
     actionsOnlyEquipped: { scope: "client", type: Boolean, default: true },
     blindOnShift: { scope: "client", type: Boolean, default: true },

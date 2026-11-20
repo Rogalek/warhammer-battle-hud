@@ -5,15 +5,19 @@
  *  - Wrath & Glory: Chwała drużyny (licznik systemu; gracze zmieniają ją, gdy MG na to pozwala),
  *  - Soulbound: Ogień Duszy drużyny (jak wyżej).
  * Systemy bez wpisu nie mają licznika.
+ *
+ * Liczniki zmienia ręcznie tylko MG; gracze widzą wartość i zasady w podpowiedzi.
  */
-import { advantageOf } from "./hud-data.mjs";
+import { advantageOf, momentumOf } from "./hud-data.mjs";
+import { is5e } from "../actions/edition.mjs";
 
 const COUNTERS = {
   wfrp4e: {
     label: "WHAMMO.Advantage",
     hint: "WHAMMO.AdvantageHint",
+    readOnlyHint: "WHAMMO.AdvantageReadOnly",
     read: (actor) => advantageOf(actor),
-    canEdit: (actor) => actor.isOwner,
+    canEdit: () => game.user.isGM,
     change: (actor, delta) => actor.modifyAdvantage(delta)
   },
   impmal: {
@@ -34,7 +38,7 @@ const COUNTERS = {
     readOnlyHint: "WHAMMO.GloryReadOnly",
     read: () => ({ value: Number(game.settings.get("wrath-and-glory", "glory")) || 0, max: Number(game.settings.get("wrath-and-glory", "gloryMax")) || 0 }),
     // Jak licznik systemu: gracze zmieniają Chwałę ręcznie tylko wtedy, gdy MG na to pozwala
-    canEdit: () => game.user.isGM || game.settings.get("wrath-and-glory", "playerCounterEdit"),
+    canEdit: () => game.user.isGM,
     change: (_actor, delta) => game.wng.RuinGloryCounter.changeCounter(delta, "glory"),
     hooks: ["updateSetting"]
   },
@@ -43,10 +47,25 @@ const COUNTERS = {
     hint: "WHAMMO.SoulfireHint",
     readOnlyHint: "WHAMMO.SoulfireReadOnly",
     read: () => ({ value: Number(game.settings.get("age-of-sigmar-soulbound", "soulfire")) || 0, max: 0 }),
-    canEdit: () => game.user.isGM || game.settings.get("age-of-sigmar-soulbound", "playerCounterEdit"),
+    canEdit: () => game.user.isGM,
     change: (_actor, delta) => game.counter.constructor.changeCounter(delta, "soulfire"),
     hooks: ["updateSetting"]
   }
 };
 
-export const counterFor = (systemId) => COUNTERS[systemId] ?? null;
+/**
+ * WFRP z zasadami 5e nie ma puli Przewagi: karta postaci pokazuje Impet (tak/nie).
+ * MG klikiem przyznaje albo odbiera Impet, prawym klikiem go odbiera; resztę (zdobycie po wygranym teście wręcz albo szarży,
+ * utrata po obrażeniach, przegranym teście, stanie, końcu walki) liczy sam system.
+ */
+const MOMENTUM = {
+  label: "WHAMMO.Momentum",
+  hint: "WHAMMO.MomentumHint",
+  readOnlyHint: "WHAMMO.MomentumReadOnly",
+  toggle: true,
+  read: (actor) => momentumOf(actor),
+  canEdit: () => game.user.isGM,
+  change: (actor, delta) => actor.update({ "system.status.momentum": delta > 0 ? !actor.system.status.momentum : false })
+};
+
+export const counterFor = (systemId) => (systemId === "wfrp4e" && is5e() ? MOMENTUM : COUNTERS[systemId] ?? null);

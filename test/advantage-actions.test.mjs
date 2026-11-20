@@ -58,3 +58,19 @@ describe("sterowanie i układ", () => {
     expect(LAYOUT[0]).toMatchObject({ id: "advantage", groups: [B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage] });
   });
 });
+
+describe("zasady 5e: bez puli Przewagi", () => {
+  const localize = (key) => key;
+  const actor5e = { type: "character", system: { status: { momentum: false, advantage: { value: 0, max: 10 } } } };
+
+  it("licznik Przewagi i jej użycia znikają (Impet jest na dużym liczniku)", () => {
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "5e" })).toEqual([]);
+    expect(B.buildAdvantageActions(actor5e, { config, localize, edition: "5e" })).toEqual([]);
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e" })).toHaveLength(1);
+  });
+
+  it("licznik Przewagi w panelu widzi tylko MG", () => {
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e", isGM: false })).toEqual([]);
+    expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e", isGM: true })).toHaveLength(1);
+  });
+});

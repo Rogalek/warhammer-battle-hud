@@ -27,7 +27,13 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 ## 🧭 Floating HUD
 
-The HUD (Advantage, action panel and ammunition) floats over the scene. Drag it by the handle on its left; the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
+The HUD (Advantage, action panel and ammunition) floats over the scene. Hold the mouse button anywhere on it and drag (a plain click still uses the buttons); the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
+
+## ✋ Hands (WFRP, Imperium Maledictum)
+
+Next to the big counter, **Hands** shows what each hand holds and how many are in use (2/2). A two-handed weapon fills both hands; the other hand is marked **Off**, and its tooltip explains the off-hand penalty the system applies. **Click** a hand to pick a weapon for it: whatever was there is put away, a two-handed weapon clears both hands, and a weapon already held moves to the chosen hand. **Right-click** empties the hand.
+
+In WFRP the number of hands is the character's equip points (2, or more for creatures with extra arms) and the system's limit on equipped weapons still applies. In Imperium Maledictum it is the left and right hand, with the dominant one as the main hand; a hand that cannot be used (an injury) is crossed out. While Hands are shown, the small group of weapon icons in the ammunition row is left out, since Hands do the same job. It can be hidden in the settings.
 
 ## 🎨 System colours
 
@@ -35,7 +41,7 @@ The HUD and the party frames take the colours of the active system's character s
 
 ## ⚡ Advantage (WFRP)
 
-The big counter at the front of the HUD follows the system: the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound (the GM changes them, or players too when the system allows it). In WFRP, the large counter shows the character's Advantage and glows brighter as it grows, up to the maximum. **Click**: +1, **right-click**: −1. The party frames highlight it too. It can be hidden in the settings.
+The big counter at the front of the HUD follows the system: the party's Superiority in Imperium Maledictum, Glory in Wrath & Glory and Soulfire in Soulbound. In WFRP, the large counter shows the character's Advantage and glows brighter as it grows, up to the maximum. Only the GM changes the counter by hand: **click** +1, **right-click** −1. Players see the value and its rules in the tooltip. The party frames highlight it too. It can be hidden in the settings.
 
 The first tab of the action panel, **Advantage**, lists what the character can spend Advantage on right now, each with its cost (⚡1, ⚡2): the system's Advantage actions (with Up in Arms: Batter, Trick, Additional Effort, Flee from Harm, Additional Action) and, with **Underworld Crew** (`wfrp4e-underworld`), the tactical orders the Chief's retinue can carry out. Actions the character cannot afford yet are dimmed. Clicking an Advantage action spends the cost, posts it to chat and rolls its test, just like the button on the character sheet; clicking a crew order opens Underworld's order dialog.
 
@@ -51,9 +57,13 @@ Tabs above the hotbar for the selected token, or your assigned character. In WFR
 
 In systems that track ammunition (WFRP, Imperium Maledictum, Wrath & Glory): choose the ammunition, reload, and equip weapons or shields with one click. The count turns amber when low and red when gone.
 
+## 🏃 Momentum (WFRP, 5th edition rules)
+
+The WFRP system can run on the 4th edition rules (the default) or the 5th edition ones (Edition Manager → Use 5e). With the 5th edition rules there is no Advantage pool, so the big counter shows **Momentum** instead, as the character sheet does: **Active** or **None**. Momentum gives +1 Advantage on Weapon Skill tests; the system grants it for winning a melee opposed test in combat or charging, and removes it when the character takes damage, loses a melee opposed test, gains a condition, or combat ends. The HUD follows those changes. The GM can also grant or take it by hand: **click** toggles it, **right-click** takes it away. Players only see it. The Advantage actions are 4th edition only, so they leave the action panel, and the party frames show Momentum in place of Advantage.
+
 ## 🖼️ Party frames
 
-Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
+The frames are hidden at first: turn them on with the party frames button in the token controls (or in the settings). In Party mode they show the characters of the players who are logged in right now (a player's assigned character, or the characters they own); players who log out drop off. Portrait, health, the system's resources and conditions for each character. **Click** targets the token, **double-click** goes to it, **right-click** opens the sheet. The header switches between Party, Combat and Selected tokens, collapses the frames and moves them when dragged.
 
 * **Choose characters** (the person icon in the header): a list of the mode's characters where you tick who is shown. In Party mode you can also add a player character that isn't assigned to anyone. The number next to the icon says how many are hidden. The choice is yours and follows you to any computer.
 * **×** on a frame (on hover) hides that one character.

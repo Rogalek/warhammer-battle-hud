@@ -180,7 +180,7 @@ export async function performAction(actor, action, intent) {
       case "increase":
       case "decrease": {
         const up = intent.intent === "increase";
-        if (action.type === T.advantage) return await actor.modifyAdvantage(up ? 1 : -1);
+        if (action.type === T.advantage) return game.user.isGM ? await actor.modifyAdvantage(up ? 1 : -1) : undefined;
         return await toggleCondition(actor, action.id, up);
       }
     }

@@ -11,15 +11,22 @@ const unique = (actors) => [...new Map(actors.filter(Boolean).map((a) => [a.uuid
 
 /**
  * Które postacie pokazać.
- * party: przypisane graczom, a gdy nikogo nie przypisano, postacie należące do graczy.
+ * party: postacie graczy, którzy są teraz zalogowani – przypisana postać gracza, a bez przypisania
+ *   postacie, których jest właścicielem. Gracze offline znikają z ramek (można ich dodać ręcznie).
  * combat: walczący (gracze widzą tylko postacie graczy). selected: zaznaczone tokeny.
  */
-export function pickActors({ mode, users = [], actors = [], combatants = [], controlled = [], partyTypes, isGM }) {
+export function pickActors({ mode, users = [], actors = [], combatants = [], controlled = [], partyTypes, isGM, owns = defaultOwns }) {
   if (mode === "combat") return unique(isGM ? combatants : combatants.filter((a) => a?.hasPlayerOwner));
   if (mode === "selected") return unique(controlled);
-  const assigned = unique(users.filter((u) => !u.isGM).map((u) => u.character)).filter((a) => partyTypes.includes(a.type));
-  return assigned.length ? assigned : unique(actors.filter((a) => a.hasPlayerOwner && partyTypes.includes(a.type)));
+  const party = (a) => a && partyTypes.includes(a.type);
+  return unique(users.filter((u) => !u.isGM && u.active).flatMap((user) => {
+    if (party(user.character)) return [user.character];
+    return actors.filter((a) => party(a) && a.hasPlayerOwner && owns(a, user));
+  }));
 }
+
+/** Czy gracz jest właścicielem postaci (w Foundry: uprawnienie OWNER). */
+const defaultOwns = (actor, user) => Boolean(actor.testUserPermission?.(user, "OWNER"));
 
 /** Wypełnienie paska w procentach, od 0 do 100. */
 export function percent(value, max) {

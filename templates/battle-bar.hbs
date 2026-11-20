@@ -2,11 +2,50 @@
   <div class="whb-side">
     <div class="whb-grip" data-tooltip="{{localize 'WHAMMO.Drag'}}" aria-label="{{localize 'WHAMMO.Drag'}}"><i class="fa-solid fa-grip-vertical" inert></i></div>
     {{#if advantage}}
-      <button type="button" class="whb-advantage {{advantage.level}} {{#if advantage.changed}}changed{{/if}}" data-action="gainAdvantage" data-tooltip="{{advantage.hint}}" aria-label="{{advantage.label}}: {{advantage.value}}">
+      <button type="button" class="whb-advantage {{advantage.level}} {{#if advantage.changed}}changed{{/if}} {{#unless advantage.editable}}readonly{{/unless}}" data-action="gainAdvantage" data-tooltip="{{advantage.hint}}" aria-label="{{advantage.label}}: {{advantage.state}}">
         <span class="whb-advantage-label">{{advantage.label}}</span>
-        <strong class="whb-advantage-value">{{advantage.value}}</strong>
-        {{#if advantage.max}}<span class="whb-advantage-max">/ {{advantage.max}}</span>{{/if}}
+        {{#if advantage.toggle}}
+          <strong class="whb-advantage-value whb-momentum"><i class="fa-solid {{#if advantage.active}}fa-angles-right{{else}}fa-minus{{/if}}" inert></i></strong>
+          <span class="whb-advantage-max">{{advantage.state}}</span>
+        {{else}}
+          <strong class="whb-advantage-value">{{advantage.value}}</strong>
+        {{/if}}
+        {{#if advantage.max}}{{#unless advantage.toggle}}<span class="whb-advantage-max">/ {{advantage.max}}</span>{{/unless}}{{/if}}
       </button>
+    {{/if}}
+    {{#if hands}}
+      <div class="whb-hands" aria-label="{{hands.label}}: {{hands.used}}/{{hands.total}}">
+        <span class="whb-hands-label">{{hands.label}} <strong>{{hands.used}}/{{hands.total}}</strong></span>
+        <div class="whb-hand-slots">
+          {{#each hands.slots}}
+            <div class="whb-hand {{role}} {{#if item}}held{{/if}} {{#if useless}}useless{{/if}} {{#if over}}over{{/if}}" data-hand="{{key}}" style="--whb-span: {{span}}">
+              {{#if open}}
+                <ul class="wham-list whb-hand-list">
+                  {{#each options}}
+                    <li><button type="button" class="{{#if current}}current{{/if}}" data-action="holdWeapon" data-weapon="{{id}}" {{#if disabled}}disabled{{/if}}>
+                      <img src="{{img}}" alt=""> <span>{{name}}</span>
+                      {{#if twoHanded}}<em class="whb-two-handed">2</em>{{/if}}
+                      {{#if equipped}}<i class="fa-solid fa-hand" inert></i>{{/if}}
+                    </button></li>
+                  {{/each}}
+                  {{#if item}}
+                    <li><button type="button" data-action="emptyHand"><i class="fa-regular fa-hand" inert></i> <span>{{localize "WHAMMO.Hands.EmptyIt"}}</span></button></li>
+                  {{/if}}
+                </ul>
+              {{/if}}
+              <button type="button" class="whb-hand-slot" data-action="toggleHand" data-tooltip-html="{{tooltip}}" data-tooltip-class="whb-tooltip" {{#if useless}}disabled{{/if}}>
+                {{#if item}}
+                  <img src="{{item.img}}" alt="{{item.name}}">
+                  {{#if item.twoHanded}}<em class="whb-two-handed">2</em>{{/if}}
+                {{else}}
+                  <i class="fa-{{#if useless}}solid fa-hand-dots{{else}}regular fa-hand{{/if}}" inert></i>
+                {{/if}}
+                {{#if (eq role "off")}}{{#unless item.twoHanded}}<span class="whb-hand-mark">{{localize "WHAMMO.Hands.OffShort"}}</span>{{/unless}}{{/if}}
+              </button>
+            </div>
+          {{/each}}
+        </div>
+      </div>
     {{/if}}
   </div>
   <div class="whb-stack">

@@ -41,3 +41,12 @@ describe("Przewaga", () => {
     expect(advantageOf(null)).toBeNull();
   });
 });
+
+describe("Impet na dużym liczniku (WFRP 5e)", () => {
+  it("jest przełącznikiem tak/nie", async () => {
+    const { momentumOf } = await import("../scripts/bar/hud-data.mjs");
+    expect(momentumOf({ system: { status: { momentum: true } } })).toEqual({ value: 1, max: 0, active: true, level: "high" });
+    expect(momentumOf({ system: { status: { momentum: false } } })).toMatchObject({ active: false, level: "none" });
+    expect(momentumOf({ system: {} })).toBeNull();
+  });
+});

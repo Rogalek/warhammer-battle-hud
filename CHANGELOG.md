@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0
+- Only the GM changes the big counter by hand (Advantage, Momentum, Superiority, Glory, Soulfire); players see the value and the rules in its tooltip. The Advantage counter in the action panel is GM-only too. Spending Advantage on its actions still works for players, as on the sheet.
+- WFRP with the 5th edition rules: the big counter shows Momentum (Active/None) instead of Advantage, as the character sheet does, and follows the system gaining and losing it. The GM grants or takes it with a click, right-click takes it away. The Advantage actions (4th edition only) leave the action panel and the party frames show Momentum instead of Advantage.
+- The party frames start hidden; turn them on with the button in the token controls or in the settings.
+- Party mode of the party frames shows only the characters of players who are logged in.
+- While Hands are shown, the small group of weapon icons is left out (Hands do the same job).
+- Hands (WFRP, Imperium Maledictum): a slot for each hand next to the big counter shows what it holds and how many hands are in use. Click a hand to put a weapon in it (two-handed weapons take both, whatever was there is put away), right-click to empty it. In WFRP the off hand is marked and the number of hands follows the character's equip points.
+- The HUD can be dragged from anywhere on it, not only by the handle. A plain click still uses the buttons, and releasing a drag over a button does not press it.
+
 ## 0.7.0
 - WFRP: a Downtime tab with Income (the current career's earning test, as on the sheet), Rest (Endurance, or Toughness without the skill) and the world's endeavour pages.
 - WFRP: channelled SL is shown where it builds up – on the spell ("2/4") in 4e and on the Wind in 5e, with a tooltip row – and "Lose the channelled power" at the top of the Magic tab clears it.

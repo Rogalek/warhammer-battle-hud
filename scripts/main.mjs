@@ -8,6 +8,7 @@ import { registerSettings as registerBarSettings, getSetting } from "./bar/setti
 import { adapterFor as ammoFor } from "./bar/systems/index.mjs";
 import { BattleBar } from "./bar/battle-bar.mjs";
 import { counterFor } from "./bar/counters.mjs";
+import { handsFor } from "./bar/hands.mjs";
 import { t } from "./bar/constants.mjs";
 import { registerSettings as registerFrameSettings, getSetting as getFrameSetting, toggleFrames } from "./frames/settings.mjs";
 import { adapterFor as framesFor } from "./frames/systems.mjs";
@@ -35,7 +36,7 @@ Hooks.once("init", () => {
   PartyFrames.adapter = frames;
   BattleBar.adapter = ammoFor(game.system.id);
   registerFrameSettings(refreshFrames);
-  registerBarSettings(Boolean(BattleBar.adapter), refreshBar, Boolean(counterFor(game.system.id)));
+  registerBarSettings(Boolean(BattleBar.adapter), refreshBar, Boolean(counterFor(game.system.id)), Boolean(handsFor(game.system.id)));
   // Zasoby spoza aktora (np. Przewaga Taktyczna w ustawieniach świata) odświeżają licznik własnym hookiem
   for (const hook of counterFor(game.system.id)?.hooks ?? []) Hooks.on(hook, () => refreshBar());
   game.modules.get(MODULE_ID).api = {
@@ -61,7 +62,7 @@ Hooks.once("ready", async () => {
 
   // Wszystko, co zmienia zawartość ramek
   for (const hook of [
-    "updateActor", "createActor", "deleteActor", "updateUser",
+    "updateActor", "createActor", "deleteActor", "updateUser", "userConnected",
     "createActiveEffect", "updateActiveEffect", "deleteActiveEffect", "createItem", "deleteItem",
     "controlToken", "targetToken", "createToken", "deleteToken", "canvasReady",
     "createCombat", "updateCombat", "deleteCombat", "createCombatant", "deleteCombatant"

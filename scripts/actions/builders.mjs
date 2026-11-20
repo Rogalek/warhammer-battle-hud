@@ -347,7 +347,7 @@ export function buildConditions(actor, env) {
 
 export function buildAdvantage(actor, env) {
   const advantage = actor?.system?.status?.advantage;
-  if (!advantage) return [];
+  if (!advantage || env.edition === "5e" || env.isGM === false) return [];
   return [{
     id: `${T.advantage}`,
     name: env.localize("WFRP4E_HUD.Advantage"),
@@ -368,7 +368,7 @@ const currentAdvantage = (actor) => Number(actor?.system?.status?.advantage?.val
 
 /** Użycia Przewagi z konfiguracji systemu (np. Grzmotnięcie, Sztuczka z Up in Arms), z kosztem. */
 export function buildAdvantageActions(actor, env) {
-  if (!actor?.system?.status?.advantage) return [];
+  if (!actor?.system?.status?.advantage || env.edition === "5e") return [];
   const current = currentAdvantage(actor);
   return (env.config?.groupAdvantageActions ?? []).map((action, index) => {
     const cost = Number(action.cost) || 0;
