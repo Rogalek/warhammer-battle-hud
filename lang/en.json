@@ -22,6 +22,8 @@
       "ShowGearHint": "A small group of icons for equipping melee weapons and shields with one click.",
       "LowAmmoName": "Low ammunition warning",
       "LowAmmoHint": "The count turns amber at this number or below.",
+      "ShowHandsName": "Show the hands",
+      "ShowHandsHint": "Systems with hand rules (WFRP, Imperium Maledictum): what each hand holds, with two-handed weapons taking both. Click a hand to pick a weapon for it, right-click to empty it.",
       "ShowActionsName": "Show the action panel",
       "ShowActionsHint": "Tabs above the hotbar with the character's tests, weapons, spells and conditions.",
       "ActionsOnlyEquippedName": "Action panel: only equipped gear",
@@ -58,7 +60,25 @@
     "GloryReadOnly": "The party's Glory (spent in tests; the GM decides whether players change it by hand).",
     "Soulfire": "Soulfire",
     "SoulfireHint": "The party's Soulfire. Click: +1. Right-click: −1.",
-    "SoulfireReadOnly": "The party's Soulfire (the GM decides whether players change it by hand)."
+    "SoulfireReadOnly": "The party's Soulfire (the GM decides whether players change it by hand).",
+    "Hands": {
+      "Label": "Hands",
+      "Main": "Main hand",
+      "Off": "Other hand",
+      "Extra": "Extra hand",
+      "Both": "Both hands",
+      "Over": "Over the hand limit",
+      "OffShort": "Off",
+      "Holds": "Holds",
+      "Empty": "Nothing",
+      "TwoHanded": "Two-handed",
+      "EmptyIt": "Empty this hand",
+      "Hint": "Click: choose what this hand holds. Right-click: empty it.",
+      "Useless": "This hand cannot hold anything (an injury or effect).",
+      "OffhandHintWfrp": "Attacks with this hand take the off-hand penalty (the system applies it). With Dual Wielder you can attack with both weapons.",
+      "OffhandHintIm": "This is not the character's dominant hand; the system applies the off-hand rules to its tests.",
+      "NoHands": "The character does not have enough hands for this weapon."
+    }
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",

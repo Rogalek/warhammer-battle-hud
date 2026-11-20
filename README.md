@@ -29,6 +29,12 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 The HUD (Advantage, action panel and ammunition) floats over the scene. Hold the mouse button anywhere on it and drag (a plain click still uses the buttons); the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar.
 
+## ✋ Hands (WFRP, Imperium Maledictum)
+
+Next to the big counter, **Hands** shows what each hand holds and how many are in use (2/2). A two-handed weapon fills both hands; the other hand is marked **Off**, and its tooltip explains the off-hand penalty the system applies. **Click** a hand to pick a weapon for it: whatever was there is put away, a two-handed weapon clears both hands, and a weapon already held moves to the chosen hand. **Right-click** empties the hand.
+
+In WFRP the number of hands is the character's equip points (2, or more for creatures with extra arms) and the system's limit on equipped weapons still applies. In Imperium Maledictum it is the left and right hand, with the dominant one as the main hand; a hand that cannot be used (an injury) is crossed out. It can be hidden in the settings.
+
 ## 🎨 System colours
 
 The HUD and the party frames take the colours of the active system's character sheet: parchment and dark red in WFRP, cream and crimson in The Old World, navy, teal and orange in Imperium Maledictum, Imperial red on graphite in Wrath & Glory, and Azyr blue with gold in Soulbound. The frames' look can be switched back to Parchment or Imperium in the settings.

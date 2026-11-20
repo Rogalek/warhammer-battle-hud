@@ -22,6 +22,8 @@
       "ShowGearHint": "Mała grupa ikon do zakładania broni białej i tarcz jednym kliknięciem.",
       "LowAmmoName": "Ostrzeżenie o małej ilości amunicji",
       "LowAmmoHint": "Przy tej liczbie lub mniejszej licznik zmienia kolor na bursztynowy.",
+      "ShowHandsName": "Pokaż ręce",
+      "ShowHandsHint": "W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. Klik na ręce wybiera do niej broń, prawy klik ją opróżnia.",
       "ShowActionsName": "Pokaż panel akcji",
       "ShowActionsHint": "Zakładki nad paskiem makr z testami, bronią, zaklęciami i stanami postaci.",
       "ActionsOnlyEquippedName": "Panel akcji: tylko założony sprzęt",
@@ -58,7 +60,25 @@
     "GloryReadOnly": "Chwała drużyny (wydawana w testach; MG decyduje, czy gracze zmieniają ją ręcznie).",
     "Soulfire": "Ogień Duszy",
     "SoulfireHint": "Ogień Duszy drużyny. Klik: +1. Prawy klik: −1.",
-    "SoulfireReadOnly": "Ogień Duszy drużyny (MG decyduje, czy gracze zmieniają go ręcznie)."
+    "SoulfireReadOnly": "Ogień Duszy drużyny (MG decyduje, czy gracze zmieniają go ręcznie).",
+    "Hands": {
+      "Label": "Ręce",
+      "Main": "Ręka wiodąca",
+      "Off": "Druga ręka",
+      "Extra": "Dodatkowa ręka",
+      "Both": "Obie ręce",
+      "Over": "Ponad limit rąk",
+      "OffShort": "2.",
+      "Holds": "Trzyma",
+      "Empty": "Nic",
+      "TwoHanded": "Dwuręczna",
+      "EmptyIt": "Opróżnij tę rękę",
+      "Hint": "Klik: wybierz, co trzyma ta ręka. Prawy klik: opróżnij ją.",
+      "Useless": "Ta ręka nie może nic trzymać (uraz albo efekt).",
+      "OffhandHintWfrp": "Ataki tą ręką dostają karę za drugą rękę (nalicza ją system). Z talentem Walka Dwiema Brońmi możesz atakować obiema.",
+      "OffhandHintIm": "To nie jest ręka wiodąca postaci; system stosuje do jej testów zasady drugiej ręki.",
+      "NoHands": "Postać nie ma dość rąk na tę broń."
+    }
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Hands (WFRP, Imperium Maledictum): a slot for each hand next to the big counter shows what it holds and how many hands are in use. Click a hand to put a weapon in it (two-handed weapons take both, whatever was there is put away), right-click to empty it. In WFRP the off hand is marked and the number of hands follows the character's equip points.
 - The HUD can be dragged from anywhere on it, not only by the handle. A plain click still uses the buttons, and releasing a drag over a button does not press it.
 
 ## 0.7.0
