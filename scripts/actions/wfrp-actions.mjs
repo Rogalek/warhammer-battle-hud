@@ -115,6 +115,50 @@ async function issueGangOrder(actor, action) {
 }
 
 /**
+ * Dochód jak przycisk na karcie: ścieżka kariery (5e) albo bieżąca kariera – test Zarobkowania
+ * z umiejętności kariery, a system sam przelicza zarobek według Statusu.
+ */
+async function rollIncome(actor) {
+  if (actor.itemTypes.careerPath?.length) return actor.system.career.rollIncome();
+  const career = actor.itemTypes.career?.find((c) => c.system.current?.value);
+  if (!career) return ui.notifications.warn(t("Notify.NoCareer"));
+  if (career.system.requiredTrappingStatus?.length && career.system.requiredTrappingStatus.some((trapping) => !trapping.owned)) {
+    return ui.notifications.error("SHEET.RequiredTrappingsError", { localize: true });
+  }
+  const skills = (career.system.incomeSkill ?? [])
+    .map((index) => career.system.skills[index])
+    .map((name) => actor.itemTypes.skill.find((skill) => skill.name === name))
+    .filter(Boolean);
+  if (!skills.length) return ui.notifications.error("SHEET.SkillMissingWarning", { localize: true });
+  const skill = skills[0];
+  return runTest(actor.setupSkill(skill, {
+    title: `${skill.name} - ${game.i18n.localize("Income")}`,
+    income: actor.system.details.status,
+    career: career.toObject()
+  }));
+}
+
+/** Odpoczynek jak na karcie: test Odporności (albo Wytrzymałości bez tej umiejętności) z odzyskiwaniem Żywotności. */
+async function rest(actor) {
+  const skill = actor.itemTags?.skill?.find((s) => s.name === game.i18n.localize("NAME.Endurance"))
+    ?? actor.itemTypes.skill.find((s) => s.name === game.i18n.localize("NAME.Endurance"));
+  const options = { rest: true, tb: actor.characteristics.t.bonus, skipTargets: true };
+  return runTest(skill ? actor.setupSkill(skill, options) : actor.setupCharacteristic("t", options));
+}
+
+/** Przedsięwzięcie: strona dziennika z przyciskiem „Perform Endeavour” systemu. */
+async function openEndeavour(_actor, action) {
+  return (await fromUuid(action.id))?.sheet?.render({ force: true });
+}
+
+/** Zebrane splatanie przepada (np. po rozproszeniu): zaklęcia 4e albo Wiatr 5e. */
+async function resetChannelling(actor) {
+  const spells = actor.itemTypes.spell.filter((s) => Number(s.system.cn?.SL) > 0);
+  if (spells.length) await actor.updateEmbeddedDocuments("Item", spells.map((s) => ({ _id: s.id, "system.cn.SL": 0 })));
+  if (Number(actor.system.status?.channelling?.value) > 0) await actor.update({ "system.status.channelling.value": 0, "system.status.channelling.wind": "" });
+}
+
+/**
  * Wykonuje akcję dla jednego aktora.
  * @param {Actor} actor
  * @param {{type: string, id: string, extra: string}} action  zdekodowana akcja
@@ -129,7 +173,10 @@ export async function performAction(actor, action, intent) {
       case "damage": return await damageGear(actor, action, 1);
       case "repair": return await damageGear(actor, action, -1);
       case "run": return await runManualScript(actor, action);
-      case "use": return action.type === T.gangOrder ? await issueGangOrder(actor, action) : await useAdvantageAction(actor, action);
+      case "use": {
+        const use = { [T.gangOrder]: issueGangOrder, [T.income]: rollIncome, [T.rest]: rest, [T.endeavour]: openEndeavour, [T.channelReset]: resetChannelling }[action.type];
+        return await (use ?? useAdvantageAction)(actor, action);
+      }
       case "increase":
       case "decrease": {
         const up = intent.intent === "increase";

@@ -22,7 +22,8 @@ export function wngPanel(actor, e = env()) {
     { id: "skills", columns: 4, groups: B.buildSkillGroups(actor, e) },
     { id: "powers", groups: [group("Powers", B.buildPowers(actor, e))] },
     { id: "abilities", groups: [group("Abilities", abilities.abilities), group("Talents", abilities.talents), group("Keywords", abilities.keywords)] },
-    { id: "status", groups: [group("Resources", status.resources), group("Conditions", status.conditions), group("Injuries", status.injuries)] }
+    { id: "status", groups: [group("Resources", status.resources), group("Conditions", status.conditions), group("Injuries", status.injuries)] },
+    { id: "downtime", groups: [group("Social", status.social)] }
   ], label);
 }
 
@@ -44,6 +45,8 @@ async function perform(actor, { type, id }, mods, settings) {
       return actor.addCondition(id);
     case WNG.wrath:
       return actor.update({ "system.resources.wrath": Math.max(0, (actor.system.resources.wrath ?? 0) + (mods.right ? -1 : 1)) });
+    case WNG.wealth:
+      return actor.update({ "system.resources.wealth": Math.max(0, (actor.system.resources.wealth ?? 0) + (mods.right ? -1 : 1)) });
     case WNG.faith: {
       const { current = 0, total = 0 } = actor.system.resources.faith ?? {};
       return actor.update({ "system.resources.faith.current": Math.max(0, Math.min(total, current + (mods.right ? -1 : 1))) });

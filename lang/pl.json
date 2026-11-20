@@ -123,7 +123,8 @@
       "Magic": "Magia",
       "Religion": "Wiara",
       "Talents": "Talenty",
-      "Conditions": "Stany"
+      "Conditions": "Stany",
+      "Downtime": "Poza walką"
     },
     "Groups": {
       "Characteristics": "Cechy",
@@ -144,7 +145,9 @@
       "Conditions": "Stany",
       "Advantage": "Przewaga",
       "AdvantageActions": "Użycie Przewagi",
-      "GangOrders": "Rozkazy szajki"
+      "GangOrders": "Rozkazy szajki",
+      "Downtime": "Między przygodami",
+      "ChannelledReset": "Spleciona moc"
     },
     "Info": {
       "Damage": "Uszkodzenie przedmiotu",
@@ -155,7 +158,8 @@
       "ItemMissing": "Tego przedmiotu nie ma już u aktora.",
       "EffectMissing": "Ten skrypt efektu nie jest już dostępny.",
       "ActionFailed": "Akcja nie powiodła się. Szczegóły w konsoli (F12).",
-      "NotEnoughAdvantage": "Za mało Przewagi: koszt {cost}, masz {current}."
+      "NotEnoughAdvantage": "Za mało Przewagi: koszt {cost}, masz {current}.",
+      "NoCareer": "Ta postać nie ma bieżącej kariery."
     },
     "Tip": {
       "Initial": "Początkowa",
@@ -207,7 +211,10 @@
       "Activation": "Aktywacja",
       "Training": "Wyszkolenie",
       "Focus": "Skupienie",
-      "CV": "WR"
+      "CV": "WR",
+      "Channelled": "Splecione PS",
+      "Career": "Kariera",
+      "Status": "Status"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -218,8 +225,15 @@
       "Effect": "Klik: uruchom skrypt · Prawy klik: karta efektu",
       "Counter": "Klik: +1 · Prawy klik: −1",
       "AdvantageAction": "Klik: wydaj Przewagę i użyj",
-      "GangOrder": "Klik: okno rozkazu"
-    }
+      "GangOrder": "Klik: okno rozkazu",
+      "Income": "Klik: test Zarobkowania umiejętnością bieżącej kariery",
+      "Rest": "Klik: odpoczynek – test Odporności na odzyskanie Żywotności",
+      "Endeavour": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
+      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)"
+    },
+    "Income": "Dochód",
+    "Rest": "Odpoczynek",
+    "ChannelledReset": "Utrata splecionej mocy"
   },
   "WHB_TOW": {
     "Reload": "Przeładuj",
@@ -238,7 +252,8 @@
       "magic": "Magia",
       "religion": "Wiara",
       "talents": "Talenty",
-      "status": "Stan"
+      "status": "Stan",
+      "downtime": "Poza walką"
     },
     "Groups": {
       "Actions": "Akcje",
@@ -256,7 +271,8 @@
       "Lores": "Wiedze",
       "Fate": "Los",
       "Conditions": "Stany",
-      "Wounds": "Rany"
+      "Wounds": "Rany",
+      "Endeavours": "Przedsięwzięcia"
     },
     "Hint": {
       "Action": "Klik: wykonaj akcję",
@@ -275,7 +291,9 @@
       "Counter": "Klik: +1 · Prawy klik: −1",
       "FateRefresh": "Klik: odnów Los do maksimum",
       "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
-      "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany"
+      "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany",
+      "EndeavourTest": "Klik: test przedsięwzięcia dla tej postaci",
+      "EndeavourPage": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)"
     }
   },
   "WHB_IM": {
@@ -343,7 +361,8 @@
       "skills": "Umiejętności",
       "powers": "Psionika",
       "abilities": "Zdolności",
-      "status": "Stan"
+      "status": "Stan",
+      "downtime": "Poza walką"
     },
     "Groups": {
       "Melee": "Broń do walki wręcz",
@@ -357,7 +376,8 @@
       "Keywords": "Słowa kluczowe",
       "Resources": "Zasoby",
       "Conditions": "Stany",
-      "Injuries": "Urazy i mutacje"
+      "Injuries": "Urazy i mutacje",
+      "Social": "Wpływy i Bogactwo"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -372,8 +392,11 @@
       "resolve": "Klik: test Hartu ducha",
       "conviction": "Klik: test Przekonania",
       "corruption": "Klik: test Spaczenia",
-      "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)"
-    }
+      "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
+      "influence": "Klik: test Wpływów"
+    },
+    "Wealth": "Bogactwo",
+    "influence": "Wpływy"
   },
   "WHB_SB": {
     "Initiative": "Inicjatywa",

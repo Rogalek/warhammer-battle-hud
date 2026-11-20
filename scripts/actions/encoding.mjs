@@ -25,7 +25,11 @@ export const ACTION_TYPES = Object.freeze({
   condition: "condition",
   advantage: "advantage",
   advantageAction: "advantageAction",
-  gangOrder: "gangOrder"
+  gangOrder: "gangOrder",
+  income: "income",
+  rest: "rest",
+  endeavour: "endeavour",
+  channelReset: "channelReset"
 });
 
 /** Składa wartość przycisku z typu, id i opcjonalnego dodatku. */

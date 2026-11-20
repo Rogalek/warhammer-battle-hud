@@ -863,3 +863,15 @@ body.whb-system-age-of-sigmar-soulbound {
   max-width: 90vw;
   max-height: 70vh;
 }
+
+/* Zebrane splatanie (WFRP): zaklęcie albo Wiatr z mocą czekającą na rzucenie */
+#warhammer-battle-hud-bar .whb-action.channelled {
+  border-color: var(--whb-highlight);
+  box-shadow: inset 0 0 6px rgba(160, 120, 255, 0.45);
+}
+
+#warhammer-battle-hud-bar .whb-action.channelled small {
+  color: var(--whb-highlight-strong);
+  font-weight: bold;
+  opacity: 1;
+}

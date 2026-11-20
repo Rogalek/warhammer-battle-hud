@@ -12,6 +12,7 @@ const ITEM_BACKED = new Set([TOW.weapon, TOW.ability, TOW.shield, TOW.armour, TO
 
 const env = () => ({
   config: game.oldworld?.config ?? {},
+  endeavours: game.journal.contents.flatMap((j) => j.pages.contents).filter((p) => p.getFlag("whtow", "endeavour") && p.testUserPermission(game.user, "OBSERVER")),
   localize: (key) => game.i18n.localize(key),
   isGM: game.user.isGM
 });
@@ -31,7 +32,8 @@ export function towPanel(actor, e = env()) {
     { id: "magic", groups: [group("Casting", magic.lores), group("Spells", magic.spells), group("Miscasts", magic.miscasts)] },
     { id: "religion", groups: [group("Blessing", B.buildBlessing(actor, e))] },
     { id: "talents", groups: [group("Talents", usable.talents), group("Abilities", usable.abilities), group("Lores", usable.lores)] },
-    { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions), group("Wounds", status.wounds)] }
+    { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions), group("Wounds", status.wounds)] },
+    { id: "downtime", groups: [group("Endeavours", B.buildEndeavours(e))] }
   ];
   return finishPanel(tabs, label);
 }
@@ -39,6 +41,16 @@ export function towPanel(actor, e = env()) {
 async function openSheet(uuid) {
   const doc = await fromUuid(uuid);
   return doc?.sheet?.render({ force: true });
+}
+
+/** Przedsięwzięcie z samym testem: jak przycisk na stronie, ale dla postaci z HUD-a; reszta otwiera stronę. */
+async function performEndeavour(actor, uuid) {
+  const page = await fromUuid(uuid);
+  const data = page?.getFlag("whtow", "endeavour") ?? {};
+  if (!data.test?.skill || data.script || data.chooseSkill) return page?.sheet?.render({ force: true });
+  const test = await actor.setupSkillTest(data.test.skill, { endeavour: data.key || true, appendTitle: ` - ${page.name}` });
+  if (test?.succeeded && data.effect) await actor.createEmbeddedDocuments("ActiveEffect", [data.effect]);
+  return test;
 }
 
 async function disposeMiscast(actor) {
@@ -93,6 +105,7 @@ async function perform(actor, { type, id, extra }, mods, settings) {
       await actor.update({ "system.fate.current": max });
       return ChatMessage.create({ content: game.i18n.format("WHB_TOW.FateRestored", { max }), speaker: { alias: actor.name }, flavor: game.i18n.localize("WHB_TOW.Fate") });
     }
+    case TOW.endeavour: return performEndeavour(actor, id);
     case TOW.wound: {
       if (mods.right) return openSheet(id);
       const wound = await fromUuid(id);

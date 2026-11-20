@@ -17,6 +17,7 @@ export const WNG = Object.freeze({
   sheet: "sheet",
   condition: "condition",
   wrath: "wrath",
+  wealth: "wealth",
   faith: "faith",
   initiative: "initiative"
 });
@@ -169,6 +170,11 @@ export function buildStatus(actor, env) {
     ...(res.faith?.total > 0 ? [{ name: env.localize("WHB_WNG.Faith"), value: v(WNG.faith), detail: `${res.faith.current ?? 0}/${res.faith.total}`, tooltip: { hint: hint(env, "Counter") } }] : []),
     { name: env.localize("WHB_WNG.corruption"), value: v(WNG.generic, "corruption"), detail: String(actor?.system?.corruption?.current ?? 0), tooltip: { hint: hint(env, "corruption") } }
   ];
+  // Poza walką: Wpływy (test jak na karcie) i Bogactwo (wartość do zmiany)
+  const social = [
+    { name: env.localize("WHB_WNG.influence"), value: v(WNG.generic, "influence"), detail: String(res.influence ?? 0), tooltip: { hint: hint(env, "influence") } },
+    { name: env.localize("WHB_WNG.Wealth"), value: v(WNG.wealth), detail: String(res.wealth ?? 0), tooltip: { hint: hint(env, "Counter") } }
+  ];
   const conditions = (env.statusEffects ?? []).filter((s) => s.id && s.id !== "dead").map((status) => {
     const active = Boolean(actor?.hasCondition?.(status.id));
     return {
@@ -186,5 +192,5 @@ export function buildStatus(actor, env) {
     cssClass: "untreated",
     tooltip: { text: description(item), hint: hint(env, "Sheet") }
   }));
-  return { resources, conditions, injuries };
+  return { resources, social, conditions, injuries };
 }

@@ -45,6 +45,9 @@ export function resolveIntent(type, mods = {}, settings = {}) {
   // Użycie Przewagi i rozkaz szajki: lewy klik wykonuje, prawy nic nie robi
   if (type === T.advantageAction || type === T.gangOrder) return { intent: right ? "none" : "use" };
 
+  // Między przygodami i czyszczenie splatania: lewy klik wykonuje
+  if ([T.income, T.rest, T.endeavour, T.channelReset].includes(type)) return { intent: right ? "none" : "use" };
+
   if (right) return { intent: ITEM_BACKED.has(type) ? "sheet" : "none" };
 
   if (ROLLABLE.has(type)) {
