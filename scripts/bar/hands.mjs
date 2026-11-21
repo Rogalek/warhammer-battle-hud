@@ -30,10 +30,13 @@ export function gearAdapter({ types, isEquipped, setEquipped, twoHanded = () => 
     supports: (actor) => all(actor).length > 0,
     hasItems: (actor) => all(actor).length > 0,
     slots: (actor) => [...all(actor).filter(isEquipped).map((item) => ({ key: item.id, role: "gear", item: view(item) })), { key: "add", role: "add", item: null }],
-    /** Pole przedmiotu: zamiana na nieużywany przedmiot (albo pozostawienie); pole „+”: przedmioty do założenia. */
-    options: (actor, key) => all(actor)
-      .filter((item) => !isEquipped(item) || item.id === key)
-      .map((item) => ({ ...view(item), equipped: isEquipped(item) })),
+    /** Pole przedmiotu: zamiana na nieużywany przedmiot tego samego rodzaju (broń na broń, pancerz na pancerz); pole „+”: wszystko do założenia. */
+    options(actor, key) {
+      const type = key === "add" ? null : actor.items.get(key)?.type;
+      return all(actor)
+        .filter((item) => (!isEquipped(item) || item.id === key) && (!type || item.type === type))
+        .map((item) => ({ ...view(item), equipped: isEquipped(item) }));
+    },
     async hold(actor, key, itemId) {
       if (key !== "add" && key !== itemId) {
         const current = actor.items.get(key);

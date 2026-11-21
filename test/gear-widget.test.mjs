@@ -30,6 +30,8 @@ describe("widżet Wyposażenie (systemy bez rąk)", () => {
   it("„+” proponuje tylko nieużywane przedmioty, ze znacznikiem dwuręcznej", () => {
     expect(adapter().options(fresh(), "add").map((o) => [o.id, o.twoHanded])).toEqual([["halberd", true]]);
     expect(adapter().options(fresh(), "sword").map((o) => o.id)).toEqual(["halberd", "sword"]);
+    // Zamiana tylko na ten sam rodzaj: w polu pancerza nie ma broni
+    expect(adapter().options(fresh(), "mail").map((o) => o.id)).toEqual(["mail"]);
   });
 
   it("założenie przez „+”, zamiana w polu i odłożenie", async () => {
