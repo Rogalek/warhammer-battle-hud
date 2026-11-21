@@ -248,7 +248,10 @@
       "CV": "WR",
       "Channelled": "Splecione PS",
       "Career": "Kariera",
-      "Status": "Status"
+      "Status": "Status",
+      "Successes": "Sukcesy",
+      "Weapon": "Broń",
+      "Equipped": "Założone"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -306,7 +309,10 @@
       "Fate": "Los",
       "Conditions": "Stany",
       "Wounds": "Rany",
-      "Endeavours": "Przedsięwzięcia"
+      "Endeavours": "Przedsięwzięcia",
+      "Defending": "Obrona przed",
+      "Mount": "Wierzchowiec",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Action": "Klik: wykonaj akcję",
@@ -327,10 +333,22 @@
       "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
       "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany",
       "EndeavourTest": "Klik: test przedsięwzięcia dla tej postaci",
-      "EndeavourPage": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)"
+      "EndeavourPage": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
+      "Defending": "Klik: przestań się bronić przed tym atakiem",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot",
+      "Mount": "Klik: dosiądź albo zsiądź · Prawy klik: otwórz wierzchowca",
+      "MountItem": "Klik: użyj z wierzchowcem · Prawy klik: otwórz przedmiot",
+      "WoundAdd": "Klik: dodaj ranę i ją otwórz"
     },
     "DicePool": "{dice}k10 ≤{target}",
-    "DicePoolRule": "Rzucasz tyloma k10, ile wynosi cecha; każda kość z wynikiem nie większym niż umiejętność to sukces."
+    "DicePoolRule": "Rzucasz tyloma k10, ile wynosi cecha; każda kość z wynikiem nie większym niż umiejętność to sukces.",
+    "Speed": "Szybkość",
+    "Resilience": "Wytrzymałość",
+    "Mounted": "w siodle",
+    "Dismounted": "pieszo",
+    "AddWound": "Dodaj ranę",
+    "Attacker": "Atakujący",
+    "DefendingText": "Twój następny test odpowiada na ten atak, tak jak na karcie postaci."
   },
   "WHB_IM": {
     "Reload": "Przeładuj",

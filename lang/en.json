@@ -248,7 +248,10 @@
       "CV": "CV",
       "Channelled": "Channelled SL",
       "Career": "Career",
-      "Status": "Status"
+      "Status": "Status",
+      "Successes": "Successes",
+      "Weapon": "Weapon",
+      "Equipped": "Equipped"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -306,7 +309,10 @@
       "Fate": "Fate",
       "Conditions": "Conditions",
       "Wounds": "Wounds",
-      "Endeavours": "Endeavours"
+      "Endeavours": "Endeavours",
+      "Defending": "Defending against",
+      "Mount": "Mount",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Action": "Click: take the action",
@@ -327,10 +333,22 @@
       "Condition": "Click: add or remove · Right-click: remove",
       "Wound": "Click: mark as treated or untreated · Right-click: open the wound",
       "EndeavourTest": "Click: the endeavour's test for this character",
-      "EndeavourPage": "Click: open the endeavour (its page has the Perform button)"
+      "EndeavourPage": "Click: open the endeavour (its page has the Perform button)",
+      "Defending": "Click: stop defending against this attack",
+      "Equip": "Click: equip or put away · Right-click: open the item",
+      "Mount": "Click: mount or dismount · Right-click: open the mount",
+      "MountItem": "Click: use with the mount · Right-click: open the item",
+      "WoundAdd": "Click: add a wound and open it"
     },
     "DicePool": "{dice}d10 ≤{target}",
-    "DicePoolRule": "Roll as many d10 as the characteristic; every die at or under the skill is a success."
+    "DicePoolRule": "Roll as many d10 as the characteristic; every die at or under the skill is a success.",
+    "Speed": "Speed",
+    "Resilience": "Resilience",
+    "Mounted": "mounted",
+    "Dismounted": "dismounted",
+    "AddWound": "Add a wound",
+    "Attacker": "Attacker",
+    "DefendingText": "Your next test answers this attack, as on the character sheet."
   },
   "WHB_IM": {
     "Reload": "Reload",

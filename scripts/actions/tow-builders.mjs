@@ -25,7 +25,12 @@ export const TOW = Object.freeze({
   fate: "fate",
   fateRefresh: "fateRefresh",
   wound: "wound",
-  endeavour: "endeavour"
+  woundAdd: "woundAdd",
+  endeavour: "endeavour",
+  equip: "equip",
+  opposed: "opposed",
+  mount: "mount",
+  mountItem: "mountItem"
 });
 
 /** Wartość przycisku i jej odczyt; identyfikatory UUID nie zawierają „|”. */
@@ -117,11 +122,9 @@ export function buildSkillGroups(actor, env) {
     .filter((group) => group.actions.length);
 }
 
-/** Założona broń (bez założonej – cała), przeładowanie, zdolności ataku, tarcze i pancerz. */
+/** Jak na karcie: tylko założona broń, przeładowanie, zdolności ataku, tarcze i pancerz. */
 export function buildCombat(actor, env) {
-  const weapons = items(actor, "weapon");
-  const equipped = weapons.filter((w) => w.system?.isEquipped);
-  const shown = equipped.length ? equipped : weapons;
+  const shown = items(actor, "weapon").filter((w) => w.system?.isEquipped);
   const weaponAction = (weapon) => {
     const system = weapon.system ?? {};
     const unloaded = system.requiresLoading && !system.isLoaded;
@@ -188,6 +191,91 @@ export function buildCombat(actor, env) {
     attacks,
     armour: armour.map(armourAction)
   };
+}
+
+/** Szybkość i Wytrzymałość z karty postaci – do nagłówków grup w zakładce Walka. */
+export function combatStats(actor, env) {
+  const speed = actor?.system?.speed?.value;
+  return {
+    speed: speed === undefined || speed === null || speed === "" ? undefined : env.localize(env.config?.speed?.[speed] ?? String(speed)),
+    resilience: actor?.system?.resilience?.value
+  };
+}
+
+/** Obrona: atak, na który odpowie następny test postaci (jak „Defending Against” na karcie). */
+export function buildDefending(actor, env) {
+  const test = actor?.system?.opposed?.system?.test;
+  if (!test) return [];
+  const successes = test.result?.successes;
+  return [{
+    name: test.actor?.name ?? env.localize("WHB_TOW.Attacker"),
+    img: test.actor?.prototypeToken?.texture?.src ?? test.actor?.img,
+    value: towValue(TOW.opposed),
+    detail: successes === undefined ? "" : String(successes),
+    cssClass: "untreated",
+    tooltip: {
+      details: [tip(env, "Weapon", test.item?.name), tip(env, "Successes", successes)],
+      text: env.localize("WHB_TOW.DefendingText"),
+      hint: hint(env, "Defending")
+    }
+  }];
+}
+
+/** Ekwipunek: każda broń, pancerz i tarcza – klik zakłada albo zdejmuje (jak w zakładce Wyposażenie). */
+export function buildEquipment(actor, env) {
+  return [...items(actor, "weapon"), ...items(actor, "armour")].map((item) => {
+    const s = item.system ?? {};
+    const isWeapon = item.type === "weapon";
+    return {
+      name: item.name,
+      img: item.img,
+      value: towValue(TOW.equip, item.uuid),
+      detail: String((isWeapon ? s.damage?.value : s.resilience) ?? ""),
+      cssClass: s.isEquipped ? "toggle active" : "toggle",
+      tooltip: {
+        details: [
+          tip(env, isWeapon ? "Damage" : "Resilience", isWeapon ? s.damage?.value : s.resilience),
+          tip(env, "Equipped", env.localize(s.isEquipped ? "Yes" : "No"))
+        ],
+        hint: hint(env, "Equip")
+      }
+    };
+  });
+}
+
+/** Wierzchowiec: dosiadanie/zsiadanie i jego przedmioty (ataki wierzchowca), jak sekcja Mount na karcie. */
+export function buildMount(actor, env) {
+  const mount = actor?.system?.mount;
+  const doc = mount?.document;
+  if (!doc) return [];
+  const mounted = !mount.dismounted;
+  const out = [{
+    name: doc.name,
+    img: doc.prototypeToken?.texture?.src ?? doc.img,
+    value: towValue(TOW.mount),
+    detail: env.localize(mounted ? "WHB_TOW.Mounted" : "WHB_TOW.Dismounted"),
+    cssClass: mounted ? "toggle active" : "toggle",
+    tooltip: { hint: hint(env, "Mount") }
+  }];
+  // Wierzchowiec bez danych przedmiotów (np. zwykły aktor) – getter systemu rzuca wyjątek
+  const mountItems = (() => {
+    try {
+      return [...(mount.items ?? [])];
+    } catch {
+      return [];
+    }
+  })();
+  for (const item of mountItems) {
+    out.push({
+      name: item.name,
+      img: item.img,
+      value: towValue(TOW.mountItem, item.uuid),
+      detail: String(item.system?.damage?.value ?? ""),
+      cssClass: mounted ? "" : "unaffordable",
+      tooltip: { details: [tip(env, "Damage", item.system?.damage?.value)], text: description(item), hint: hint(env, "MountItem") }
+    });
+  }
+  return out;
 }
 
 /** Magia: rzucanie z tradycji, zaklęcia z Wartością Rzucania i postępem, pula Miscastów. */
@@ -308,6 +396,8 @@ export function buildStatus(actor, env) {
       hint: hint(env, "Wound")
     }
   }));
+  // Nowa rana jak przycisk „+” na karcie
+  wounds.push({ name: env.localize("WHB_TOW.AddWound"), value: towValue(TOW.woundAdd), tooltip: { hint: hint(env, "WoundAdd") } });
   return { fate: fateActions, conditions, wounds };
 }
 

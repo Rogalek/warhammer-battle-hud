@@ -35,23 +35,24 @@ body.whb-system-wfrp4e {
 
 /* The Old World: krem, karmazyn i stara żółć */
 body.whb-system-whtow {
-  --whb-bg: rgba(32, 30, 29, 0.88);
-  --whb-bg-strong: rgba(26, 24, 23, 0.94);
-  --whb-border: #a39d8b;
-  --whb-text: #e8e0d6;
-  --whb-muted: #a39d8b;
-  --whb-accent: #b21a22;
-  --whb-highlight: #c6b869;
-  --whb-highlight-strong: #e6d98a;
+  /* Jak karta postaci The Old World: pergamin, granat tow-blue, krem, brąz nagłówków i złoto */
+  --whb-bg: rgba(232, 224, 214, 0.96);
+  --whb-bg-strong: rgba(232, 224, 214, 0.98);
+  --whb-border: rgb(0, 69, 94);
+  --whb-text: #333;
+  --whb-muted: #6a6b6b;
+  --whb-accent: rgb(0, 69, 94);
+  --whb-highlight: #a58b24;
+  --whb-highlight-strong: goldenrod;
   --whb-highlight-dark: #a58b24;
-  --whb-badge-from: #771c18;
-  --whb-badge-to: #2a0d0b;
+  --whb-badge-from: rgb(0, 69, 94);
+  --whb-badge-to: #002433;
   --whb-badge-text: #e8e0d6;
   --whb-frame-bg: rgba(232, 224, 214, 0.96);
   --whb-frame-text: #2a2420;
-  --whb-frame-border: #771c18;
-  --whb-frame-track: rgba(119, 28, 24, 0.2);
-  --whb-frame-accent: #b21a22;
+  --whb-frame-border: rgb(0, 69, 94);
+  --whb-frame-track: rgba(0, 69, 94, 0.2);
+  --whb-frame-accent: rgb(0, 69, 94);
 }
 
 /* Imperium Maledictum: granat, morski turkus i pomarańcz */
@@ -1046,4 +1047,91 @@ body.whb-system-age-of-sigmar-soulbound {
   color: var(--whb-highlight-strong);
   font-weight: bold;
   opacity: 1;
+}
+
+/* The Old World: HUD wygląda jak karta postaci systemu – pergaminowe tło, przyciski akcji w granacie
+   (tow-blue) z kremowym tekstem, nagłówki list na brązowym pasku, czcionki CaslonPro i Dominican */
+body.whb-system-whtow #warhammer-battle-hud-bar {
+  font-family: "CaslonPro", var(--font-text, serif);
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-panel,
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs,
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-grip,
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-hands,
+body.whb-system-whtow #warhammer-battle-hud-bar .wham-list {
+  background: #e8e0d6 url("../../../systems/whtow/assets/ui/background.webp") center / cover;
+  border-color: rgb(0, 69, 94);
+  color: #333;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #444;
+  font-family: "Dominican", var(--font-header, serif);
+  font-size: 0.85rem;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs button:hover {
+  background: rgba(0, 69, 94, 0.15);
+  border-color: rgb(0, 69, 94);
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs button.active {
+  background: rgba(0, 69, 94, 0.5);
+  border-color: #e8e0d6;
+  color: #e8e0d6;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-action {
+  background: rgba(0, 69, 94, 0.5);
+  border: 1px solid rgb(0, 69, 94);
+  border-radius: 4px;
+  color: #e8e0d6;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-action:hover {
+  background: rgb(0, 69, 94);
+  border-color: goldenrod;
+}
+
+/* Przełączniki: włączone pełnym granatem ze złotą ramką, wyłączone jasne */
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.toggle {
+  background: rgba(139, 151, 149, 0.35);
+  border-color: rgba(0, 69, 94, 0.5);
+  color: #333;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.toggle.active {
+  background: rgb(0, 69, 94);
+  border-color: goldenrod;
+  color: #e8e0d6;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.unaffordable {
+  opacity: 0.55;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.untreated {
+  background: rgba(178, 26, 34, 0.75);
+  border-color: #771c18;
+  color: #e8e0d6;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-panel h4 {
+  padding: 1px 4px;
+  background: rgba(163, 157, 139, 0.53);
+  border-bottom: 1px solid #a39d8b;
+  color: #333;
+  font-family: "CaslonPro", var(--font-text, serif);
+  opacity: 1;
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .whb-grip {
+  color: rgb(0, 69, 94);
+}
+
+body.whb-system-whtow #warhammer-battle-hud-bar .wham-list button {
+  color: #333;
 }
