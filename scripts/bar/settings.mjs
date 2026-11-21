@@ -18,7 +18,6 @@ export function registerSettings(hasAmmo, onChange, hasAdvantage = false, hasHan
     ...(hasAmmo ? {
       showBar: { scope: "client", type: Boolean, default: true },
       onlyEquipped: { scope: "client", type: Boolean, default: true },
-      showGear: { scope: "client", type: Boolean, default: true },
       lowAmmo: { scope: "world", type: Number, default: 3 }
     } : {})
   };

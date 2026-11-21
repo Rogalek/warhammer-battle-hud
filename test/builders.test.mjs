@@ -156,8 +156,8 @@ describe("poprawki broni i splatania", () => {
   const fighter = (list) => ({ type: "character", itemTypes: { weapon: list }, items: list });
   const envOnly = { localize: (k) => `L(${k})`, edition: "4e", settings: { onlyEquipped: true } };
 
-  it("bez założonej broni pokazuje wszystkie", () => {
-    expect(B.buildWeapons(fighter([weapon("B", false), weapon("A", false)]), envOnly).melee.map((a) => a.name)).toEqual(["A", "B"]);
+  it("bez założonej broni grupy są puste (broń zakłada się w Ekwipunku)", () => {
+    expect(B.buildWeapons(fighter([weapon("B", false), weapon("A", false)]), envOnly).melee).toEqual([]);
   });
   it("z założoną bronią pokazuje tylko ją", () => {
     expect(B.buildWeapons(fighter([weapon("B", true), weapon("A", false)]), envOnly).melee.map((a) => a.name)).toEqual(["B"]);

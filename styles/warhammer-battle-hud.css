@@ -15,6 +15,31 @@
   --whb-badge-from: #5a1f14;
   --whb-badge-to: #2a0d08;
   --whb-badge-text: #f3e3b5;
+  /* Wspólne tokeny wyglądu – każdy system ustawia te same nazwy, struktura stylów jest jedna */
+  --whb-surface-image: none;
+  --whb-font: inherit;
+  --whb-font-tab: inherit;
+  --whb-font-heading: inherit;
+  --whb-btn-bg: rgba(255, 255, 255, 0.06);
+  --whb-btn-text: var(--whb-text);
+  --whb-btn-border: transparent;
+  --whb-btn-hover-bg: rgba(255, 255, 255, 0.14);
+  --whb-btn-hover-border: var(--whb-highlight);
+  --whb-tab-bg: rgba(255, 255, 255, 0.06);
+  --whb-tab-text: var(--whb-text);
+  --whb-active-bg: var(--whb-accent);
+  --whb-active-image: none;
+  --whb-active-text: #fff;
+  --whb-active-border: transparent;
+  --whb-toggle-bg: var(--whb-btn-bg);
+  --whb-toggle-text: var(--whb-btn-text);
+  --whb-toggle-border: var(--whb-btn-border);
+  --whb-heading-bg: transparent;
+  --whb-heading-image: none;
+  --whb-heading-text: var(--whb-highlight);
+  --whb-heading-border: transparent;
+  --whb-alert-bg: rgba(224, 80, 80, 0.12);
+  --whb-alert-text: #e05050;
   /* Ramki drużyny w wyglądzie „systemu” */
   --whb-frame-bg: rgba(233, 220, 190, 0.95);
   --whb-frame-text: #2b1d0e;
@@ -23,21 +48,45 @@
   --whb-frame-accent: #8a5a00;
 }
 
-/* WFRP: pergamin, ciemna czerwień i złoto */
+/* WFRP: jak karta postaci – pergamin, ciemna czerwień aktywnej zakładki, granat zakładek, CaslonPro */
 body.whb-system-wfrp4e {
-  --whb-bg: rgba(38, 14, 10, 0.86);
-  --whb-bg-strong: rgba(30, 10, 8, 0.93);
-  --whb-border: #6b4f2a;
-  --whb-text: #f1ede9;
-  --whb-muted: #b5aeac;
-  --whb-accent: #7a1c12;
+  --whb-bg: rgba(239, 230, 216, 0.96);
+  --whb-bg-strong: rgba(239, 230, 216, 0.98);
+  --whb-surface-image: url("../../../systems/wfrp4e/ui/backgrounds/parchment-texture.webp");
+  --whb-border: rgba(115, 105, 83, 0.8);
+  --whb-text: #1e1a14;
+  --whb-muted: rgba(70, 67, 49, 0.85);
+  --whb-accent: #4a0404;
+  --whb-highlight: #846109;
+  --whb-highlight-strong: #a8790c;
+  --whb-highlight-dark: #4a0404;
+  --whb-font: "CaslonPro", serif;
+  --whb-font-tab: "CaslonAntiquePL", "CaslonAntique", serif;
+  --whb-font-heading: "CaslonAntiquePL", "CaslonAntique", serif;
+  --whb-btn-bg: rgba(123, 115, 59, 0.16);
+  --whb-btn-text: #111;
+  --whb-btn-border: rgba(115, 105, 83, 0.65);
+  --whb-btn-hover-bg: rgba(123, 115, 59, 0.32);
+  --whb-btn-hover-border: #4a0404;
+  --whb-tab-bg: transparent;
+  --whb-tab-text: #273444;
+  --whb-active-bg: #4a0404;
+  --whb-active-text: #f1ede9;
+  --whb-active-border: #846109;
+  --whb-toggle-bg: rgba(255, 255, 255, 0.35);
+  --whb-toggle-text: #273444;
+  --whb-toggle-border: rgba(115, 105, 83, 0.65);
+  --whb-heading-text: rgba(70, 67, 49, 0.95);
+  --whb-heading-border: rgba(115, 105, 83, 0.65);
+  --whb-alert-bg: #7a1c12;
+  --whb-alert-text: #f1ede9;
 }
 
-/* The Old World: krem, karmazyn i stara żółć */
+/* The Old World: jak karta postaci – pergamin, granat tow-blue z kremem, brązowe nagłówki list, złoto */
 body.whb-system-whtow {
-  /* Jak karta postaci The Old World: pergamin, granat tow-blue, krem, brąz nagłówków i złoto */
   --whb-bg: rgba(232, 224, 214, 0.96);
   --whb-bg-strong: rgba(232, 224, 214, 0.98);
+  --whb-surface-image: url("../../../systems/whtow/assets/ui/background.webp");
   --whb-border: rgb(0, 69, 94);
   --whb-text: #333;
   --whb-muted: #6a6b6b;
@@ -48,6 +97,27 @@ body.whb-system-whtow {
   --whb-badge-from: rgb(0, 69, 94);
   --whb-badge-to: #002433;
   --whb-badge-text: #e8e0d6;
+  --whb-font: "CaslonPro", serif;
+  --whb-font-tab: "Dominican", serif;
+  --whb-font-heading: "CaslonPro", serif;
+  --whb-btn-bg: rgba(0, 69, 94, 0.5);
+  --whb-btn-text: #e8e0d6;
+  --whb-btn-border: rgb(0, 69, 94);
+  --whb-btn-hover-bg: rgb(0, 69, 94);
+  --whb-btn-hover-border: goldenrod;
+  --whb-tab-bg: transparent;
+  --whb-tab-text: #444;
+  --whb-active-bg: rgb(0, 69, 94);
+  --whb-active-text: #e8e0d6;
+  --whb-active-border: goldenrod;
+  --whb-toggle-bg: rgba(139, 151, 149, 0.35);
+  --whb-toggle-text: #333;
+  --whb-toggle-border: rgba(0, 69, 94, 0.5);
+  --whb-heading-bg: rgba(163, 157, 139, 0.53);
+  --whb-heading-text: #333;
+  --whb-heading-border: #a39d8b;
+  --whb-alert-bg: rgba(178, 26, 34, 0.75);
+  --whb-alert-text: #e8e0d6;
   --whb-frame-bg: rgba(232, 224, 214, 0.96);
   --whb-frame-text: #2a2420;
   --whb-frame-border: rgb(0, 69, 94);
@@ -55,7 +125,7 @@ body.whb-system-whtow {
   --whb-frame-accent: rgb(0, 69, 94);
 }
 
-/* Imperium Maledictum: granat, morski turkus i pomarańcz */
+/* Imperium Maledictum: jak karta postaci – ciemny turkus, morska zieleń i pomarańcz */
 body.whb-system-impmal {
   --whb-bg: rgba(28, 49, 50, 0.9);
   --whb-bg-strong: rgba(20, 36, 37, 0.95);
@@ -69,6 +139,8 @@ body.whb-system-impmal {
   --whb-badge-from: #065c63;
   --whb-badge-to: #10201f;
   --whb-badge-text: #e6e6e6;
+  --whb-btn-border: rgba(6, 92, 99, 0.6);
+  --whb-active-border: #cf9742;
   --whb-frame-bg: rgba(28, 49, 50, 0.95);
   --whb-frame-text: #dddddd;
   --whb-frame-border: #065c63;
@@ -76,20 +148,40 @@ body.whb-system-impmal {
   --whb-frame-accent: #cf9742;
 }
 
-/* Wrath & Glory: imperialna czerwień na grafitowym tle */
+/* Wrath & Glory: jak karta postaci – jasny papier, czarne pola z jasnym tekstem, imperialna czerwień */
 body.whb-system-wrath-and-glory {
-  --whb-bg: rgba(24, 30, 31, 0.9);
-  --whb-bg-strong: rgba(18, 22, 23, 0.95);
-  --whb-border: #8b8d90;
-  --whb-text: #e6e5e3;
-  --whb-muted: #8b8d90;
+  --whb-bg: rgba(233, 231, 226, 0.96);
+  --whb-bg-strong: rgba(233, 231, 226, 0.98);
+  --whb-surface-image: url("../../../systems/wrath-and-glory/assets/image/background.webp");
+  --whb-border: #191813;
+  --whb-text: #000;
+  --whb-muted: #555;
   --whb-accent: #8a2e2a;
-  --whb-highlight: #c9a24a;
-  --whb-highlight-strong: #e6c36a;
+  --whb-highlight: #892e29;
+  --whb-highlight-strong: #b8443d;
   --whb-highlight-dark: #752322;
   --whb-badge-from: #8a2e2a;
   --whb-badge-to: #3a002c;
   --whb-badge-text: #e6e5e3;
+  --whb-font: "Caxton Std Book", serif;
+  --whb-font-tab: "Caxton Std Book", serif;
+  --whb-font-heading: "Priori", serif;
+  --whb-btn-bg: #000;
+  --whb-btn-text: #e6e5e3;
+  --whb-btn-border: #000;
+  --whb-btn-hover-bg: #2a2a2a;
+  --whb-btn-hover-border: #8a2e2a;
+  --whb-tab-bg: #000;
+  --whb-tab-text: #e6e5e3;
+  --whb-active-bg: #8a2e2a;
+  --whb-active-text: #e6e5e3;
+  --whb-active-border: #8a2e2a;
+  --whb-toggle-bg: rgba(0, 0, 0, 0.12);
+  --whb-toggle-text: #000;
+  --whb-toggle-border: rgba(0, 0, 0, 0.45);
+  --whb-heading-text: #892e29;
+  --whb-alert-bg: #8a2e2a;
+  --whb-alert-text: #e6e5e3;
   --whb-frame-bg: rgba(230, 229, 227, 0.96);
   --whb-frame-text: #191813;
   --whb-frame-border: #8a2e2a;
@@ -97,20 +189,44 @@ body.whb-system-wrath-and-glory {
   --whb-frame-accent: #8a2e2a;
 }
 
-/* Soulbound: granat Azyru i złoto Sigmara */
+/* Soulbound: jak karta postaci – jasny papier, granatowe paski nagłówków Azyru i złoto Sigmara */
 body.whb-system-age-of-sigmar-soulbound {
-  --whb-bg: rgba(24, 48, 81, 0.9);
-  --whb-bg-strong: rgba(16, 33, 56, 0.95);
-  --whb-border: #806b3a;
-  --whb-text: #f0ead6;
-  --whb-muted: #a19e78;
-  --whb-accent: #806b3a;
-  --whb-highlight: #d8c48a;
-  --whb-highlight-strong: #f0dfa6;
+  --whb-bg: rgba(240, 234, 214, 0.96);
+  --whb-bg-strong: rgba(240, 234, 214, 0.98);
+  --whb-surface-image: url("../../../systems/age-of-sigmar-soulbound/assets/image/background.webp");
+  --whb-border: #7c6c42;
+  --whb-text: #000;
+  --whb-muted: #5e5a47;
+  --whb-accent: #183051;
+  --whb-highlight: #806b3a;
+  --whb-highlight-strong: #a8904f;
   --whb-highlight-dark: #806b3a;
   --whb-badge-from: #183051;
   --whb-badge-to: #0b1626;
   --whb-badge-text: #f0ead6;
+  --whb-font: "MinionPro", serif;
+  --whb-font-tab: "Signika", sans-serif;
+  --whb-font-heading: "Quadrant-Regular", serif;
+  --whb-btn-bg: rgba(255, 255, 255, 0.6);
+  --whb-btn-text: #000;
+  --whb-btn-border: #7c6c42;
+  --whb-btn-hover-bg: rgba(255, 255, 255, 0.9);
+  --whb-btn-hover-border: #183051;
+  --whb-tab-bg: transparent;
+  --whb-tab-text: #000;
+  --whb-active-bg: #183051;
+  --whb-active-image: url("../../../systems/age-of-sigmar-soulbound/assets/image/header-background.webp");
+  --whb-active-text: whitesmoke;
+  --whb-active-border: #806b3a;
+  --whb-toggle-bg: rgba(24, 48, 81, 0.1);
+  --whb-toggle-text: #000;
+  --whb-toggle-border: rgba(124, 108, 66, 0.6);
+  --whb-heading-bg: #183051;
+  --whb-heading-image: url("../../../systems/age-of-sigmar-soulbound/assets/image/header-background.webp");
+  --whb-heading-text: whitesmoke;
+  --whb-heading-border: #7c6c42;
+  --whb-alert-bg: #7a1c12;
+  --whb-alert-text: #f0ead6;
   --whb-frame-bg: rgba(240, 234, 214, 0.96);
   --whb-frame-text: #183051;
   --whb-frame-border: #806b3a;
@@ -205,27 +321,6 @@ body.whb-system-age-of-sigmar-soulbound {
 
 .wham-reload.needed {
   color: #e05050;
-}
-
-.wham-gear {
-  display: flex;
-  gap: 2px;
-  padding: 2px;
-  background: var(--whb-bg);
-  border: 1px solid var(--whb-border);
-  border-radius: 4px;
-}
-
-.wham-gear .wham-icon img {
-  opacity: 0.45;
-}
-
-.wham-gear .wham-icon.equipped img {
-  opacity: 1;
-}
-
-.wham-gear .wham-icon.equipped {
-  border-color: var(--whb-highlight);
 }
 
 .wham-list {
@@ -849,17 +944,6 @@ body.whb-system-age-of-sigmar-soulbound {
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
 }
 
-/* Zakładka Przewagi – wyróżniona, bo jej akcje zależą od licznika */
-.whb-tabs button[data-tab="advantage"] {
-  color: var(--whb-highlight-strong);
-  font-weight: bold;
-}
-
-.whb-tabs button[data-tab="advantage"].active {
-  background: var(--whb-highlight-dark);
-  color: #fff;
-}
-
 .whb-action.advantage-cost small {
   color: var(--whb-highlight-strong);
   opacity: 1;
@@ -965,12 +1049,6 @@ body.whb-system-age-of-sigmar-soulbound {
   object-position: top;
 }
 
-/* Rany nieopatrzone i przepełniona pula Miscastów */
-.whb-action.untreated span,
-.whb-action.untreated small {
-  color: #e05050;
-}
-
 /* Panel w kolumnach: krótkie grupy obok siebie zamiast długiej listy z paskiem przewijania */
 .whb-panel.whb-columns {
   display: grid;
@@ -993,42 +1071,93 @@ body.whb-system-age-of-sigmar-soulbound {
   font-style: italic;
 }
 
-/* Przyciski HUD-a w kolorach motywu – systemy (np. Soulbound) nadpisują styl przycisków Foundry */
+/* Jedna struktura wyglądu dla wszystkich systemów – kolory, tła i czcionki pochodzą z tokenów motywu.
+   Przyciski HUD-a nadpisują styl przycisków Foundry, który systemy (np. Soulbound) zmieniają po swojemu */
 #warhammer-battle-hud-bar {
-  --button-text-color: var(--whb-text);
-  --button-background-color: rgba(255, 255, 255, 0.06);
-  --button-border-color: var(--whb-border);
-  --button-hover-text-color: var(--whb-text);
-  --button-hover-background-color: rgba(255, 255, 255, 0.14);
-  --button-hover-border-color: var(--whb-highlight);
+  --button-text-color: var(--whb-btn-text);
+  --button-background-color: var(--whb-btn-bg);
+  --button-border-color: var(--whb-btn-border);
+  --button-hover-text-color: var(--whb-btn-text);
+  --button-hover-background-color: var(--whb-btn-hover-bg);
+  --button-hover-border-color: var(--whb-btn-hover-border);
+  font-family: var(--whb-font);
 }
 
-#warhammer-battle-hud-bar .whb-tabs button,
-#warhammer-battle-hud-bar .whb-action {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid transparent;
+#warhammer-battle-hud-bar .whb-panel,
+#warhammer-battle-hud-bar .whb-tabs,
+#warhammer-battle-hud-bar .whb-grip,
+#warhammer-battle-hud-bar .whb-hands,
+#warhammer-battle-hud-bar .wham-list,
+#warhammer-battle-hud-bar .wham-weapon {
+  background-color: var(--whb-bg-strong);
+  background-image: var(--whb-surface-image);
+  background-position: center;
+  background-size: cover;
+  border-color: var(--whb-border);
   color: var(--whb-text);
+}
+
+#warhammer-battle-hud-bar .whb-action {
+  background: var(--whb-btn-bg);
+  border: 1px solid var(--whb-btn-border);
+  border-radius: 4px;
+  color: var(--whb-btn-text);
   text-shadow: none;
 }
 
-#warhammer-battle-hud-bar .whb-tabs button:hover,
 #warhammer-battle-hud-bar .whb-action:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: var(--whb-highlight);
+  background: var(--whb-btn-hover-bg);
+  border-color: var(--whb-btn-hover-border);
+}
+
+#warhammer-battle-hud-bar .whb-tabs button {
+  background: var(--whb-tab-bg);
+  border: 1px solid transparent;
+  color: var(--whb-tab-text);
+  font-family: var(--whb-font-tab);
+  text-shadow: none;
+}
+
+#warhammer-battle-hud-bar .whb-tabs button:hover {
+  border-color: var(--whb-btn-hover-border);
+}
+
+/* Przełączniki (stany, Ekwipunek, wierzchowiec): wyłączone jaśniej, włączone jak aktywna zakładka */
+#warhammer-battle-hud-bar .whb-action.toggle {
+  background: var(--whb-toggle-bg);
+  border-color: var(--whb-toggle-border);
+  color: var(--whb-toggle-text);
 }
 
 #warhammer-battle-hud-bar .whb-tabs button.active,
 #warhammer-battle-hud-bar .whb-action.toggle.active {
-  background: var(--whb-accent);
-  color: #fff;
-}
-
-#warhammer-battle-hud-bar .whb-tabs button[data-tab="advantage"] {
-  color: var(--whb-highlight-strong);
+  background-color: var(--whb-active-bg);
+  background-image: var(--whb-active-image);
+  background-size: cover;
+  border-color: var(--whb-active-border);
+  color: var(--whb-active-text);
 }
 
 #warhammer-battle-hud-bar .whb-panel h4 {
-  color: var(--whb-highlight);
+  padding: 1px 4px;
+  background-color: var(--whb-heading-bg);
+  background-image: var(--whb-heading-image);
+  background-size: cover;
+  border-bottom: 1px solid var(--whb-heading-border);
+  color: var(--whb-heading-text);
+  font-family: var(--whb-font-heading);
+  opacity: 1;
+}
+
+/* Rany nieopatrzone, przepełniona pula Miscastów, atak, przed którym się bronisz */
+#warhammer-battle-hud-bar .whb-action.untreated {
+  background: var(--whb-alert-bg);
+  border-color: var(--whb-alert-text);
+}
+
+#warhammer-battle-hud-bar .whb-action.untreated span,
+#warhammer-battle-hud-bar .whb-action.untreated small {
+  color: var(--whb-alert-text);
 }
 
 /* Kolumny potrzebują więcej miejsca niż zwykły panel (np. 9 cech Imperium Maledictum) */
@@ -1047,91 +1176,4 @@ body.whb-system-age-of-sigmar-soulbound {
   color: var(--whb-highlight-strong);
   font-weight: bold;
   opacity: 1;
-}
-
-/* The Old World: HUD wygląda jak karta postaci systemu – pergaminowe tło, przyciski akcji w granacie
-   (tow-blue) z kremowym tekstem, nagłówki list na brązowym pasku, czcionki CaslonPro i Dominican */
-body.whb-system-whtow #warhammer-battle-hud-bar {
-  font-family: "CaslonPro", var(--font-text, serif);
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-panel,
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs,
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-grip,
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-hands,
-body.whb-system-whtow #warhammer-battle-hud-bar .wham-list {
-  background: #e8e0d6 url("../../../systems/whtow/assets/ui/background.webp") center / cover;
-  border-color: rgb(0, 69, 94);
-  color: #333;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs button {
-  background: transparent;
-  border: 1px solid transparent;
-  color: #444;
-  font-family: "Dominican", var(--font-header, serif);
-  font-size: 0.85rem;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs button:hover {
-  background: rgba(0, 69, 94, 0.15);
-  border-color: rgb(0, 69, 94);
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-tabs button.active {
-  background: rgba(0, 69, 94, 0.5);
-  border-color: #e8e0d6;
-  color: #e8e0d6;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-action {
-  background: rgba(0, 69, 94, 0.5);
-  border: 1px solid rgb(0, 69, 94);
-  border-radius: 4px;
-  color: #e8e0d6;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-action:hover {
-  background: rgb(0, 69, 94);
-  border-color: goldenrod;
-}
-
-/* Przełączniki: włączone pełnym granatem ze złotą ramką, wyłączone jasne */
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.toggle {
-  background: rgba(139, 151, 149, 0.35);
-  border-color: rgba(0, 69, 94, 0.5);
-  color: #333;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.toggle.active {
-  background: rgb(0, 69, 94);
-  border-color: goldenrod;
-  color: #e8e0d6;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.unaffordable {
-  opacity: 0.55;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-action.untreated {
-  background: rgba(178, 26, 34, 0.75);
-  border-color: #771c18;
-  color: #e8e0d6;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-panel h4 {
-  padding: 1px 4px;
-  background: rgba(163, 157, 139, 0.53);
-  border-bottom: 1px solid #a39d8b;
-  color: #333;
-  font-family: "CaslonPro", var(--font-text, serif);
-  opacity: 1;
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .whb-grip {
-  color: rgb(0, 69, 94);
-}
-
-body.whb-system-whtow #warhammer-battle-hud-bar .wham-list button {
-  color: #333;
 }

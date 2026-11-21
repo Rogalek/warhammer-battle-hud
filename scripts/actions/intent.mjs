@@ -42,6 +42,9 @@ export function resolveIntent(type, mods = {}, settings = {}) {
 
   if (type === T.effect) return { intent: right ? "sheet" : "run" };
 
+  // Ekwipunek: lewy klik zakłada albo odkłada, prawy otwiera przedmiot (jak w pozostałych systemach)
+  if (type === T.equip) return { intent: right ? "sheet" : "use" };
+
   // Użycie Przewagi i rozkaz szajki: lewy klik wykonuje, prawy nic nie robi
   if (type === T.advantageAction || type === T.gangOrder) return { intent: right ? "none" : "use" };
 

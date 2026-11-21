@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+- One HUD across all systems. Every system's Combat tab starts with its actions and ends with an Equipment group that equips or puts away any weapon, armour or shield (right-click opens it). One rule for weapons and armour in Combat: player characters show only equipped ones, NPCs and creatures everything (the "only equipped gear" setting now works in every system). Skills sit in columns by characteristic with its value in the header (now also in WFRP), and conditions, wounds and similar live in the Status tab (WFRP and Soulbound "Conditions" became "Status"; The Old World's wounds moved back there).
+- WFRP: the Advantage tab became the first groups of the Combat tab.
+- The small group of equip icons in the ammunition row and its "Show the other weapons" setting are gone – equipping lives in the Equipment group.
+- Colours: the HUD looks like each system's character sheet (background, buttons, active tab, list headers, fonts) – WFRP, Wrath & Glory and Soulbound now use their sheets' light pages. All systems set the same colour tokens instead of separate style overrides.
 - The Old World: the HUD takes the look of the character sheet – parchment, tow-blue buttons with cream text, list headers on a brown band and the system's fonts.
 - The Old World: the Combat tab follows the sheet – the attack you are defending against, Speed and Resilience in the group headers, only equipped weapons to attack with, wounds (moved from Status) with "Add a wound", the mount (mount/dismount and its attacks) and a new Equipment group to equip or put away any weapon, armour or shield.
 - The action panel opens downward when the HUD is moved to the upper part of the screen; the HUD then keeps its top edge in place. A new setting fixes the direction (automatic, upward, downward).

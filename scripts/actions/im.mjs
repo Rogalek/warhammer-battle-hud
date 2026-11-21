@@ -9,9 +9,10 @@ import { t } from "./constants.mjs";
 const IM = B.IM;
 
 /** Typy, które prawym klikiem otwierają kartę przedmiotu. */
-const ITEM_BACKED = new Set([IM.weapon, IM.trait, IM.protection, IM.power, IM.use, IM.sheet, IM.reload]);
+const ITEM_BACKED = new Set([IM.weapon, IM.trait, IM.protection, IM.power, IM.use, IM.sheet, IM.reload, IM.equip]);
 
 const env = () => ({
+  onlyEquipped: game.settings.get("warhammer-battle-hud", "actionsOnlyEquipped"),
   config: game.impmal?.config ?? {},
   localize: (key) => game.i18n.localize(key),
   statusEffects: CONFIG.statusEffects
@@ -27,7 +28,7 @@ export function imPanel(actor, e = env()) {
   const talents = B.buildTalents(actor, e);
   const status = B.buildStatus(actor, e);
   const tabs = [
-    { id: "combat", groups: [group("Actions", B.buildActions(e)), group("Melee", combat.melee), group("Ranged", combat.ranged), group("Reload", combat.reload), group("Defence", combat.defence), group("Traits", combat.traits), group("Protection", combat.protection)] },
+    { id: "combat", groups: [group("Actions", B.buildActions(e)), group("Melee", combat.melee), group("Ranged", combat.ranged), group("Reload", combat.reload), group("Defence", combat.defence), group("Traits", combat.traits), group("Protection", combat.protection), group("Equipment", B.buildEquipment(actor, e))] },
     { id: "characteristics", groups: [group("Characteristics", B.buildCharacteristics(actor, e))] },
     { id: "skills", columns: 4, groups: B.buildSkillGroups(actor, e) },
     { id: "psychic", groups: [group("Powers", psychic.powers), group("Warp", psychic.warp)] },
@@ -63,6 +64,13 @@ async function perform(actor, { type, id, extra }, mods, settings) {
     case IM.protection:
     case IM.sheet: return actor.items.get(id)?.sheet?.render({ force: true });
     case IM.use: return actor.useItem({ id, uuid: actor.items.get(id)?.uuid });
+    case IM.equip: {
+      const item = actor.items.get(id);
+      if (!item) return;
+      // Broń postaci gracza trzymają ręce (jak przycisk dłoni na karcie); reszta to zwykłe „założone”
+      if (item.type === "weapon" && actor.system.hands) return actor.update(actor.system.hands.toggle(undefined, item));
+      return item.update({ "system.equipped.value": !item.system.equipped?.value });
+    }
     case IM.condition:
       if (mods.right) return actor.removeCondition(id);
       return actor.addCondition(id);

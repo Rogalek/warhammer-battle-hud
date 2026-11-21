@@ -5,7 +5,11 @@
  * Pula kości testu to wartość atrybutu + wyszkolenie umiejętności; skupienie pozwala potem podbijać wyniki.
  */
 import { plain } from "./builders.mjs";
-import { panelValue as v } from "./system-panel.mjs";
+import { equipmentActions, gearForUse, panelValue as v } from "./system-panel.mjs";
+
+/** Typy postaci graczy – reguła „tylko założone” w Walce. */
+const PC_TYPES = ["player"];
+const gear = (actor, env, list) => gearForUse(actor, list, (item) => Boolean(item.system?.equipped), { onlyEquipped: env.onlyEquipped ?? true, pcTypes: PC_TYPES });
 
 export const SB = Object.freeze({
   attribute: "attribute",
@@ -17,7 +21,8 @@ export const SB = Object.freeze({
   ability: "ability",
   condition: "condition",
   mettle: "mettle",
-  initiative: "initiative"
+  initiative: "initiative",
+  equip: "equip"
 });
 
 const tip = (env, key, value) => ({ label: env.localize(`WFRP4E_HUD.Tip.${key}`), value });
@@ -75,9 +80,7 @@ export function buildSkillGroups(actor, env) {
 
 /** Walka: założona broń, rzut na Inicjatywę, pancerz i Hart (Mettle). */
 export function buildCombat(actor, env) {
-  const weapons = items(actor, "weapon");
-  const equipped = weapons.filter((w) => w.system?.equipped);
-  const shown = equipped.length ? equipped : weapons;
+  const shown = gear(actor, env, items(actor, "weapon"));
   const combat = actor?.system?.combat ?? {};
   const weaponAction = (weapon) => ({
     name: weapon.name,
@@ -94,7 +97,7 @@ export function buildCombat(actor, env) {
       hint: hint(env, "Attack")
     }
   });
-  const armour = items(actor, "armour").filter((a) => a.system?.equipped).map((piece) => ({
+  const armour = gear(actor, env, items(actor, "armour")).map((piece) => ({
     name: piece.name,
     img: piece.img,
     value: v(SB.armour, piece.id),
@@ -111,6 +114,18 @@ export function buildCombat(actor, env) {
     other,
     armour
   };
+}
+
+/** Ekwipunek: broń i pancerz – klik zakłada albo odkłada. */
+export function buildEquipment(actor, env) {
+  const isWeapon = (item) => item.type === "weapon";
+  return equipmentActions([...items(actor, "weapon"), ...items(actor, "armour")], {
+    isEquipped: (item) => Boolean(item.system?.equipped),
+    value: (item) => v(SB.equip, item.id),
+    detail: (item) => (isWeapon(item) ? item.system?.damage : item.system?.benefit),
+    details: (item) => [tip(env, isWeapon(item) ? "Damage" : "AP", isWeapon(item) ? item.system?.damage : item.system?.benefit)],
+    hint: hint(env, "Equip")
+  });
 }
 
 /** Czary i cuda z ST, celem, zasięgiem i czasem trwania. */

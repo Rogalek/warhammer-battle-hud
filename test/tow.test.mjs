@@ -18,6 +18,7 @@ const env = {
 
 const item = (type, name, system = {}) => ({ uuid: `Actor.a.Item.${name}`, name, type, img: `${type}.webp`, system });
 const actor = {
+  type: "character",
   system: {
     skills: { melee: { characteristic: "ws", value: 3, advances: 1 }, defence: { characteristic: "ws", value: 2 }, shooting: { characteristic: "bs", value: 2 } },
     characteristics: { ws: { value: 3 }, bs: { value: 2 } },

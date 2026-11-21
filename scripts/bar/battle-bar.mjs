@@ -118,7 +118,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const actor = this.constructor.actor;
     if (!actor) return context;
     Object.assign(context, this.#actionContext(actor), { advantage: this.#advantageContext(actor), hands: this.#handsContext(actor) });
-    if (!adapter || !getSetting("showBar")) return Object.assign(context, { weapons: [], gear: [] });
+    if (!adapter || !getSetting("showBar")) return Object.assign(context, { weapons: [] });
     const low = getSetting("lowAmmo");
     const onlyEquipped = getSetting("onlyEquipped");
     const all = adapter.allWeapons(actor);
@@ -139,9 +139,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           open: this.openList === weapon.id,
           options: list.map((item) => ({ ...entry(item), current: item.id === ammo?.id }))
         };
-      }),
-      // Ręce zakładają broń same, więc przy nich mała grupa ikon byłaby dublem
-      gear: getSetting("showGear") && !this.constructor.showsHands(actor) ? all.filter((w) => !ranged.includes(w)).map((w) => ({ id: w.id, name: w.name, img: w.img, equipped: adapter.isEquipped(w) })) : []
+      })
+      // Pozostałą broń i pancerz zakłada się w grupie Ekwipunek zakładki Walka (we wszystkich systemach)
     });
   }
 

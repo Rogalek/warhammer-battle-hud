@@ -17,9 +17,7 @@
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
-      "OnlyEquippedHint": "Odłożona broń dystansowa trafia do małej grupy ekwipunku.",
-      "ShowGearName": "Pokazuj pozostałą broń",
-      "ShowGearHint": "Mała grupa ikon do zakładania broni białej i tarcz jednym kliknięciem. Znika, gdy widać Ręce.",
+      "OnlyEquippedHint": "Odłożona broń dystansowa znika z rzędu amunicji; zakładasz ją w grupie Ekwipunek zakładki Walka.",
       "LowAmmoName": "Ostrzeżenie o małej ilości amunicji",
       "LowAmmoHint": "Przy tej liczbie lub mniejszej licznik zmienia kolor na bursztynowy.",
       "ShowHandsName": "Pokaż ręce",
@@ -29,7 +27,7 @@
       "PanelDirectionName": "Kierunek rozwijania panelu akcji",
       "PanelDirectionHint": "Automatycznie: w dół, gdy przesuniesz HUD w górną część ekranu, a w pozostałych miejscach w górę. HUD w domyślnym miejscu nad paskiem makr zawsze rozwija się w górę.",
       "ActionsOnlyEquippedName": "Panel akcji: tylko założony sprzęt",
-      "ActionsOnlyEquippedHint": "Postacie graczy pokazują tylko założoną broń i pancerz. BN-i i stworzenia zawsze pokazują wszystko.",
+      "ActionsOnlyEquippedHint": "We wszystkich systemach postacie graczy pokazują w zakładce Walka tylko założoną broń i pancerz (zakładasz je w grupie Ekwipunek). BN-i i stworzenia zawsze pokazują wszystko.",
       "BlindOnShiftName": "Shift-klik rzuca jako tajny rzut MG",
       "BlindOnShiftHint": "Przytrzymanie Shift przy kliknięciu testu w panelu daje tajny rzut MG.",
       "SkipDialogByDefaultName": "Domyślnie pomijaj okno rzutu",
@@ -158,7 +156,8 @@
       "Religion": "Wiara",
       "Talents": "Talenty",
       "Conditions": "Stany",
-      "Downtime": "Poza walką"
+      "Downtime": "Poza walką",
+      "Status": "Stan"
     },
     "Groups": {
       "Characteristics": "Cechy",
@@ -181,7 +180,8 @@
       "AdvantageActions": "Użycie Przewagi",
       "GangOrders": "Rozkazy szajki",
       "Downtime": "Między przygodami",
-      "ChannelledReset": "Spleciona moc"
+      "ChannelledReset": "Spleciona moc",
+      "Equipment": "Ekwipunek"
     },
     "Info": {
       "Damage": "Uszkodzenie przedmiotu",
@@ -266,7 +266,8 @@
       "Income": "Klik: test Zarobkowania umiejętnością bieżącej kariery",
       "Rest": "Klik: odpoczynek – test Odporności na odzyskanie Żywotności",
       "Endeavour": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
-      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)"
+      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot"
     },
     "Income": "Dochód",
     "Rest": "Odpoczynek",
@@ -383,7 +384,8 @@
       "Corruption": "Zepsucie",
       "Fate": "Przeznaczenie",
       "Conditions": "Stany",
-      "Injuries": "Urazy i rany krytyczne"
+      "Injuries": "Urazy i rany krytyczne",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Action": "Klik: wybierz to jako akcję w tej turze",
@@ -398,7 +400,8 @@
       "Purge": "Klik: oczyść Ładunek Spaczni (w walce test Dyscypliny)",
       "Use": "Klik: użyj · Prawy klik: karta przedmiotu",
       "Counter": "Klik: +1 · Prawy klik: −1",
-      "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij"
+      "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij",
+      "Equip": "Klik: załóż albo odłóż (broń trafia do ręki wiodącej) · Prawy klik: otwórz przedmiot"
     }
   },
   "WHB_WNG": {
@@ -431,7 +434,8 @@
       "Resources": "Zasoby",
       "Conditions": "Stany",
       "Injuries": "Urazy i mutacje",
-      "Social": "Wpływy i Bogactwo"
+      "Social": "Wpływy i Bogactwo",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -447,7 +451,8 @@
       "conviction": "Klik: test Przekonania",
       "corruption": "Klik: test Spaczenia",
       "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
-      "influence": "Klik: test Wpływów"
+      "influence": "Klik: test Wpływów",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot"
     },
     "Wealth": "Bogactwo",
     "influence": "Wpływy"
@@ -460,7 +465,8 @@
       "skills": "Umiejętności",
       "powers": "Moce",
       "talents": "Talenty",
-      "conditions": "Stany"
+      "conditions": "Stany",
+      "status": "Stan"
     },
     "Groups": {
       "Melee": "Broń do walki wręcz",
@@ -471,7 +477,8 @@
       "Spells": "Czary",
       "Miracles": "Cuda",
       "Talents": "Talenty",
-      "Conditions": "Stany"
+      "Conditions": "Stany",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -482,7 +489,8 @@
       "Spell": "Klik: rzuć czar · Prawy klik: karta czaru",
       "Miracle": "Klik: przywołaj cud · Prawy klik: karta cudu",
       "Ability": "Klik: użyj (test albo opis na czacie) · Prawy klik: karta przedmiotu",
-      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij"
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot"
     }
   }
 }

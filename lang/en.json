@@ -17,9 +17,7 @@
       "ShowBarName": "Show the ammunition row",
       "ShowBarHint": "For this user only.",
       "OnlyEquippedName": "Only equipped ranged weapons",
-      "OnlyEquippedHint": "Put-away ranged weapons move to the small gear group.",
-      "ShowGearName": "Show the other weapons",
-      "ShowGearHint": "A small group of icons for equipping melee weapons and shields with one click. Left out while Hands are shown.",
+      "OnlyEquippedHint": "Ranged weapons you put away leave the ammunition row; equip them in the Equipment group of the Combat tab.",
       "LowAmmoName": "Low ammunition warning",
       "LowAmmoHint": "The count turns amber at this number or below.",
       "ShowHandsName": "Show the hands",
@@ -29,7 +27,7 @@
       "PanelDirectionName": "Action panel opens",
       "PanelDirectionHint": "Automatic: downward when you move the HUD to the upper part of the screen, upward otherwise. The HUD in its default place above the hotbar always opens upward.",
       "ActionsOnlyEquippedName": "Action panel: only equipped gear",
-      "ActionsOnlyEquippedHint": "Player characters show only equipped weapons and armour. NPCs and creatures always show everything.",
+      "ActionsOnlyEquippedHint": "In every system, player characters show only equipped weapons and armour in the Combat tab (equip them in its Equipment group). NPCs and creatures always show everything.",
       "BlindOnShiftName": "Shift-click rolls as Blind GM",
       "BlindOnShiftHint": "Holding Shift while clicking a test in the panel makes it a Blind GM roll.",
       "SkipDialogByDefaultName": "Skip the roll dialog by default",
@@ -158,7 +156,8 @@
       "Religion": "Religion",
       "Talents": "Talents",
       "Conditions": "Conditions",
-      "Downtime": "Downtime"
+      "Downtime": "Downtime",
+      "Status": "Status"
     },
     "Groups": {
       "Characteristics": "Characteristics",
@@ -181,7 +180,8 @@
       "AdvantageActions": "Use Advantage",
       "GangOrders": "Gang orders",
       "Downtime": "Between adventures",
-      "ChannelledReset": "Channelled power"
+      "ChannelledReset": "Channelled power",
+      "Equipment": "Equipment"
     },
     "Info": {
       "Damage": "Damage to the item",
@@ -266,7 +266,8 @@
       "Income": "Click: Income test with the current career's earning skill",
       "Rest": "Click: rest – Endurance test to recover Wounds",
       "Endeavour": "Click: open the endeavour (its page has the Perform button)",
-      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)"
+      "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)",
+      "Equip": "Click: equip or put away · Right-click: open the item"
     },
     "Income": "Income",
     "Rest": "Rest",
@@ -383,7 +384,8 @@
       "Corruption": "Corruption",
       "Fate": "Fate",
       "Conditions": "Conditions",
-      "Injuries": "Injuries and criticals"
+      "Injuries": "Injuries and criticals",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Action": "Click: take this as your action for the turn",
@@ -398,7 +400,8 @@
       "Purge": "Click: purge the Warp Charge (a Discipline test in combat)",
       "Use": "Click: use · Right-click: open the item",
       "Counter": "Click: +1 · Right-click: −1",
-      "Condition": "Click: add (again: Major) · Right-click: remove"
+      "Condition": "Click: add (again: Major) · Right-click: remove",
+      "Equip": "Click: equip or put away (weapons go to the dominant hand) · Right-click: open the item"
     }
   },
   "WHB_WNG": {
@@ -431,7 +434,8 @@
       "Resources": "Resources",
       "Conditions": "Conditions",
       "Injuries": "Injuries and mutations",
-      "Social": "Influence and Wealth"
+      "Social": "Influence and Wealth",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -447,7 +451,8 @@
       "conviction": "Click: Conviction test",
       "corruption": "Click: Corruption test",
       "initiative": "Click: roll Initiative (adds you to the combat)",
-      "influence": "Click: Influence test"
+      "influence": "Click: Influence test",
+      "Equip": "Click: equip or put away · Right-click: open the item"
     },
     "Wealth": "Wealth",
     "influence": "Influence"
@@ -460,7 +465,8 @@
       "skills": "Skills",
       "powers": "Powers",
       "talents": "Talents",
-      "conditions": "Conditions"
+      "conditions": "Conditions",
+      "status": "Status"
     },
     "Groups": {
       "Melee": "Melee weapons",
@@ -471,7 +477,8 @@
       "Spells": "Spells",
       "Miracles": "Miracles",
       "Talents": "Talents",
-      "Conditions": "Conditions"
+      "Conditions": "Conditions",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -482,7 +489,8 @@
       "Spell": "Click: cast · Right-click: open the spell",
       "Miracle": "Click: invoke · Right-click: open the miracle",
       "Ability": "Click: use (test or post to chat) · Right-click: open the item",
-      "Condition": "Click: add or remove · Right-click: remove"
+      "Condition": "Click: add or remove · Right-click: remove",
+      "Equip": "Click: equip or put away · Right-click: open the item"
     }
   }
 }

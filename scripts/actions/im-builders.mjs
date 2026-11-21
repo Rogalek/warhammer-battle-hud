@@ -5,6 +5,11 @@
  * Akcja: { name, value ("typ|id|dodatek"), img?, detail?, tooltip ({ details, text, hint }), cssClass? }.
  */
 import { plain } from "./builders.mjs";
+import { equipmentActions, gearForUse } from "./system-panel.mjs";
+
+const PC_TYPES = ["character"];
+const isEquipped = (item) => Boolean(item.system?.equipped?.value);
+const gear = (actor, env, list) => gearForUse(actor, list, isEquipped, { onlyEquipped: env.onlyEquipped ?? true, pcTypes: PC_TYPES });
 
 export const IM = Object.freeze({
   action: "action",
@@ -22,7 +27,8 @@ export const IM = Object.freeze({
   use: "use",
   sheet: "sheet",
   condition: "condition",
-  fate: "fate"
+  fate: "fate",
+  equip: "equip"
 });
 
 export const imValue = (type, id = "", extra = "") => [type, id, extra].join("|").replace(/\|+$/, "");
@@ -112,11 +118,9 @@ export function buildSkills(actor, env) {
   return out;
 }
 
-/** Walka: założona broń (bez założonej – cała), przeładowanie, Unik, Inicjatywa, cechy ataku i ochrona. */
+/** Walka: broń (wspólna reguła „tylko założone”), przeładowanie, Unik, Inicjatywa, cechy ataku i ochrona. */
 export function buildCombat(actor, env) {
-  const weapons = items(actor, "weapon");
-  const equipped = weapons.filter((w) => w.system?.equipped?.value);
-  const shown = equipped.length ? equipped : weapons;
+  const shown = gear(actor, env, items(actor, "weapon"));
   const weaponAction = (weapon) => {
     const s = weapon.system ?? {};
     // Magazynek mają tylko bronie dystansowe (broń biała ma w danych domyślne mag.value = 1)
@@ -162,7 +166,7 @@ export function buildCombat(actor, env) {
     detail: String(trait.system.attack.damage?.value ?? ""),
     tooltip: { details: [tip(env, "Damage", trait.system.attack.damage?.value)], text: description(trait), hint: hint(env, "Attack") }
   }));
-  const protection = items(actor, "protection").filter((p) => p.system?.equipped?.value).map((piece) => ({
+  const protection = gear(actor, env, items(actor, "protection")).map((piece) => ({
     name: piece.name,
     img: piece.img,
     value: imValue(IM.protection, piece.id),
@@ -181,6 +185,18 @@ export function buildCombat(actor, env) {
     traits: attackTraits,
     protection
   };
+}
+
+/** Ekwipunek: broń (przez ręce systemu) i ochrona – klik zakłada albo odkłada. */
+export function buildEquipment(actor, env) {
+  const isWeapon = (item) => item.type === "weapon";
+  return equipmentActions([...items(actor, "weapon"), ...items(actor, "protection")], {
+    isEquipped,
+    value: (item) => imValue(IM.equip, item.id),
+    detail: (item) => (isWeapon(item) ? item.system?.damage?.value : item.system?.armour),
+    details: (item) => [tip(env, isWeapon(item) ? "Damage" : "AP", isWeapon(item) ? item.system?.damage?.value : item.system?.armour)],
+    hint: hint(env, "Equip")
+  });
 }
 
 /** Moce psioniczne z Wartością Spaczni i trudnością, test Spaczni i oczyszczenie (gdy jest ładunek). */

@@ -6,8 +6,6 @@ import { GROUP_IDS as G } from "./builders.mjs";
 /** Grupy: id → klucz tłumaczenia nazwy. */
 export const GROUPS = {
   [G.characteristics]: "WFRP4E_HUD.Groups.Characteristics",
-  [G.skillsBasic]: "WFRP4E_HUD.Groups.BasicSkills",
-  [G.skillsAdvanced]: "WFRP4E_HUD.Groups.AdvancedSkills",
   [G.weaponsMelee]: "WFRP4E_HUD.Groups.Melee",
   [G.weaponsRanged]: "WFRP4E_HUD.Groups.Ranged",
   [G.armour]: "WFRP4E_HUD.Groups.Armour",
@@ -23,22 +21,24 @@ export const GROUPS = {
   [G.conditions]: "WFRP4E_HUD.Groups.Conditions",
   [G.advantage]: "WFRP4E_HUD.Groups.Advantage",
   [G.advantageActions]: "WFRP4E_HUD.Groups.AdvantageActions",
+  [G.equipment]: "WFRP4E_HUD.Groups.Equipment",
   [G.gangOrders]: "WFRP4E_HUD.Groups.GangOrders",
   [G.downtime]: "WFRP4E_HUD.Groups.Downtime",
   [G.channelledReset]: "WFRP4E_HUD.Groups.ChannelledReset"
 };
 
-/** Zakładki: id → klucz tłumaczenia i grupy w kolejności. */
+/**
+ * Zakładki: id → klucz tłumaczenia i grupy w kolejności. Układ jak w pozostałych systemach:
+ * Walka zaczyna się od akcji systemu (użycia Przewagi, rozkazy szajki), a kończy grupą Ekwipunek;
+ * umiejętności są w kolumnach według cech (`dynamic: "skills"`); stany są w zakładce Stan.
+ */
 export const LAYOUT = [
-  // Przewaga pierwsza: to, co można za nią teraz zrobić, jest w walce najważniejsze
-  // W zasadach 5e nie ma puli Przewagi; Impet jest na dużym liczniku, więc zostają tu tylko rozkazy szajki
-  { id: "advantage", name: "WFRP4E_HUD.Tabs.Advantage", groups: [G.advantageActions, G.gangOrders, G.advantage] },
+  { id: "combat", name: "WFRP4E_HUD.Tabs.Combat", groups: [G.advantageActions, G.gangOrders, G.advantage, G.weaponsMelee, G.weaponsRanged, G.armour, G.traits, G.equipment] },
   { id: "characteristics", name: "WFRP4E_HUD.Tabs.Characteristics", groups: [G.characteristics] },
-  { id: "skills", name: "WFRP4E_HUD.Tabs.Skills", groups: [G.skillsBasic, G.skillsAdvanced] },
-  { id: "combat", name: "WFRP4E_HUD.Tabs.Combat", groups: [G.weaponsMelee, G.weaponsRanged, G.armour, G.traits] },
+  { id: "skills", name: "WFRP4E_HUD.Tabs.Skills", columns: 4, dynamic: "skills", groups: [] },
   { id: "magic", name: "WFRP4E_HUD.Tabs.Magic", groups: [G.channelledReset, G.petty, G.spells, G.channelling] },
   { id: "religion", name: "WFRP4E_HUD.Tabs.Religion", groups: [G.blessings, G.miracles] },
   { id: "talents", name: "WFRP4E_HUD.Tabs.Talents", groups: [G.talents, G.extended, G.effects] },
-  { id: "conditions", name: "WFRP4E_HUD.Tabs.Conditions", groups: [G.conditions] },
+  { id: "status", name: "WFRP4E_HUD.Tabs.Status", groups: [G.conditions] },
   { id: "downtime", name: "WFRP4E_HUD.Tabs.Downtime", groups: [G.downtime] }
 ];

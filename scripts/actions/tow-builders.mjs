@@ -5,6 +5,11 @@
  * Akcja: { name, value ("typ|id|dodatek"), img?, detail?, tooltip ({ details, text, hint }), cssClass? }.
  */
 import { plain } from "./builders.mjs";
+import { equipmentActions, gearForUse } from "./system-panel.mjs";
+
+/** Typy postaci graczy (reguła „tylko założone” w Walce). */
+const PC_TYPES = ["character"];
+const gear = (actor, env, list) => gearForUse(actor, list, (item) => item.system?.isEquipped, { onlyEquipped: env.onlyEquipped ?? true, pcTypes: PC_TYPES });
 
 /** Typy akcji panelu The Old World. */
 export const TOW = Object.freeze({
@@ -122,9 +127,9 @@ export function buildSkillGroups(actor, env) {
     .filter((group) => group.actions.length);
 }
 
-/** Jak na karcie: tylko założona broń, przeładowanie, zdolności ataku, tarcze i pancerz. */
+/** Broń i pancerz do walki (wspólna reguła „tylko założone”), przeładowanie, zdolności ataku. */
 export function buildCombat(actor, env) {
-  const shown = items(actor, "weapon").filter((w) => w.system?.isEquipped);
+  const shown = gear(actor, env, items(actor, "weapon"));
   const weaponAction = (weapon) => {
     const system = weapon.system ?? {};
     const unloaded = system.requiresLoading && !system.isLoaded;
@@ -172,7 +177,7 @@ export function buildCombat(actor, env) {
       hint: hint(env, "Attack")
     }
   }));
-  const armour = items(actor, "armour").filter((a) => a.system?.isEquipped);
+  const armour = gear(actor, env, items(actor, "armour"));
   const armourAction = (piece) => ({
     name: piece.name,
     img: piece.img,
@@ -223,23 +228,13 @@ export function buildDefending(actor, env) {
 
 /** Ekwipunek: każda broń, pancerz i tarcza – klik zakłada albo zdejmuje (jak w zakładce Wyposażenie). */
 export function buildEquipment(actor, env) {
-  return [...items(actor, "weapon"), ...items(actor, "armour")].map((item) => {
-    const s = item.system ?? {};
-    const isWeapon = item.type === "weapon";
-    return {
-      name: item.name,
-      img: item.img,
-      value: towValue(TOW.equip, item.uuid),
-      detail: String((isWeapon ? s.damage?.value : s.resilience) ?? ""),
-      cssClass: s.isEquipped ? "toggle active" : "toggle",
-      tooltip: {
-        details: [
-          tip(env, isWeapon ? "Damage" : "Resilience", isWeapon ? s.damage?.value : s.resilience),
-          tip(env, "Equipped", env.localize(s.isEquipped ? "Yes" : "No"))
-        ],
-        hint: hint(env, "Equip")
-      }
-    };
+  const isWeapon = (item) => item.type === "weapon";
+  return equipmentActions([...items(actor, "weapon"), ...items(actor, "armour")], {
+    isEquipped: (item) => Boolean(item.system?.isEquipped),
+    value: (item) => towValue(TOW.equip, item.uuid),
+    detail: (item) => (isWeapon(item) ? item.system?.damage?.value : item.system?.resilience),
+    details: (item) => [tip(env, isWeapon(item) ? "Damage" : "Resilience", isWeapon(item) ? item.system?.damage?.value : item.system?.resilience)],
+    hint: hint(env, "Equip")
   });
 }
 

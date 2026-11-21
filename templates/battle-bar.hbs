@@ -101,13 +101,6 @@
           {{/if}}
         </div>
       {{/each}}
-      {{#if gear.length}}
-        <div class="wham-gear">
-          {{#each gear}}
-            <button type="button" class="wham-icon {{#if equipped}}equipped{{/if}}" data-weapon="{{id}}" data-action="toggleEquip" data-tooltip="{{name}}: {{localize 'WHAMMO.ToggleEquip'}}" aria-label="{{name}}"><img src="{{img}}" alt=""></button>
-          {{/each}}
-        </div>
-      {{/if}}
     </div>
   </div>
 </div>

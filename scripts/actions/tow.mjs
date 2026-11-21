@@ -11,6 +11,7 @@ const TOW = B.TOW;
 const ITEM_BACKED = new Set([TOW.weapon, TOW.ability, TOW.shield, TOW.armour, TOW.spell, TOW.use, TOW.wound, TOW.equip, TOW.mountItem]);
 
 const env = () => ({
+  onlyEquipped: game.settings.get("warhammer-battle-hud", "actionsOnlyEquipped"),
   config: game.oldworld?.config ?? {},
   endeavours: game.journal.contents.flatMap((j) => j.pages.contents).filter((p) => p.getFlag("whtow", "endeavour") && p.testUserPermission(game.user, "OBSERVER")),
   localize: (key) => game.i18n.localize(key),
@@ -40,7 +41,6 @@ export function towPanel(actor, e = env()) {
         group("Reload", combat.reload),
         group("Attacks", combat.attacks),
         titled("Armour", "Resilience", stats.resilience, combat.armour),
-        group("Wounds", status.wounds),
         group("Mount", B.buildMount(actor, e)),
         group("Equipment", B.buildEquipment(actor, e))
       ]
@@ -49,7 +49,8 @@ export function towPanel(actor, e = env()) {
     { id: "magic", groups: [group("Casting", magic.lores), group("Spells", magic.spells), group("Miscasts", magic.miscasts)] },
     { id: "religion", groups: [group("Blessing", B.buildBlessing(actor, e))] },
     { id: "talents", groups: [group("Talents", usable.talents), group("Abilities", usable.abilities), group("Lores", usable.lores)] },
-    { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions)] },
+    // Stan jak w pozostałych systemach: Los, stany i rany (z przyciskiem dodania rany)
+    { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions), group("Wounds", status.wounds)] },
     { id: "downtime", groups: [group("Endeavours", B.buildEndeavours(e))] }
   ];
   return finishPanel(tabs, label);

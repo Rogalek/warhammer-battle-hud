@@ -19,14 +19,11 @@ const collectEffects = (actor) => [...(actor.effects ?? []), ...[...(actor.items
 /** Akcje postaci według grup. Pojazdy mają tylko stany. */
 export function actionsByGroup(actor, env) {
   if (!FULL_ACTORS.includes(actor.type)) return { [G.conditions]: B.buildConditions(actor, env) };
-  const skills = B.buildSkills(actor, env);
   const weapons = B.buildWeapons(actor, env);
   const spells = B.buildSpells(actor, env);
   const prayers = B.buildPrayers(actor, env);
   return {
     [G.characteristics]: B.buildCharacteristics(actor, env),
-    [G.skillsBasic]: skills.basic,
-    [G.skillsAdvanced]: skills.advanced,
     [G.weaponsMelee]: weapons.melee,
     [G.weaponsRanged]: weapons.ranged,
     [G.armour]: B.buildArmour(actor, env),
@@ -44,7 +41,8 @@ export function actionsByGroup(actor, env) {
     [G.advantageActions]: B.buildAdvantageActions(actor, env),
     [G.downtime]: B.buildDowntime(actor, env),
     [G.channelledReset]: B.buildChannelledReset(actor, env),
-    [G.gangOrders]: B.buildGangOrders(actor, env)
+    [G.gangOrders]: B.buildGangOrders(actor, env),
+    [G.equipment]: B.buildEquipment(actor, env)
   };
 }
 
@@ -68,6 +66,7 @@ const HINTS = {
   [T.advantageAction]: "AdvantageAction",
   [T.gangOrder]: "GangOrder",
   [T.income]: "Income",
+  [T.equip]: "Equip",
   [T.rest]: "Rest",
   [T.endeavour]: "Endeavour",
   [T.channelReset]: "ChannelReset"
@@ -94,12 +93,17 @@ export function buildPanel(actor, env) {
     }),
     cssClass: action.cssClass ?? ""
   });
+  // Umiejętności w kolumnach według cech: grupy zależą od postaci, nie od stałego układu
+  const dynamic = { skills: () => (FULL_ACTORS.includes(actor.type) ? B.buildSkillGroups(actor, env) : []) };
   return LAYOUT.map((tab) => ({
     id: tab.id,
     label: env.localize(tab.name),
-    groups: tab.groups
-      .filter((id) => byGroup[id]?.length)
-      .map((id) => ({ label: env.localize(GROUPS[id]), actions: byGroup[id].map(view) }))
+    columns: tab.columns,
+    groups: tab.dynamic
+      ? dynamic[tab.dynamic]().map((group) => ({ label: group.label, actions: group.actions.map(view) }))
+      : tab.groups
+        .filter((id) => byGroup[id]?.length)
+        .map((id) => ({ label: env.localize(GROUPS[id]), actions: byGroup[id].map(view) }))
   })).filter((tab) => tab.groups.length);
 }
 
@@ -127,7 +131,7 @@ export function wfrpActions(getSetting) {
   });
   const panel = (actor) => buildPanel(actor, env());
   return {
-    tabs: (actor) => panel(actor).map(({ id, label }) => ({ id, label })),
+    tabs: (actor) => panel(actor).map(({ id, label, columns }) => ({ id, label, columns })),
     groups: (actor, tabId) => panel(actor).find((tab) => tab.id === tabId)?.groups ?? [],
     async perform(actor, value, mods) {
       const action = decodeAction(value);
