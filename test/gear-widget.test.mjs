@@ -65,3 +65,16 @@ describe("który widżet dostaje system", () => {
     expect(widgetFor("impmal", pc).mode).toBe("hands");
   });
 });
+
+describe("kolejność rąk: ręka wiodąca zawsze pierwsza", () => {
+  const actor = (handed) => ({ system: { handed, hands: { left: { document: null }, right: { document: null } } }, itemTypes: { weapon: [] } });
+  it("Imperium Maledictum: wiodąca pierwsza, niezależnie od strony", () => {
+    expect(handsFor("impmal").slots(actor("right")).map((s) => [s.key, s.role])).toEqual([["right", "main"], ["left", "off"]]);
+    expect(handsFor("impmal").slots(actor("left")).map((s) => [s.key, s.role])).toEqual([["left", "main"], ["right", "off"]]);
+    expect(handsFor("impmal").slots(actor("")).map((s) => s.role)).toEqual(["main", "off"]);
+  });
+  it("WFRP: slot 0 to ręka wiodąca, slot 1 druga", () => {
+    const wfrp = { type: "character", system: { settings: { equipPoints: 2 } }, itemTypes: { weapon: [] } };
+    expect(handsFor("wfrp4e").slots(wfrp).map((s) => s.role)).toEqual(["main", "off"]);
+  });
+});

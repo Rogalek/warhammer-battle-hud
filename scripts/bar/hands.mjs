@@ -98,7 +98,8 @@ const HANDS = {
       const { hands } = actor.system;
       // Postać bez wybranej ręki wiodącej: system przyjmuje prawą
       const handed = actor.system.handed || "right";
-      return ["left", "right"].map((key) => {
+      // Wszędzie ta sama kolejność: ręka wiodąca pierwsza (po lewej), druga ręka za nią – jak w WFRP
+      return [handed, handed === "left" ? "right" : "left"].map((key) => {
         const doc = hands[key].document;
         return {
           key,
