@@ -294,7 +294,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
       top = Math.round(vh - saved.bottom - offsetHeight);
       setSetting("hudPosition", { ...saved, top });
     }
-    Object.assign(style, { left: `${x}px`, top: `${clampTop(top, offsetHeight, vh)}px`, bottom: "" });
+    // `auto`, nie pusty napis: inaczej wraca domyślne `bottom` z arkusza i HUD rozciąga się na cały ekran
+    Object.assign(style, { left: `${x}px`, top: `${clampTop(top, offsetHeight, vh)}px`, bottom: "auto" });
   }
 
   /**
