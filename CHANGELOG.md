@@ -7,8 +7,7 @@
 - WFRP: the Advantage tab became the first groups of the Combat tab.
 - The small group of equip icons in the ammunition row and its "Show the other weapons" setting are gone – equipping lives in the Equipment group.
 - Colours: the HUD looks like each system's character sheet (background, buttons, active tab, list headers, fonts) – WFRP, Wrath & Glory and Soulbound now use their sheets' light pages. All systems set the same colour tokens instead of separate style overrides.
-- The Old World: the HUD takes the look of the character sheet – parchment, tow-blue buttons with cream text, list headers on a brown band and the system's fonts.
-- The Old World: the Combat tab follows the sheet – the attack you are defending against, Speed and Resilience in the group headers, only equipped weapons to attack with, wounds (moved from Status) with "Add a wound", the mount (mount/dismount and its attacks) and a new Equipment group to equip or put away any weapon, armour or shield.
+- The Old World: the Combat tab shows the attack you are defending against, Speed and Resilience in the group headers, and the mount (mount/dismount and its attacks); wounds in Status get an "Add a wound" button.
 - The action panel opens downward when the HUD is moved to the upper part of the screen; the HUD then keeps its top edge in place. A new setting fixes the direction (automatic, upward, downward).
 - The Old World: skills show their dice pool, e.g. "4d10 ≤3" (as many d10 as the characteristic, every die at or under the skill succeeds), and each column header shows the characteristic. The tooltip no longer calls the skill value "Dice".
 
