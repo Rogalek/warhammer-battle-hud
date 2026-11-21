@@ -17,6 +17,22 @@ export function clampAnchor({ x, bottom }, width, height, viewportWidth, viewpor
   };
 }
 
+/** Górna krawędź HUD-a przesunięta tak, by nie wyszedł poza ekran. */
+export const clampTop = (top, height, viewportHeight) => Math.round(Math.max(0, Math.min(top, Math.max(0, viewportHeight - height))));
+
+/**
+ * Kierunek rozwijania panelu: "up" albo "down".
+ * Ustawienie "auto" otwiera panel w dół, gdy przesunięty HUD stoi w górnej części ekranu
+ * (górna krawędź w górnych 40% ekranu; starsze zapisy bez `top` – dolna krawędź powyżej połowy).
+ * HUD w domyślnym miejscu nad paskiem makr zawsze otwiera się w górę.
+ */
+export function panelDirection(setting, saved, viewportHeight) {
+  if (!isAnchor(saved)) return "up";
+  if (setting === "up" || setting === "down") return setting;
+  if (Number.isFinite(saved.top)) return saved.top < viewportHeight * 0.4 ? "down" : "up";
+  return saved.bottom > viewportHeight * 0.5 ? "down" : "up";
+}
+
 /** Skala bez maksimum: przy tylu punktach Przewaga uchodzi za wysoką. */
 const DEFAULT_SCALE = 10;
 

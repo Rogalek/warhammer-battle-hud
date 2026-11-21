@@ -26,6 +26,8 @@
       "ShowHandsHint": "W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. Klik na ręce wybiera do niej broń, prawy klik ją opróżnia.",
       "ShowActionsName": "Pokaż panel akcji",
       "ShowActionsHint": "Zakładki nad paskiem makr z testami, bronią, zaklęciami i stanami postaci.",
+      "PanelDirectionName": "Kierunek rozwijania panelu akcji",
+      "PanelDirectionHint": "Automatycznie: w dół, gdy przesuniesz HUD w górną część ekranu, a w pozostałych miejscach w górę. HUD w domyślnym miejscu nad paskiem makr zawsze rozwija się w górę.",
       "ActionsOnlyEquippedName": "Panel akcji: tylko założony sprzęt",
       "ActionsOnlyEquippedHint": "Postacie graczy pokazują tylko założoną broń i pancerz. BN-i i stworzenia zawsze pokazują wszystko.",
       "BlindOnShiftName": "Shift-klik rzuca jako tajny rzut MG",
@@ -84,7 +86,12 @@
     "MomentumOff": "Brak",
     "MomentumHint": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. System śledzi to sam. Klik: przyznaj albo odbierz Impet. Prawy klik: odbierz go.",
     "AdvantageReadOnly": "Przewaga postaci (ręcznie zmienia ją tylko MG).",
-    "MomentumReadOnly": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. Ręcznie zmienia go tylko MG."
+    "MomentumReadOnly": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. Ręcznie zmienia go tylko MG.",
+    "Direction": {
+      "auto": "Automatycznie",
+      "up": "W górę",
+      "down": "W dół"
+    }
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -321,7 +328,9 @@
       "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany",
       "EndeavourTest": "Klik: test przedsięwzięcia dla tej postaci",
       "EndeavourPage": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)"
-    }
+    },
+    "DicePool": "{dice}k10 ≤{target}",
+    "DicePoolRule": "Rzucasz tyloma k10, ile wynosi cecha; każda kość z wynikiem nie większym niż umiejętność to sukces."
   },
   "WHB_IM": {
     "Reload": "Przeładuj",

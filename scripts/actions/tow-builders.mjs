@@ -77,29 +77,43 @@ export function buildCombatActions(env) {
 }
 
 /** Umiejętności pogrupowane według cech, z liczbą kości. */
+/**
+ * Pula kości testu umiejętności, jak w systemie (`{cecha}d10cs<={umiejętność}`):
+ * rzucamy tyloma k10, ile wynosi cecha, a sukcesem jest każda kość z wynikiem nie większym niż umiejętność.
+ */
+export function dicePool(env, dice, target) {
+  if (dice === undefined || dice === null || target === undefined || target === null) return "";
+  return env.localize("WHB_TOW.DicePool").replace("{dice}", dice).replace("{target}", target);
+}
+
 export function buildSkillGroups(actor, env) {
   const skills = actor?.system?.skills ?? {};
   const characteristics = actor?.system?.characteristics ?? {};
   return Object.entries(env.config?.characteristics ?? {})
-    .map(([ch, label]) => ({
-      label: env.localize(label),
-      actions: Object.entries(skills)
-        .filter(([, skill]) => skill?.characteristic === ch)
-        .map(([key, skill]) => ({
-          name: env.localize(env.config?.skills?.[key] ?? key),
-          value: towValue(TOW.skill, key),
-          detail: String(skill.value ?? ""),
-          tooltip: {
-            details: [
-              tip(env, "Characteristic", `${env.localize(label)} (${characteristics[ch]?.value ?? "?"})`),
-              tip(env, "Advances", skill.advances || undefined),
-              tip(env, "Improvement", skill.improvement || undefined),
-              tip(env, "Dice", skill.value)
-            ],
-            hint: hint(env, "Roll")
-          }
-        }))
-    }))
+    .map(([ch, label]) => {
+      const dice = characteristics[ch]?.value;
+      return {
+        // Nagłówek z wartością cechy: od razu widać, iloma kośćmi rzuca każda umiejętność z kolumny
+        label: dice === undefined ? env.localize(label) : `${env.localize(label)} (${dice})`,
+        actions: Object.entries(skills)
+          .filter(([, skill]) => skill?.characteristic === ch)
+          .map(([key, skill]) => ({
+            name: env.localize(env.config?.skills?.[key] ?? key),
+            value: towValue(TOW.skill, key),
+            detail: dicePool(env, dice, skill.value) || String(skill.value ?? ""),
+            tooltip: {
+              details: [
+                tip(env, "Dice", dice === undefined ? undefined : `${dice} (${env.localize(label)})`),
+                tip(env, "Target", skill.value),
+                tip(env, "Advances", skill.advances || undefined),
+                tip(env, "Improvement", skill.improvement || undefined)
+              ],
+              text: env.localize("WHB_TOW.DicePoolRule"),
+              hint: hint(env, "Roll")
+            }
+          }))
+      };
+    })
     .filter((group) => group.actions.length);
 }
 

@@ -6,7 +6,7 @@
 import { MODULE_ID, t, log } from "./constants.mjs";
 import { getSetting, hasSetting, setSetting } from "./settings.mjs";
 import { ammoState } from "./ammo-data.mjs";
-import { advantageLevel, clampAnchor, isAnchor } from "./hud-data.mjs";
+import { advantageLevel, clampAnchor, clampTop, isAnchor, panelDirection } from "./hud-data.mjs";
 import { counterFor } from "./counters.mjs";
 import { handsFor } from "./hands.mjs";
 import { groupSlots, handsUsed } from "./hands-data.mjs";
@@ -263,19 +263,38 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#place();
   }
 
+  /** Kierunek rozwijania panelu dla zapisanego (albo podanego) położenia. */
+  #direction(saved = getSetting("hudPosition")) {
+    return panelDirection(getSetting("panelDirection"), saved, window.innerHeight);
+  }
+
   /**
    * Ustawia HUD w zapisanym miejscu, a bez zapisu – nad paskiem makr.
    * Pasek makr bywa jedno- lub dwurzędowy, więc wysokość liczymy z jego rzeczywistego położenia.
+   * Panel rozwijany w górę trzyma dolną krawędź HUD-a, a rozwijany w dół – górną, więc otwarcie zakładki
+   * nie przesuwa paska ani licznika.
    */
-  #place(saved = getSetting("hudPosition")) {
+  #place(saved = getSetting("hudPosition"), direction = this.#direction(saved)) {
     const { style, offsetWidth, offsetHeight } = this.element;
+    const vh = window.innerHeight;
+    this.element.classList.toggle("whb-down", direction === "down");
     if (!isAnchor(saved)) {
       const top = document.getElementById("hotbar")?.getBoundingClientRect().top;
-      Object.assign(style, { left: "", bottom: top > 0 ? `${window.innerHeight - top + 8}px` : "" });
+      Object.assign(style, { left: "", top: "", bottom: top > 0 ? `${vh - top + 8}px` : "" });
       return;
     }
-    const { x, bottom } = clampAnchor(saved, offsetWidth, offsetHeight, window.innerWidth, window.innerHeight);
-    Object.assign(style, { left: `${x}px`, bottom: `${bottom}px` });
+    const { x, bottom } = clampAnchor(saved, offsetWidth, offsetHeight, window.innerWidth, vh);
+    if (direction !== "down") {
+      Object.assign(style, { left: `${x}px`, top: "", bottom: `${bottom}px` });
+      return;
+    }
+    // Starsze zapisy nie mają górnej krawędzi: liczymy ją raz (przy zwiniętym panelu) i zapisujemy
+    let top = saved.top;
+    if (!Number.isFinite(top)) {
+      top = Math.round(vh - saved.bottom - offsetHeight);
+      setSetting("hudPosition", { ...saved, top });
+    }
+    Object.assign(style, { left: `${x}px`, top: `${clampTop(top, offsetHeight, vh)}px`, bottom: "" });
   }
 
   /**
@@ -290,7 +309,9 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const { element } = this;
     const start = { x: event.clientX, y: event.clientY };
     const box = element.getBoundingClientRect();
-    const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY };
+    const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY, top: event.clientY - box.top };
+    // Kierunek panelu nie zmienia się w trakcie przeciągania, dopiero po puszczeniu
+    const direction = this.#direction();
     let moved = false;
     const move = (e) => {
       if (!moved) {
@@ -300,7 +321,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
         window.getSelection()?.removeAllRanges();
         game.tooltip?.deactivate?.();
       }
-      this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y) });
+      this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y), top: e.clientY - grab.top }, direction);
     };
     const stop = () => {
       window.removeEventListener("pointermove", move);
@@ -315,8 +336,11 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
       };
       window.addEventListener("click", swallow, { capture: true, once: true });
       setTimeout(() => window.removeEventListener("click", swallow, { capture: true }), 0);
-      const { left, width, bottom } = element.getBoundingClientRect();
-      setSetting("hudPosition", { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom) });
+      const { left, width, bottom, top } = element.getBoundingClientRect();
+      const saved = { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom), top: Math.round(top) };
+      setSetting("hudPosition", saved);
+      // Po puszczeniu w innej części ekranu panel może zmienić kierunek
+      if (this.#direction(saved) !== direction) this.#place(saved);
     };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);

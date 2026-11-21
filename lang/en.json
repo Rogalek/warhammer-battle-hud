@@ -26,6 +26,8 @@
       "ShowHandsHint": "Systems with hand rules (WFRP, Imperium Maledictum): what each hand holds, with two-handed weapons taking both. Click a hand to pick a weapon for it, right-click to empty it.",
       "ShowActionsName": "Show the action panel",
       "ShowActionsHint": "Tabs above the hotbar with the character's tests, weapons, spells and conditions.",
+      "PanelDirectionName": "Action panel opens",
+      "PanelDirectionHint": "Automatic: downward when you move the HUD to the upper part of the screen, upward otherwise. The HUD in its default place above the hotbar always opens upward.",
       "ActionsOnlyEquippedName": "Action panel: only equipped gear",
       "ActionsOnlyEquippedHint": "Player characters show only equipped weapons and armour. NPCs and creatures always show everything.",
       "BlindOnShiftName": "Shift-click rolls as Blind GM",
@@ -84,7 +86,12 @@
     "MomentumOff": "None",
     "MomentumHint": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. The system tracks this itself. Click: give or take Momentum. Right-click: take it away.",
     "AdvantageReadOnly": "The character's Advantage (only the GM changes it by hand).",
-    "MomentumReadOnly": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. Only the GM changes it by hand."
+    "MomentumReadOnly": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. Only the GM changes it by hand.",
+    "Direction": {
+      "auto": "Automatically",
+      "up": "Upward",
+      "down": "Downward"
+    }
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -321,7 +328,9 @@
       "Wound": "Click: mark as treated or untreated · Right-click: open the wound",
       "EndeavourTest": "Click: the endeavour's test for this character",
       "EndeavourPage": "Click: open the endeavour (its page has the Perform button)"
-    }
+    },
+    "DicePool": "{dice}d10 ≤{target}",
+    "DicePoolRule": "Roll as many d10 as the characteristic; every die at or under the skill is a success."
   },
   "WHB_IM": {
     "Reload": "Reload",

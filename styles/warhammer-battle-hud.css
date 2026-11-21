@@ -292,6 +292,22 @@ body.whb-system-age-of-sigmar-soulbound {
   color: var(--whb-highlight);
 }
 
+/* Panel rozwijany w dół (HUD przy górnej krawędzi): zakładki i amunicja na górze, panel pod nimi,
+   listy wyboru otwierają się pod przyciskiem */
+#warhammer-battle-hud-bar.whb-down .whb-hud {
+  align-items: flex-start;
+}
+
+#warhammer-battle-hud-bar.whb-down .whb-stack {
+  flex-direction: column-reverse;
+}
+
+#warhammer-battle-hud-bar.whb-down .wham-list {
+  top: 100%;
+  bottom: auto;
+  margin: 2px 0 0;
+}
+
 #warhammer-battle-hud-bar.dragging,
 #warhammer-battle-hud-bar.dragging * {
   cursor: grabbing;
