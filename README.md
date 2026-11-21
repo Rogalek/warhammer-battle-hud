@@ -29,11 +29,13 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 The HUD (Advantage, action panel and ammunition) floats over the scene. Hold the mouse button anywhere on it and drag (a plain click still uses the buttons); the position is saved to your user account, so it follows you to any computer. **Double-click** the handle to put it back above the hotbar. The action panel opens upward, or downward when you move the HUD to the upper part of the screen; the "Action panel opens" setting can fix it to one direction.
 
-## ✋ Hands (WFRP, Imperium Maledictum)
+## ✋ Hands and equipment
 
 Next to the big counter, **Hands** shows what each hand holds and how many are in use (2/2). A two-handed weapon fills both hands; the other hand is marked **Off**, and its tooltip explains the off-hand penalty the system applies. **Click** a hand to pick a weapon for it: whatever was there is put away, a two-handed weapon clears both hands, and a weapon already held moves to the chosen hand. **Right-click** empties the hand.
 
-In WFRP the number of hands is the character's equip points (2, or more for creatures with extra arms) and the system's limit on equipped weapons still applies. In Imperium Maledictum it is the left and right hand, with the dominant one as the main hand; a hand that cannot be used (an injury) is crossed out. Hands show what each hand holds; any weapon or armour can also be equipped from the Equipment group of the Combat tab. It can be hidden in the settings.
+In WFRP the number of hands is the character's equip points (2, or more for creatures with extra arms) and the system's limit on equipped weapons still applies. In Imperium Maledictum it is the left and right hand, with the dominant one as the main hand; a hand that cannot be used (an injury) is crossed out. Hands show what each hand holds; any weapon or armour can also be equipped from the Equipment group of the Combat tab.
+
+Systems without hand rules (The Old World, Wrath & Glory, Soulbound, and Imperium Maledictum NPCs, which the system gives no hands) show the same widget as **Equipped**: a slot for every equipped weapon and armour, and a **+** slot. **Click** an item to swap it for another one or put it away, **right-click** puts it away, and **+** lists what you can still equip. Two-handed weapons are marked "2" (The Old World's 2H grip, Soulbound's Two-handed trait). The widget can be hidden in the settings ("Show hands / equipment").
 
 ## 🎨 System colours
 

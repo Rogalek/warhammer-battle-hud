@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+- Every system where items are equipped has the widget next to the big counter: Hands in WFRP and Imperium Maledictum (hand rules), and Equipped in The Old World, Wrath & Glory, Soulbound and for Imperium Maledictum NPCs – a slot per equipped weapon or armour plus a "+" slot; click swaps or puts away, right-click puts away, two-handed weapons are marked "2".
 - One HUD across all systems. Every system's Combat tab starts with its actions and ends with an Equipment group that equips or puts away any weapon, armour or shield (right-click opens it). One rule for weapons and armour in Combat: player characters show only equipped ones, NPCs and creatures everything (the "only equipped gear" setting now works in every system). Skills sit in columns by characteristic with its value in the header (now also in WFRP), and conditions, wounds and similar live in the Status tab (WFRP and Soulbound "Conditions" became "Status"; The Old World's wounds moved back there).
 - WFRP: the Advantage tab became the first groups of the Combat tab.
 - The small group of equip icons in the ammunition row and its "Show the other weapons" setting are gone – equipping lives in the Equipment group.

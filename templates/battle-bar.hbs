@@ -14,8 +14,8 @@
       </button>
     {{/if}}
     {{#if hands}}
-      <div class="whb-hands" aria-label="{{hands.label}}: {{hands.used}}/{{hands.total}}">
-        <span class="whb-hands-label">{{hands.label}} <strong>{{hands.used}}/{{hands.total}}</strong></span>
+      <div class="whb-hands" aria-label="{{hands.label}}: {{hands.count}}">
+        <span class="whb-hands-label">{{hands.label}} <strong>{{hands.count}}</strong></span>
         <div class="whb-hand-slots">
           {{#each hands.slots}}
             <div class="whb-hand {{role}} {{#if item}}held{{/if}} {{#if useless}}useless{{/if}} {{#if over}}over{{/if}}" data-hand="{{key}}" style="--whb-span: {{span}}">
@@ -29,7 +29,7 @@
                     </button></li>
                   {{/each}}
                   {{#if item}}
-                    <li><button type="button" data-action="emptyHand"><i class="fa-regular fa-hand" inert></i> <span>{{localize "WHAMMO.Hands.EmptyIt"}}</span></button></li>
+                    <li><button type="button" data-action="emptyHand"><i class="fa-regular fa-hand" inert></i> <span>{{emptyLabel}}</span></button></li>
                   {{/if}}
                 </ul>
               {{/if}}
@@ -38,7 +38,7 @@
                   <img src="{{item.img}}" alt="{{item.name}}">
                   {{#if item.twoHanded}}<em class="whb-two-handed">2</em>{{/if}}
                 {{else}}
-                  <i class="fa-{{#if useless}}solid fa-hand-dots{{else}}regular fa-hand{{/if}}" inert></i>
+                  <i class="{{icon}}" inert></i>
                 {{/if}}
                 {{#if (eq role "off")}}{{#unless item.twoHanded}}<span class="whb-hand-mark">{{localize "WHAMMO.Hands.OffShort"}}</span>{{/unless}}{{/if}}
               </button>

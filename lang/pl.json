@@ -20,8 +20,8 @@
       "OnlyEquippedHint": "Odłożona broń dystansowa znika z rzędu amunicji; zakładasz ją w grupie Ekwipunek zakładki Walka.",
       "LowAmmoName": "Ostrzeżenie o małej ilości amunicji",
       "LowAmmoHint": "Przy tej liczbie lub mniejszej licznik zmienia kolor na bursztynowy.",
-      "ShowHandsName": "Pokaż ręce",
-      "ShowHandsHint": "W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. Klik na ręce wybiera do niej broń, prawy klik ją opróżnia.",
+      "ShowHandsName": "Pokaż ręce / wyposażenie",
+      "ShowHandsHint": "Obok dużego licznika. W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. W pozostałych (The Old World, Wrath & Glory, Soulbound): każda założona broń i pancerz oraz pole „+” do założenia kolejnych. Klik wybiera, prawy klik opróżnia albo odkłada.",
       "ShowActionsName": "Pokaż panel akcji",
       "ShowActionsHint": "Zakładki nad paskiem makr z testami, bronią, zaklęciami i stanami postaci.",
       "PanelDirectionName": "Kierunek rozwijania panelu akcji",
@@ -89,6 +89,13 @@
       "auto": "Automatycznie",
       "up": "W górę",
       "down": "W dół"
+    },
+    "Gear": {
+      "Label": "Wyposażenie",
+      "Add": "Załóż przedmiot",
+      "AddHint": "Klik: wybierz broń albo pancerz do założenia.",
+      "Hint": "Klik: zamień na inny przedmiot albo odłóż. Prawy klik: odłóż.",
+      "PutAway": "Odłóż"
     }
   },
   "WHFRAMES": {

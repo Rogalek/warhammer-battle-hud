@@ -8,7 +8,7 @@ import { getSetting, hasSetting, setSetting } from "./settings.mjs";
 import { ammoState } from "./ammo-data.mjs";
 import { advantageLevel, clampAnchor, clampTop, isAnchor, panelDirection } from "./hud-data.mjs";
 import { counterFor } from "./counters.mjs";
-import { handsFor } from "./hands.mjs";
+import { widgetFor } from "./hands.mjs";
 import { groupSlots, handsUsed } from "./hands-data.mjs";
 import { tooltipHtml } from "../actions/tooltip.mjs";
 
@@ -79,8 +79,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** Czy HUD pokazuje ręce tej postaci (system z zasadami rąk, postać z bronią, którą gracz może zmieniać). */
   static showsHands(actor) {
-    const hands = handsFor(game.system.id);
-    return Boolean(actor?.isOwner && hands && hasSetting("showHands") && getSetting("showHands") && hands.supports(actor) && actor.itemTypes.weapon?.length);
+    const hands = widgetFor(game.system.id, actor);
+    return Boolean(actor?.isOwner && hands && hasSetting("showHands") && getSetting("showHands") && hands.hasItems(actor));
   }
 
   /** Pokazuje, odświeża albo chowa pasek zależnie od bieżącej postaci. */
@@ -157,10 +157,14 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     return { ...advantage, changed };
   }
 
-  /** Ręce: slot na rękę (broń dwuręczna zajmuje dwa), pod kliknięciem lista broni do wzięcia w tę rękę. */
+  /**
+   * Widżet obok licznika: Ręce (systemy z zasadami rąk – slot na rękę, broń dwuręczna zajmuje dwa)
+   * albo Wyposażenie (pozostałe systemy – pole na każdy założony przedmiot i pole „+”).
+   */
   #handsContext(actor) {
     if (!this.constructor.showsHands(actor)) return null;
-    const hands = handsFor(game.system.id);
+    const hands = widgetFor(game.system.id, actor);
+    if (hands.mode === "gear") return this.#gearContext(actor, hands);
     const slots = hands.slots(actor);
     if (!slots.length) return null;
     const options = hands.options(actor);
@@ -169,8 +173,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const groups = groupSlots(slots);
     if (!groups.some((group) => group.key === this.openHand)) this.openHand = null;
     return {
-      used: handsUsed(slots),
-      total: slots.filter((slot) => !slot.over).length,
+      count: `${handsUsed(slots)}/${slots.filter((slot) => !slot.over).length}`,
       label: label("Label"),
       slots: groups.map((group) => {
         const role = group.span > 1 ? label("Both") : label(group.over ? "Over" : { main: "Main", off: "Off", extra: "Extra" }[group.role]);
@@ -182,6 +185,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           item: group.item,
           useless: group.useless,
           over: group.over,
+          icon: group.useless ? "fa-solid fa-hand-dots" : "fa-regular fa-hand",
+          emptyLabel: label("EmptyIt"),
           open,
           tooltip: tooltipHtml({
             name: role,
@@ -193,6 +198,35 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
             hint: group.useless ? "" : label("Hint")
           }),
           options: open ? options.map((o) => ({ ...o, current: o.id === group.item?.id, disabled: o.twoHanded && anyUseless })) : []
+        };
+      })
+    };
+  }
+
+  /** Wyposażenie: każdy założony przedmiot to pole (klik – zamiana albo odłożenie), ostatnie pole „+” zakłada kolejny. */
+  #gearContext(actor, hands) {
+    const slots = hands.slots(actor);
+    if (!slots.some((slot) => slot.key === this.openHand)) this.openHand = null;
+    const label = (key) => game.i18n.localize(`WHAMMO.Gear.${key}`);
+    return {
+      count: String(slots.filter((slot) => slot.item).length),
+      label: label("Label"),
+      slots: slots.map((slot) => {
+        const open = this.openHand === slot.key;
+        return {
+          key: slot.key,
+          span: 1,
+          role: slot.role,
+          item: slot.item,
+          icon: "fa-solid fa-plus",
+          emptyLabel: label("PutAway"),
+          open,
+          tooltip: tooltipHtml({
+            name: slot.item ? slot.item.name : label("Add"),
+            details: [{ label: game.i18n.localize("WHAMMO.Hands.TwoHanded"), value: slot.item?.twoHanded ? game.i18n.localize("Yes") : undefined }],
+            hint: label(slot.item ? "Hint" : "AddHint")
+          }),
+          options: open ? hands.options(actor, slot.key).map((o) => ({ ...o, current: o.id === slot.item?.id })) : []
         };
       })
     };
@@ -419,7 +453,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
   /** Zmiana rąk zawsze dla aktualnej postaci; błędy reguł systemu (limit, niesprawna ręka) system już pokazał. */
   async #withHands(action) {
     const actor = this.constructor.actor;
-    const hands = handsFor(game.system.id);
+    const hands = widgetFor(game.system.id, actor);
     if (!actor || !hands) return;
     try {
       await action(actor, hands);

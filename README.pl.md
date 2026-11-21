@@ -29,11 +29,13 @@ https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/late
 
 HUD (Przewaga, panel akcji i amunicja) unosi się nad sceną. Przytrzymaj przycisk myszy w dowolnym miejscu HUD-a i przeciągnij (zwykłe kliknięcie dalej uruchamia przyciski); położenie zapisuje się przy koncie gracza, więc działa na każdym komputerze. **Podwójny klik** na uchwycie przywraca go nad pasek makr. Panel akcji rozwija się w górę, a w dół, gdy przesuniesz HUD w górną część ekranu; ustawienie „Kierunek rozwijania panelu akcji” pozwala wybrać jeden kierunek na stałe.
 
-## ✋ Ręce (WFRP, Imperium Maledictum)
+## ✋ Ręce i wyposażenie
 
 Obok dużego licznika **Ręce** pokazują, co trzyma każda ręka i ile jest zajętych (2/2). Broń dwuręczna wypełnia obie ręce; druga ręka ma znacznik **2.**, a jej podpowiedź mówi o karze, którą nalicza system. **Klik** na ręce pozwala wybrać do niej broń: to, co w niej było, zostaje odłożone, broń dwuręczna zwalnia obie ręce, a broń już trzymana przechodzi do wybranej ręki. **Prawy klik** opróżnia rękę.
 
-W WFRP liczba rąk to punkty wyposażenia postaci (2, a więcej np. u istot z dodatkowymi ramionami) i dalej działa systemowy limit założonej broni. W Imperium Maledictum to lewa i prawa ręka, z wiodącą jako główną; ręka, której nie da się używać (uraz), jest przekreślona. Ręce pokazują, co trzyma każda ręka; każdą broń i pancerz można też założyć w grupie Ekwipunek zakładki Walka. Można je ukryć w ustawieniach.
+W WFRP liczba rąk to punkty wyposażenia postaci (2, a więcej np. u istot z dodatkowymi ramionami) i dalej działa systemowy limit założonej broni. W Imperium Maledictum to lewa i prawa ręka, z wiodącą jako główną; ręka, której nie da się używać (uraz), jest przekreślona. Ręce pokazują, co trzyma każda ręka; każdą broń i pancerz można też założyć w grupie Ekwipunek zakładki Walka.
+
+Systemy bez zasad rąk (The Old World, Wrath & Glory, Soulbound oraz BN-i Imperium Maledictum, którym system nie daje rąk) pokazują ten sam widżet jako **Wyposażenie**: pole na każdą założoną broń i pancerz oraz pole **+**. **Klik** na przedmiocie pozwala zamienić go na inny albo odłożyć, **prawy klik** odkłada, a **+** pokazuje, co jeszcze można założyć. Broń dwuręczna ma znacznik „2” (chwyt 2H w The Old World, cecha Dwuręczna w Soulbound). Widżet można ukryć w ustawieniach („Pokaż ręce / wyposażenie”).
 
 ## 🎨 Kolory systemów
 
