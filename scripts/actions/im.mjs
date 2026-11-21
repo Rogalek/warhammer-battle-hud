@@ -67,8 +67,11 @@ async function perform(actor, { type, id, extra }, mods, settings) {
     case IM.equip: {
       const item = actor.items.get(id);
       if (!item) return;
-      // Broń postaci gracza trzymają ręce (jak przycisk dłoni na karcie); reszta to zwykłe „założone”
-      if (item.type === "weapon" && actor.system.hands) return actor.update(actor.system.hands.toggle(undefined, item));
+      // Broń postaci gracza trzymają ręce (jak przycisk dłoni na karcie): do ręki wiodącej, a bez wybranej – do prawej
+      if (item.type === "weapon" && actor.system.hands) {
+        if (item.system.isEquipped) return item.system.unequip();
+        return item.system.equip(actor.system.handed || "right");
+      }
       return item.update({ "system.equipped.value": !item.system.equipped?.value });
     }
     case IM.condition:

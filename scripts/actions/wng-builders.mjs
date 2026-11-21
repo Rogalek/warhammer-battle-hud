@@ -55,7 +55,7 @@ export function buildSkillGroups(actor, env) {
   const attributes = actor?.system?.attributes ?? {};
   return Object.entries(env.config?.attributes ?? {})
     .map(([attr, attrLabel]) => ({
-      label: env.localize(attrLabel),
+      label: attributes[attr]?.total === undefined ? env.localize(attrLabel) : `${env.localize(attrLabel)} (${attributes[attr].total})`,
       actions: Object.entries(env.config?.skills ?? {})
         .filter(([key]) => skills[key]?.attribute === attr)
         .map(([key, label]) => ({

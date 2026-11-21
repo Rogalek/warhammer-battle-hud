@@ -80,7 +80,10 @@ export function buildCharacteristics(actor, env) {
 export function buildSkillGroups(actor, env) {
   const skills = buildSkills(actor, env);
   return Object.entries(env.config?.characteristics ?? {})
-    .map(([key, label]) => ({ label: env.localize(label), actions: skills.filter((a) => a.characteristic === key) }))
+    .map(([key, label]) => {
+      const value = actor?.system?.characteristics?.[key]?.total;
+      return { label: value === undefined ? env.localize(label) : `${env.localize(label)} (${value})`, actions: skills.filter((a) => a.characteristic === key) };
+    })
     .filter((group) => group.actions.length);
 }
 

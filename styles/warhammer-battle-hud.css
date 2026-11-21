@@ -15,7 +15,18 @@
   --whb-badge-from: #5a1f14;
   --whb-badge-to: #2a0d08;
   --whb-badge-text: #f3e3b5;
-  /* Wspólne tokeny wyglądu – każdy system ustawia te same nazwy, struktura stylów jest jedna */
+  /* Ramki drużyny w wyglądzie „systemu” */
+  --whb-frame-bg: rgba(233, 220, 190, 0.95);
+  --whb-frame-text: #2b1d0e;
+  --whb-frame-border: #6b4f2a;
+  --whb-frame-track: rgba(60, 40, 20, 0.3);
+  --whb-frame-accent: #8a5a00;
+}
+
+/* Wspólne tokeny wyglądu – zdefiniowane na <body>, nie w :root: zmienne zależne od innych (np. var(--whb-accent))
+   są liczone tam, gdzie je zdefiniowano, więc muszą widzieć kolory ustawione przez body.whb-system-<id>.
+   Każdy system nadpisuje te same nazwy; struktura stylów jest jedna. */
+body {
   --whb-surface-image: none;
   --whb-font: inherit;
   --whb-font-tab: inherit;
@@ -40,12 +51,6 @@
   --whb-heading-border: transparent;
   --whb-alert-bg: rgba(224, 80, 80, 0.12);
   --whb-alert-text: #e05050;
-  /* Ramki drużyny w wyglądzie „systemu” */
-  --whb-frame-bg: rgba(233, 220, 190, 0.95);
-  --whb-frame-text: #2b1d0e;
-  --whb-frame-border: #6b4f2a;
-  --whb-frame-track: rgba(60, 40, 20, 0.3);
-  --whb-frame-accent: #8a5a00;
 }
 
 /* WFRP: jak karta postaci – pergamin, ciemna czerwień aktywnej zakładki, granat zakładek, CaslonPro */
@@ -1095,6 +1100,11 @@ body.whb-system-age-of-sigmar-soulbound {
   background-size: cover;
   border-color: var(--whb-border);
   color: var(--whb-text);
+}
+
+/* Przyciski dziedziczą czcionkę karty systemu, a nie czcionkę przycisków Foundry */
+#warhammer-battle-hud-bar button {
+  font-family: inherit;
 }
 
 #warhammer-battle-hud-bar .whb-action {
