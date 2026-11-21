@@ -44,6 +44,13 @@ describe("WFRP 4e: ukończenie poziomu kariery", () => {
     expect(report.complete).toBe(true);
   });
 
+  it("„(Dowolny)” bierze wolną specjalizację, bez liczenia jej dwa razy", () => {
+    const careerSkills = ["Język (Gildii)", "Język (Dowolny)", "Wiedza (Any)"];
+    const skills = [{ name: "Język (Gildii)", advances: 10 }, { name: "Język (Bretoński)", advances: 7 }, { name: "Język (Klasyczny)", advances: 3 }];
+    const rows = careerCheck4e({ ...base, careerSkills, skills }).skills.rows;
+    expect(rows.map((r) => [r.name, r.advances, r.owned])).toEqual([["Język (Gildii)", 10, true], ["Język (Bretoński)", 7, true], ["Wiedza (Any)", 0, false]]);
+  });
+
   it("kariera z mniej niż 8 umiejętnościami wymaga wszystkich", () => {
     const report = careerCheck4e({ ...base, careerSkills: ["Unik", "Atletyka"], skills: [{ name: "Unik", advances: 5 }] });
     expect(report.skills).toMatchObject({ done: 1, required: 2 });

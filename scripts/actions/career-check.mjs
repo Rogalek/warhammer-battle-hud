@@ -13,6 +13,12 @@ export const SKILLS_NEEDED = 8;
 
 const lower = (name) => String(name ?? "").trim().toLowerCase();
 
+/** Specjalizacja „dowolna” w nazwach umiejętności kariery (EN i PL). */
+const ANY = ["any", "dowolny", "dowolna", "dowolne", "dowolnej"];
+const SPEC = /^(.*?)\s*\(([^)]*)\)\s*$/;
+const isAny = (name) => ANY.includes(lower(SPEC.exec(String(name))?.[2]));
+const baseName = (name) => lower(SPEC.exec(String(name))?.[1] ?? name);
+
 /**
  * @param {object} input
  * @param {number} input.level                poziom kariery (1–4)
@@ -27,10 +33,28 @@ export function careerCheck4e({ level, characteristics = [], careerSkills = [], 
 
   const chars = characteristics.map((c) => ({ ...c, advances: Number(c.advances) || 0, ok: (Number(c.advances) || 0) >= needed }));
 
-  const owned = new Map(skills.map((s) => [lower(s.name), Number(s.advances) || 0]));
-  const careerSkillRows = [...new Set(careerSkills.map((n) => String(n).trim()).filter(Boolean))].map((name) => {
-    const advances = owned.get(lower(name));
-    return { name, owned: advances !== undefined, advances: advances ?? 0, ok: (advances ?? 0) >= needed };
+  // Najpierw dokładne nazwy, potem „(Dowolny)” bierze najlepszą wolną specjalizację – żadna nie liczy się dwa razy
+  const owned = skills.map((s) => ({ name: String(s.name ?? ""), key: lower(s.name), advances: Number(s.advances) || 0 }));
+  const used = new Set();
+  const names = [...new Set(careerSkills.map((n) => String(n).trim()).filter(Boolean))];
+  const found = new Map();
+  for (const name of names.filter((n) => !isAny(n))) {
+    const skill = owned.find((s) => s.key === lower(name));
+    if (skill) used.add(skill.key);
+    found.set(name, skill);
+  }
+  for (const name of names.filter(isAny)) {
+    const base = baseName(name);
+    const skill = owned
+      .filter((s) => !used.has(s.key) && baseName(s.name) === base)
+      .sort((a, b) => b.advances - a.advances)[0];
+    if (skill) used.add(skill.key);
+    found.set(name, skill);
+  }
+  const careerSkillRows = names.map((name) => {
+    const skill = found.get(name);
+    const advances = skill?.advances ?? 0;
+    return { name: skill && isAny(name) ? skill.name : name, owned: Boolean(skill), advances, ok: advances >= needed };
   });
   const skillsRequired = Math.min(SKILLS_NEEDED, careerSkillRows.length);
   const skillsDone = careerSkillRows.filter((s) => s.ok).length;
