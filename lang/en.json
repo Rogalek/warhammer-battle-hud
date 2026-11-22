@@ -17,17 +17,17 @@
       "ShowBarName": "Show the ammunition row",
       "ShowBarHint": "For this user only.",
       "OnlyEquippedName": "Only equipped ranged weapons",
-      "OnlyEquippedHint": "Put-away ranged weapons move to the small gear group.",
-      "ShowGearName": "Show the other weapons",
-      "ShowGearHint": "A small group of icons for equipping melee weapons and shields with one click. Left out while Hands are shown.",
+      "OnlyEquippedHint": "Ranged weapons you put away leave the ammunition row; equip them in the Equipment group of the Combat tab.",
       "LowAmmoName": "Low ammunition warning",
       "LowAmmoHint": "The count turns amber at this number or below.",
-      "ShowHandsName": "Show the hands",
-      "ShowHandsHint": "Systems with hand rules (WFRP, Imperium Maledictum): what each hand holds, with two-handed weapons taking both. Click a hand to pick a weapon for it, right-click to empty it.",
+      "ShowHandsName": "Show hands / equipment",
+      "ShowHandsHint": "Next to the big counter. Systems with hand rules (WFRP, Imperium Maledictum): what each hand holds, with two-handed weapons taking both. Other systems (The Old World, Wrath & Glory, Soulbound): every equipped weapon and armour, with a \"+\" to equip more. Click to choose, right-click to empty or put away.",
       "ShowActionsName": "Show the action panel",
       "ShowActionsHint": "Tabs above the hotbar with the character's tests, weapons, spells and conditions.",
+      "PanelDirectionName": "Action panel opens",
+      "PanelDirectionHint": "Automatic: downward when you move the HUD to the upper part of the screen, upward otherwise. The HUD in its default place above the hotbar always opens upward.",
       "ActionsOnlyEquippedName": "Action panel: only equipped gear",
-      "ActionsOnlyEquippedHint": "Player characters show only equipped weapons and armour. NPCs and creatures always show everything.",
+      "ActionsOnlyEquippedHint": "In every system, player characters show only equipped weapons and armour in the Combat tab (equip them in its Equipment group). NPCs and creatures always show everything.",
       "BlindOnShiftName": "Shift-click rolls as Blind GM",
       "BlindOnShiftHint": "Holding Shift while clicking a test in the panel makes it a Blind GM roll.",
       "SkipDialogByDefaultName": "Skip the roll dialog by default",
@@ -84,7 +84,19 @@
     "MomentumOff": "None",
     "MomentumHint": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. The system tracks this itself. Click: give or take Momentum. Right-click: take it away.",
     "AdvantageReadOnly": "The character's Advantage (only the GM changes it by hand).",
-    "MomentumReadOnly": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. Only the GM changes it by hand."
+    "MomentumReadOnly": "Momentum (5th edition rules): +1 Advantage on Weapon Skill tests. Gained by winning a melee opposed test in combat or by charging; lost on taking damage, losing a melee opposed test, gaining a condition, or when combat ends. Only the GM changes it by hand.",
+    "Direction": {
+      "auto": "Automatically",
+      "up": "Upward",
+      "down": "Downward"
+    },
+    "Gear": {
+      "Label": "Equipped",
+      "Add": "Equip an item",
+      "AddHint": "Click: choose a weapon or armour to equip.",
+      "Hint": "Click: swap for another item or put it away. Right-click: put it away.",
+      "PutAway": "Put it away"
+    }
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -151,7 +163,8 @@
       "Religion": "Religion",
       "Talents": "Talents",
       "Conditions": "Conditions",
-      "Downtime": "Downtime"
+      "Downtime": "Downtime",
+      "Status": "Status"
     },
     "Groups": {
       "Characteristics": "Characteristics",
@@ -174,7 +187,8 @@
       "AdvantageActions": "Use Advantage",
       "GangOrders": "Gang orders",
       "Downtime": "Between adventures",
-      "ChannelledReset": "Channelled power"
+      "ChannelledReset": "Channelled power",
+      "Equipment": "Equipment"
     },
     "Info": {
       "Damage": "Damage to the item",
@@ -241,7 +255,10 @@
       "CV": "CV",
       "Channelled": "Channelled SL",
       "Career": "Career",
-      "Status": "Status"
+      "Status": "Status",
+      "Successes": "Successes",
+      "Weapon": "Weapon",
+      "Equipped": "Equipped"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -257,7 +274,8 @@
       "Rest": "Click: rest – Endurance test to recover Wounds",
       "Endeavour": "Click: open the endeavour (its page has the Perform button)",
       "ChannelReset": "Click: drop all channelled SL (for example after a lost concentration)",
-      "CareerCheck": "Click: check the career (only you see the answer)"
+      "CareerCheck": "Click: check the career (only you see the answer)",
+      "Equip": "Click: equip or put away · Right-click: open the item"
     },
     "Income": "Income",
     "Rest": "Rest",
@@ -319,7 +337,10 @@
       "Fate": "Fate",
       "Conditions": "Conditions",
       "Wounds": "Wounds",
-      "Endeavours": "Endeavours"
+      "Endeavours": "Endeavours",
+      "Defending": "Defending against",
+      "Mount": "Mount",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Action": "Click: take the action",
@@ -340,8 +361,22 @@
       "Condition": "Click: add or remove · Right-click: remove",
       "Wound": "Click: mark as treated or untreated · Right-click: open the wound",
       "EndeavourTest": "Click: the endeavour's test for this character",
-      "EndeavourPage": "Click: open the endeavour (its page has the Perform button)"
-    }
+      "EndeavourPage": "Click: open the endeavour (its page has the Perform button)",
+      "Defending": "Click: stop defending against this attack",
+      "Equip": "Click: equip or put away · Right-click: open the item",
+      "Mount": "Click: mount or dismount · Right-click: open the mount",
+      "MountItem": "Click: use with the mount · Right-click: open the item",
+      "WoundAdd": "Click: add a wound and open it"
+    },
+    "DicePool": "{dice}d10 ≤{target}",
+    "DicePoolRule": "Roll as many d10 as the characteristic; every die at or under the skill is a success.",
+    "Speed": "Speed",
+    "Resilience": "Resilience",
+    "Mounted": "mounted",
+    "Dismounted": "dismounted",
+    "AddWound": "Add a wound",
+    "Attacker": "Attacker",
+    "DefendingText": "Your next test answers this attack, as on the character sheet."
   },
   "WHB_IM": {
     "Reload": "Reload",
@@ -376,7 +411,8 @@
       "Corruption": "Corruption",
       "Fate": "Fate",
       "Conditions": "Conditions",
-      "Injuries": "Injuries and criticals"
+      "Injuries": "Injuries and criticals",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Action": "Click: take this as your action for the turn",
@@ -391,7 +427,8 @@
       "Purge": "Click: purge the Warp Charge (a Discipline test in combat)",
       "Use": "Click: use · Right-click: open the item",
       "Counter": "Click: +1 · Right-click: −1",
-      "Condition": "Click: add (again: Major) · Right-click: remove"
+      "Condition": "Click: add (again: Major) · Right-click: remove",
+      "Equip": "Click: equip or put away (weapons go to the dominant hand) · Right-click: open the item"
     }
   },
   "WHB_WNG": {
@@ -424,7 +461,8 @@
       "Resources": "Resources",
       "Conditions": "Conditions",
       "Injuries": "Injuries and mutations",
-      "Social": "Influence and Wealth"
+      "Social": "Influence and Wealth",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -440,7 +478,8 @@
       "conviction": "Click: Conviction test",
       "corruption": "Click: Corruption test",
       "initiative": "Click: roll Initiative (adds you to the combat)",
-      "influence": "Click: Influence test"
+      "influence": "Click: Influence test",
+      "Equip": "Click: equip or put away · Right-click: open the item"
     },
     "Wealth": "Wealth",
     "influence": "Influence"
@@ -453,7 +492,8 @@
       "skills": "Skills",
       "powers": "Powers",
       "talents": "Talents",
-      "conditions": "Conditions"
+      "conditions": "Conditions",
+      "status": "Status"
     },
     "Groups": {
       "Melee": "Melee weapons",
@@ -464,7 +504,8 @@
       "Spells": "Spells",
       "Miracles": "Miracles",
       "Talents": "Talents",
-      "Conditions": "Conditions"
+      "Conditions": "Conditions",
+      "Equipment": "Equipment"
     },
     "Hint": {
       "Roll": "Click: test · Alt: skip the dialog · Shift: Blind GM roll",
@@ -475,7 +516,8 @@
       "Spell": "Click: cast · Right-click: open the spell",
       "Miracle": "Click: invoke · Right-click: open the miracle",
       "Ability": "Click: use (test or post to chat) · Right-click: open the item",
-      "Condition": "Click: add or remove · Right-click: remove"
+      "Condition": "Click: add or remove · Right-click: remove",
+      "Equip": "Click: equip or put away · Right-click: open the item"
     }
   }
 }

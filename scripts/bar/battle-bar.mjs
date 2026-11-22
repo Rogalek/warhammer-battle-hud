@@ -6,9 +6,9 @@
 import { MODULE_ID, t, log } from "./constants.mjs";
 import { getSetting, hasSetting, setSetting } from "./settings.mjs";
 import { ammoState } from "./ammo-data.mjs";
-import { advantageLevel, clampAnchor, isAnchor } from "./hud-data.mjs";
+import { advantageLevel, clampAnchor, clampTop, isAnchor, panelDirection } from "./hud-data.mjs";
 import { counterFor } from "./counters.mjs";
-import { handsFor } from "./hands.mjs";
+import { widgetFor } from "./hands.mjs";
 import { groupSlots, handsUsed } from "./hands-data.mjs";
 import { tooltipHtml } from "../actions/tooltip.mjs";
 
@@ -79,8 +79,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** Czy HUD pokazuje ręce tej postaci (system z zasadami rąk, postać z bronią, którą gracz może zmieniać). */
   static showsHands(actor) {
-    const hands = handsFor(game.system.id);
-    return Boolean(actor?.isOwner && hands && hasSetting("showHands") && getSetting("showHands") && hands.supports(actor) && actor.itemTypes.weapon?.length);
+    const hands = widgetFor(game.system.id, actor);
+    return Boolean(actor?.isOwner && hands && hasSetting("showHands") && getSetting("showHands") && hands.hasItems(actor));
   }
 
   /** Pokazuje, odświeża albo chowa pasek zależnie od bieżącej postaci. */
@@ -118,7 +118,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const actor = this.constructor.actor;
     if (!actor) return context;
     Object.assign(context, this.#actionContext(actor), { advantage: this.#advantageContext(actor), hands: this.#handsContext(actor) });
-    if (!adapter || !getSetting("showBar")) return Object.assign(context, { weapons: [], gear: [] });
+    if (!adapter || !getSetting("showBar")) return Object.assign(context, { weapons: [] });
     const low = getSetting("lowAmmo");
     const onlyEquipped = getSetting("onlyEquipped");
     const all = adapter.allWeapons(actor);
@@ -139,9 +139,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           open: this.openList === weapon.id,
           options: list.map((item) => ({ ...entry(item), current: item.id === ammo?.id }))
         };
-      }),
-      // Ręce zakładają broń same, więc przy nich mała grupa ikon byłaby dublem
-      gear: getSetting("showGear") && !this.constructor.showsHands(actor) ? all.filter((w) => !ranged.includes(w)).map((w) => ({ id: w.id, name: w.name, img: w.img, equipped: adapter.isEquipped(w) })) : []
+      })
+      // Pozostałą broń i pancerz zakłada się w grupie Ekwipunek zakładki Walka (we wszystkich systemach)
     });
   }
 
@@ -158,10 +157,14 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     return { ...advantage, changed };
   }
 
-  /** Ręce: slot na rękę (broń dwuręczna zajmuje dwa), pod kliknięciem lista broni do wzięcia w tę rękę. */
+  /**
+   * Widżet obok licznika: Ręce (systemy z zasadami rąk – slot na rękę, broń dwuręczna zajmuje dwa)
+   * albo Wyposażenie (pozostałe systemy – pole na każdy założony przedmiot i pole „+”).
+   */
   #handsContext(actor) {
     if (!this.constructor.showsHands(actor)) return null;
-    const hands = handsFor(game.system.id);
+    const hands = widgetFor(game.system.id, actor);
+    if (hands.mode === "gear") return this.#gearContext(actor, hands);
     const slots = hands.slots(actor);
     if (!slots.length) return null;
     const options = hands.options(actor);
@@ -170,8 +173,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const groups = groupSlots(slots);
     if (!groups.some((group) => group.key === this.openHand)) this.openHand = null;
     return {
-      used: handsUsed(slots),
-      total: slots.filter((slot) => !slot.over).length,
+      count: `${handsUsed(slots)}/${slots.filter((slot) => !slot.over).length}`,
       label: label("Label"),
       slots: groups.map((group) => {
         const role = group.span > 1 ? label("Both") : label(group.over ? "Over" : { main: "Main", off: "Off", extra: "Extra" }[group.role]);
@@ -183,6 +185,8 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           item: group.item,
           useless: group.useless,
           over: group.over,
+          icon: group.useless ? "fa-solid fa-hand-dots" : "fa-regular fa-hand",
+          emptyLabel: label("EmptyIt"),
           open,
           tooltip: tooltipHtml({
             name: role,
@@ -194,6 +198,35 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
             hint: group.useless ? "" : label("Hint")
           }),
           options: open ? options.map((o) => ({ ...o, current: o.id === group.item?.id, disabled: o.twoHanded && anyUseless })) : []
+        };
+      })
+    };
+  }
+
+  /** Wyposażenie: każdy założony przedmiot to pole (klik – zamiana albo odłożenie), ostatnie pole „+” zakłada kolejny. */
+  #gearContext(actor, hands) {
+    const slots = hands.slots(actor);
+    if (!slots.some((slot) => slot.key === this.openHand)) this.openHand = null;
+    const label = (key) => game.i18n.localize(`WHAMMO.Gear.${key}`);
+    return {
+      count: String(slots.filter((slot) => slot.item).length),
+      label: label("Label"),
+      slots: slots.map((slot) => {
+        const open = this.openHand === slot.key;
+        return {
+          key: slot.key,
+          span: 1,
+          role: slot.role,
+          item: slot.item,
+          icon: "fa-solid fa-plus",
+          emptyLabel: label("PutAway"),
+          open,
+          tooltip: tooltipHtml({
+            name: slot.item ? slot.item.name : label("Add"),
+            details: [{ label: game.i18n.localize("WHAMMO.Hands.TwoHanded"), value: slot.item?.twoHanded ? game.i18n.localize("Yes") : undefined }],
+            hint: label(slot.item ? "Hint" : "AddHint")
+          }),
+          options: open ? hands.options(actor, slot.key).map((o) => ({ ...o, current: o.id === slot.item?.id })) : []
         };
       })
     };
@@ -263,19 +296,39 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     this.#place();
   }
 
+  /** Kierunek rozwijania panelu dla zapisanego (albo podanego) położenia. */
+  #direction(saved = getSetting("hudPosition")) {
+    return panelDirection(getSetting("panelDirection"), saved, window.innerHeight);
+  }
+
   /**
    * Ustawia HUD w zapisanym miejscu, a bez zapisu – nad paskiem makr.
    * Pasek makr bywa jedno- lub dwurzędowy, więc wysokość liczymy z jego rzeczywistego położenia.
+   * Panel rozwijany w górę trzyma dolną krawędź HUD-a, a rozwijany w dół – górną, więc otwarcie zakładki
+   * nie przesuwa paska ani licznika.
    */
-  #place(saved = getSetting("hudPosition")) {
+  #place(saved = getSetting("hudPosition"), direction = this.#direction(saved)) {
     const { style, offsetWidth, offsetHeight } = this.element;
+    const vh = window.innerHeight;
+    this.element.classList.toggle("whb-down", direction === "down");
     if (!isAnchor(saved)) {
       const top = document.getElementById("hotbar")?.getBoundingClientRect().top;
-      Object.assign(style, { left: "", bottom: top > 0 ? `${window.innerHeight - top + 8}px` : "" });
+      Object.assign(style, { left: "", top: "", bottom: top > 0 ? `${vh - top + 8}px` : "" });
       return;
     }
-    const { x, bottom } = clampAnchor(saved, offsetWidth, offsetHeight, window.innerWidth, window.innerHeight);
-    Object.assign(style, { left: `${x}px`, bottom: `${bottom}px` });
+    const { x, bottom } = clampAnchor(saved, offsetWidth, offsetHeight, window.innerWidth, vh);
+    if (direction !== "down") {
+      Object.assign(style, { left: `${x}px`, top: "", bottom: `${bottom}px` });
+      return;
+    }
+    // Starsze zapisy nie mają górnej krawędzi: liczymy ją raz (przy zwiniętym panelu) i zapisujemy
+    let top = saved.top;
+    if (!Number.isFinite(top)) {
+      top = Math.round(vh - saved.bottom - offsetHeight);
+      setSetting("hudPosition", { ...saved, top });
+    }
+    // `auto`, nie pusty napis: inaczej wraca domyślne `bottom` z arkusza i HUD rozciąga się na cały ekran
+    Object.assign(style, { left: `${x}px`, top: `${clampTop(top, offsetHeight, vh)}px`, bottom: "auto" });
   }
 
   /**
@@ -290,7 +343,9 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     const { element } = this;
     const start = { x: event.clientX, y: event.clientY };
     const box = element.getBoundingClientRect();
-    const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY };
+    const grab = { x: event.clientX - (box.left + box.width / 2), y: box.bottom - event.clientY, top: event.clientY - box.top };
+    // Kierunek panelu nie zmienia się w trakcie przeciągania, dopiero po puszczeniu
+    const direction = this.#direction();
     let moved = false;
     const move = (e) => {
       if (!moved) {
@@ -300,7 +355,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
         window.getSelection()?.removeAllRanges();
         game.tooltip?.deactivate?.();
       }
-      this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y) });
+      this.#place({ x: e.clientX - grab.x, bottom: window.innerHeight - (e.clientY + grab.y), top: e.clientY - grab.top }, direction);
     };
     const stop = () => {
       window.removeEventListener("pointermove", move);
@@ -315,8 +370,11 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
       };
       window.addEventListener("click", swallow, { capture: true, once: true });
       setTimeout(() => window.removeEventListener("click", swallow, { capture: true }), 0);
-      const { left, width, bottom } = element.getBoundingClientRect();
-      setSetting("hudPosition", { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom) });
+      const { left, width, bottom, top } = element.getBoundingClientRect();
+      const saved = { x: Math.round(left + width / 2), bottom: Math.round(window.innerHeight - bottom), top: Math.round(top) };
+      setSetting("hudPosition", saved);
+      // Po puszczeniu w innej części ekranu panel może zmienić kierunek
+      if (this.#direction(saved) !== direction) this.#place(saved);
     };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);
@@ -395,7 +453,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
   /** Zmiana rąk zawsze dla aktualnej postaci; błędy reguł systemu (limit, niesprawna ręka) system już pokazał. */
   async #withHands(action) {
     const actor = this.constructor.actor;
-    const hands = handsFor(game.system.id);
+    const hands = widgetFor(game.system.id, actor);
     if (!actor || !hands) return;
     try {
       await action(actor, hands);

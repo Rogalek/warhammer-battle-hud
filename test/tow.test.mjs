@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import * as B from "../scripts/actions/tow-builders.mjs";
 
 const env = {
-  localize: (key) => key,
+  localize: (key) => ({ "WHB_TOW.DicePool": "{dice}d10 ≤{target}" })[key] ?? key,
   config: {
     characteristics: { ws: "Weapon Skill", bs: "Ballistic Skill" },
     skills: { melee: "Melee", defence: "Defence", shooting: "Shooting" },
@@ -18,6 +18,7 @@ const env = {
 
 const item = (type, name, system = {}) => ({ uuid: `Actor.a.Item.${name}`, name, type, img: `${type}.webp`, system });
 const actor = {
+  type: "character",
   system: {
     skills: { melee: { characteristic: "ws", value: 3, advances: 1 }, defence: { characteristic: "ws", value: 2 }, shooting: { characteristic: "bs", value: 2 } },
     characteristics: { ws: { value: 3 }, bs: { value: 2 } },
@@ -56,7 +57,11 @@ describe("The Old World: panel akcji", () => {
 
   it("umiejętności według cech, z kośćmi", () => {
     const groups = B.buildSkillGroups(actor, env);
-    expect(groups.map((g) => [g.label, g.actions.map((a) => `${a.name}:${a.detail}`)])).toEqual([["Weapon Skill", ["Melee:3", "Defence:2"]], ["Ballistic Skill", ["Shooting:2"]]]);
+    // Pula kości: tyle k10, ile cecha, sukces na wyniku ≤ umiejętności
+    expect(groups.map((g) => [g.label, g.actions.map((a) => `${a.name}:${a.detail}`)])).toEqual([["Weapon Skill (3)", ["Melee:3d10 ≤3", "Defence:3d10 ≤2"]], ["Ballistic Skill (2)", ["Shooting:2d10 ≤2"]]]);
+    const melee = groups[0].actions[0].tooltip.details;
+    expect(melee.find((d) => d.label.endsWith("Dice")).value).toBe("3 (Weapon Skill)");
+    expect(melee.find((d) => d.label.endsWith("Target")).value).toBe(3);
   });
 
   it("walka: tylko założona broń, przeładowanie nienaładowanej, zdolności ataku, tarcza osobno", () => {
@@ -88,5 +93,47 @@ describe("The Old World: panel akcji", () => {
     expect(s.fate.map((a) => a.detail ?? "")).toEqual(["1/3", ""]);
     expect(s.conditions[0]).toMatchObject({ name: "Prone", cssClass: "toggle active" });
     expect(s.wounds[0]).toMatchObject({ value: "wound|Actor.a.Item.Cut", cssClass: "untreated" });
+  });
+});
+
+describe("The Old World: zakładka Walka jak na karcie", () => {
+  it("broń do ataku tylko założona; Ekwipunek zakłada i zdejmuje każdą broń i pancerz", () => {
+    const c = B.buildCombat(actor, env);
+    expect(c.melee.map((a) => a.name)).toEqual(["Sword"]);
+    const eq = B.buildEquipment(actor, env);
+    expect(eq.map((a) => [a.name, a.cssClass])).toEqual([["Crossbow", "toggle active"], ["Spare Axe", "toggle"], ["Sword", "toggle active"], ["Buckler", "toggle active"], ["Mail", "toggle active"]]);
+    expect(eq[1].value).toBe("equip|Actor.a.Item.Spare Axe");
+  });
+
+  it("Szybkość i Wytrzymałość do nagłówków", () => {
+    const stats = B.combatStats({ system: { speed: { value: "normal" }, resilience: { value: 5 } } }, { ...env, config: { speed: { normal: "Normal" } } });
+    expect(stats).toEqual({ speed: "Normal", resilience: 5 });
+    expect(B.combatStats({ system: {} }, env)).toEqual({ speed: undefined, resilience: undefined });
+  });
+
+  it("obrona: atakujący, broń i sukcesy, gdy postać się broni", () => {
+    expect(B.buildDefending(actor, env)).toEqual([]);
+    const defending = { system: { opposed: { system: { test: { actor: { name: "Orc", img: "orc.webp" }, item: { name: "Choppa" }, result: { successes: 2 } } } } } };
+    const [row] = B.buildDefending(defending, env);
+    expect(row).toMatchObject({ name: "Orc", value: "opposed", detail: "2", cssClass: "untreated" });
+    expect(row.tooltip.details.map((d) => d.value)).toEqual(["Choppa", 2]);
+  });
+
+  it("wierzchowiec: dosiadanie i jego ataki (przygaszone pieszo)", () => {
+    expect(B.buildMount(actor, env)).toEqual([]);
+    const horse = { name: "Horse", img: "horse.webp", prototypeToken: { texture: { src: "horse-token.webp" } } };
+    const hoof = item("weapon", "Hooves", { damage: { value: 2 } });
+    const rider = (dismounted) => ({ system: { mount: { document: horse, dismounted, items: [hoof] } } });
+    const mounted = B.buildMount(rider(false), env);
+    expect(mounted.map((a) => [a.name, a.value, a.cssClass])).toEqual([["Horse", "mount", "toggle active"], ["Hooves", "mountItem|Actor.a.Item.Hooves", ""]]);
+    expect(B.buildMount(rider(true), env).map((a) => a.cssClass)).toEqual(["toggle", "unaffordable"]);
+    // Wierzchowiec bez danych przedmiotów: getter systemu rzuca wyjątek
+    const broken = { system: { mount: { document: horse, dismounted: false, get items() { throw new Error("no mountData"); } } } };
+    expect(B.buildMount(broken, env)).toHaveLength(1);
+  });
+
+  it("rany z przyciskiem dodania rany", () => {
+    const wounds = B.buildStatus(actor, env).wounds;
+    expect(wounds.map((a) => a.value)).toEqual(["wound|Actor.a.Item.Cut", "woundAdd"]);
   });
 });

@@ -54,8 +54,10 @@ describe("sterowanie i układ", () => {
     expect(decodeAction("gangOrder|trip")).toEqual({ type: "gangOrder", id: "trip", extra: "" });
   });
 
-  it("zakładka Przewagi jest pierwsza", () => {
-    expect(LAYOUT[0]).toMatchObject({ id: "advantage", groups: [B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage] });
+  it("Walka jest pierwsza i zaczyna się od użyć Przewagi, kończy Ekwipunkiem", () => {
+    expect(LAYOUT[0].id).toBe("combat");
+    expect(LAYOUT[0].groups.slice(0, 3)).toEqual([B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage]);
+    expect(LAYOUT[0].groups.at(-1)).toBe(B.GROUP_IDS.equipment);
   });
 });
 

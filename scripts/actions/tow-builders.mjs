@@ -5,6 +5,11 @@
  * Akcja: { name, value ("typ|id|dodatek"), img?, detail?, tooltip ({ details, text, hint }), cssClass? }.
  */
 import { plain } from "./builders.mjs";
+import { equipmentActions, gearForUse } from "./system-panel.mjs";
+
+/** Typy postaci graczy (reguła „tylko założone” w Walce). */
+const PC_TYPES = ["character"];
+const gear = (actor, env, list) => gearForUse(actor, list, (item) => item.system?.isEquipped, { onlyEquipped: env.onlyEquipped ?? true, pcTypes: PC_TYPES });
 
 /** Typy akcji panelu The Old World. */
 export const TOW = Object.freeze({
@@ -25,7 +30,12 @@ export const TOW = Object.freeze({
   fate: "fate",
   fateRefresh: "fateRefresh",
   wound: "wound",
-  endeavour: "endeavour"
+  woundAdd: "woundAdd",
+  endeavour: "endeavour",
+  equip: "equip",
+  opposed: "opposed",
+  mount: "mount",
+  mountItem: "mountItem"
 });
 
 /** Wartość przycisku i jej odczyt; identyfikatory UUID nie zawierają „|”. */
@@ -77,37 +87,49 @@ export function buildCombatActions(env) {
 }
 
 /** Umiejętności pogrupowane według cech, z liczbą kości. */
+/**
+ * Pula kości testu umiejętności, jak w systemie (`{cecha}d10cs<={umiejętność}`):
+ * rzucamy tyloma k10, ile wynosi cecha, a sukcesem jest każda kość z wynikiem nie większym niż umiejętność.
+ */
+export function dicePool(env, dice, target) {
+  if (dice === undefined || dice === null || target === undefined || target === null) return "";
+  return env.localize("WHB_TOW.DicePool").replace("{dice}", dice).replace("{target}", target);
+}
+
 export function buildSkillGroups(actor, env) {
   const skills = actor?.system?.skills ?? {};
   const characteristics = actor?.system?.characteristics ?? {};
   return Object.entries(env.config?.characteristics ?? {})
-    .map(([ch, label]) => ({
-      label: env.localize(label),
-      actions: Object.entries(skills)
-        .filter(([, skill]) => skill?.characteristic === ch)
-        .map(([key, skill]) => ({
-          name: env.localize(env.config?.skills?.[key] ?? key),
-          value: towValue(TOW.skill, key),
-          detail: String(skill.value ?? ""),
-          tooltip: {
-            details: [
-              tip(env, "Characteristic", `${env.localize(label)} (${characteristics[ch]?.value ?? "?"})`),
-              tip(env, "Advances", skill.advances || undefined),
-              tip(env, "Improvement", skill.improvement || undefined),
-              tip(env, "Dice", skill.value)
-            ],
-            hint: hint(env, "Roll")
-          }
-        }))
-    }))
+    .map(([ch, label]) => {
+      const dice = characteristics[ch]?.value;
+      return {
+        // Nagłówek z wartością cechy: od razu widać, iloma kośćmi rzuca każda umiejętność z kolumny
+        label: dice === undefined ? env.localize(label) : `${env.localize(label)} (${dice})`,
+        actions: Object.entries(skills)
+          .filter(([, skill]) => skill?.characteristic === ch)
+          .map(([key, skill]) => ({
+            name: env.localize(env.config?.skills?.[key] ?? key),
+            value: towValue(TOW.skill, key),
+            detail: dicePool(env, dice, skill.value) || String(skill.value ?? ""),
+            tooltip: {
+              details: [
+                tip(env, "Dice", dice === undefined ? undefined : `${dice} (${env.localize(label)})`),
+                tip(env, "Target", skill.value),
+                tip(env, "Advances", skill.advances || undefined),
+                tip(env, "Improvement", skill.improvement || undefined)
+              ],
+              text: env.localize("WHB_TOW.DicePoolRule"),
+              hint: hint(env, "Roll")
+            }
+          }))
+      };
+    })
     .filter((group) => group.actions.length);
 }
 
-/** Założona broń (bez założonej – cała), przeładowanie, zdolności ataku, tarcze i pancerz. */
+/** Broń i pancerz do walki (wspólna reguła „tylko założone”), przeładowanie, zdolności ataku. */
 export function buildCombat(actor, env) {
-  const weapons = items(actor, "weapon");
-  const equipped = weapons.filter((w) => w.system?.isEquipped);
-  const shown = equipped.length ? equipped : weapons;
+  const shown = gear(actor, env, items(actor, "weapon"));
   const weaponAction = (weapon) => {
     const system = weapon.system ?? {};
     const unloaded = system.requiresLoading && !system.isLoaded;
@@ -155,7 +177,7 @@ export function buildCombat(actor, env) {
       hint: hint(env, "Attack")
     }
   }));
-  const armour = items(actor, "armour").filter((a) => a.system?.isEquipped);
+  const armour = gear(actor, env, items(actor, "armour"));
   const armourAction = (piece) => ({
     name: piece.name,
     img: piece.img,
@@ -174,6 +196,81 @@ export function buildCombat(actor, env) {
     attacks,
     armour: armour.map(armourAction)
   };
+}
+
+/** Szybkość i Wytrzymałość z karty postaci – do nagłówków grup w zakładce Walka. */
+export function combatStats(actor, env) {
+  const speed = actor?.system?.speed?.value;
+  return {
+    speed: speed === undefined || speed === null || speed === "" ? undefined : env.localize(env.config?.speed?.[speed] ?? String(speed)),
+    resilience: actor?.system?.resilience?.value
+  };
+}
+
+/** Obrona: atak, na który odpowie następny test postaci (jak „Defending Against” na karcie). */
+export function buildDefending(actor, env) {
+  const test = actor?.system?.opposed?.system?.test;
+  if (!test) return [];
+  const successes = test.result?.successes;
+  return [{
+    name: test.actor?.name ?? env.localize("WHB_TOW.Attacker"),
+    img: test.actor?.prototypeToken?.texture?.src ?? test.actor?.img,
+    value: towValue(TOW.opposed),
+    detail: successes === undefined ? "" : String(successes),
+    cssClass: "untreated",
+    tooltip: {
+      details: [tip(env, "Weapon", test.item?.name), tip(env, "Successes", successes)],
+      text: env.localize("WHB_TOW.DefendingText"),
+      hint: hint(env, "Defending")
+    }
+  }];
+}
+
+/** Ekwipunek: każda broń, pancerz i tarcza – klik zakłada albo zdejmuje (jak w zakładce Wyposażenie). */
+export function buildEquipment(actor, env) {
+  const isWeapon = (item) => item.type === "weapon";
+  return equipmentActions([...items(actor, "weapon"), ...items(actor, "armour")], {
+    isEquipped: (item) => Boolean(item.system?.isEquipped),
+    value: (item) => towValue(TOW.equip, item.uuid),
+    detail: (item) => (isWeapon(item) ? item.system?.damage?.value : item.system?.resilience),
+    details: (item) => [tip(env, isWeapon(item) ? "Damage" : "Resilience", isWeapon(item) ? item.system?.damage?.value : item.system?.resilience)],
+    hint: hint(env, "Equip")
+  });
+}
+
+/** Wierzchowiec: dosiadanie/zsiadanie i jego przedmioty (ataki wierzchowca), jak sekcja Mount na karcie. */
+export function buildMount(actor, env) {
+  const mount = actor?.system?.mount;
+  const doc = mount?.document;
+  if (!doc) return [];
+  const mounted = !mount.dismounted;
+  const out = [{
+    name: doc.name,
+    img: doc.prototypeToken?.texture?.src ?? doc.img,
+    value: towValue(TOW.mount),
+    detail: env.localize(mounted ? "WHB_TOW.Mounted" : "WHB_TOW.Dismounted"),
+    cssClass: mounted ? "toggle active" : "toggle",
+    tooltip: { hint: hint(env, "Mount") }
+  }];
+  // Wierzchowiec bez danych przedmiotów (np. zwykły aktor) – getter systemu rzuca wyjątek
+  const mountItems = (() => {
+    try {
+      return [...(mount.items ?? [])];
+    } catch {
+      return [];
+    }
+  })();
+  for (const item of mountItems) {
+    out.push({
+      name: item.name,
+      img: item.img,
+      value: towValue(TOW.mountItem, item.uuid),
+      detail: String(item.system?.damage?.value ?? ""),
+      cssClass: mounted ? "" : "unaffordable",
+      tooltip: { details: [tip(env, "Damage", item.system?.damage?.value)], text: description(item), hint: hint(env, "MountItem") }
+    });
+  }
+  return out;
 }
 
 /** Magia: rzucanie z tradycji, zaklęcia z Wartością Rzucania i postępem, pula Miscastów. */
@@ -294,6 +391,8 @@ export function buildStatus(actor, env) {
       hint: hint(env, "Wound")
     }
   }));
+  // Nowa rana jak przycisk „+” na karcie
+  wounds.push({ name: env.localize("WHB_TOW.AddWound"), value: towValue(TOW.woundAdd), tooltip: { hint: hint(env, "WoundAdd") } });
   return { fate: fateActions, conditions, wounds };
 }
 

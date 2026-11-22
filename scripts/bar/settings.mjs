@@ -9,6 +9,7 @@ export function registerSettings(hasAmmo, onChange, hasAdvantage = false, hasHan
     ...(hasAdvantage ? { showAdvantage: { scope: "client", type: Boolean, default: true } } : {}),
     ...(hasHands ? { showHands: { scope: "client", type: Boolean, default: true } } : {}),
     showActions: { scope: "client", type: Boolean, default: true },
+    panelDirection: { scope: "client", type: String, default: "auto", choices: { auto: `${I18N}.Direction.auto`, up: `${I18N}.Direction.up`, down: `${I18N}.Direction.down` } },
     actionsOnlyEquipped: { scope: "client", type: Boolean, default: true },
     blindOnShift: { scope: "client", type: Boolean, default: true },
     skipDialogByDefault: { scope: "client", type: Boolean, default: false },
@@ -17,7 +18,6 @@ export function registerSettings(hasAmmo, onChange, hasAdvantage = false, hasHan
     ...(hasAmmo ? {
       showBar: { scope: "client", type: Boolean, default: true },
       onlyEquipped: { scope: "client", type: Boolean, default: true },
-      showGear: { scope: "client", type: Boolean, default: true },
       lowAmmo: { scope: "world", type: Number, default: 3 }
     } : {})
   };

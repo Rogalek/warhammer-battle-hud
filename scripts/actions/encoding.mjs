@@ -28,6 +28,7 @@ export const ACTION_TYPES = Object.freeze({
   gangOrder: "gangOrder",
   income: "income",
   careerCheck: "careerCheck",
+  equip: "equip",
   rest: "rest",
   endeavour: "endeavour",
   channelReset: "channelReset"

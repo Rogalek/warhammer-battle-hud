@@ -11,8 +11,6 @@ import { ACTION_TYPES as T, encodeAction } from "./encoding.mjs";
 /** Grupy HUD (id grup TAH) – układ w scripts/defaults.mjs. */
 export const GROUP_IDS = Object.freeze({
   characteristics: "characteristics",
-  skillsBasic: "skills-basic",
-  skillsAdvanced: "skills-advanced",
   weaponsMelee: "weapons-melee",
   weaponsRanged: "weapons-ranged",
   armour: "armour",
@@ -28,6 +26,7 @@ export const GROUP_IDS = Object.freeze({
   conditions: "conditions",
   advantage: "advantage",
   advantageActions: "advantage-actions",
+  equipment: "equipment",
   gangOrders: "gang-orders",
   downtime: "downtime",
   channelledReset: "channelled-reset"
@@ -87,7 +86,7 @@ function itemAction(item, type, extra = {}) {
   };
 }
 
-/** Postacie graczy pokazują tylko założony sprzęt (gdy włączone); NPC i stwory – wszystko. */
+/** Wspólna reguła wszystkich systemów: postacie graczy pokazują tylko założony sprzęt (gdy włączone); NPC i stwory – wszystko. */
 function showGear(actor, item, env) {
   if (!env.settings?.onlyEquipped || actor.type !== "character") return true;
   return item.system?.isEquipped !== false;
@@ -109,6 +108,52 @@ export function buildCharacteristics(actor, env) {
         tip(env, "Total", characteristics[key].value)
       ]
     }));
+}
+
+/**
+ * Umiejętności w kolumnach według cech (jak w pozostałych systemach), z wartością cechy w nagłówku.
+ * Cechy bez umiejętności postaci nie mają kolumny.
+ */
+export function buildSkillGroups(actor, env = NO_ENV) {
+  const characteristics = actor?.system?.characteristics ?? {};
+  const skills = [...items(actor, "skill")].sort(byName);
+  return Object.entries(env.config?.characteristics ?? {})
+    .map(([key, label]) => {
+      const value = characteristics[key]?.value;
+      const name = env.localize(label);
+      return {
+        label: value === undefined ? name : `${name} (${value})`,
+        actions: skills
+          .filter((skill) => skill.system?.characteristic?.value === key)
+          .map((skill) => itemAction(skill, T.skill, {
+            info1: { text: String(skill.system?.total?.value ?? "") },
+            tooltip: plainDescription(skill) || undefined,
+            details: [
+              tip(env, "Characteristic", value === undefined ? name : `${name} (${value})`),
+              tip(env, "Advances", skill.system?.advances?.value || undefined),
+              tip(env, "Total", skill.system?.total?.value)
+            ]
+          }))
+      };
+    })
+    .filter((group) => group.actions.length);
+}
+
+/** Ekwipunek: każda broń i pancerz – klik zakłada albo odkłada (system pilnuje limitu rąk). */
+export function buildEquipment(actor, env = NO_ENV) {
+  return [...items(actor, "weapon"), ...items(actor, "armour")].sort(byName).map((item) => {
+    const equipped = Boolean(item.system?.isEquipped);
+    const isWeapon = item.type === "weapon";
+    return {
+      id: `${T.equip}-${item.id}`,
+      name: item.name,
+      img: item.img,
+      encodedValue: encodeAction(T.equip, item.id),
+      info1: { text: String((isWeapon ? item.system?.Damage ?? item.system?.damage?.value : undefined) ?? "") },
+      cssClass: equipped ? "toggle active" : "toggle",
+      details: [tip(env, isWeapon ? "Damage" : "Equipped", isWeapon ? item.system?.Damage ?? item.system?.damage?.value : env.localize(equipped ? "Yes" : "No"))]
+    };
+  });
 }
 
 /** Umiejętności podstawowe i zaawansowane osobno (system: advanced.value = "bsc" | "adv"). */
@@ -134,10 +179,9 @@ export function buildWeapons(actor, env) {
   const melee = [];
   const ranged = [];
   const weapons = [...items(actor, "weapon")].sort(byName);
-  // Bez założonej broni filtr zostawiłby pustą listę, więc pokazujemy wszystkie
-  const anyEquipped = weapons.some((weapon) => weapon.system?.isEquipped);
+  // Bez założonej broni grupy są puste – broń zakłada się w grupie Ekwipunek (jak w pozostałych systemach)
   for (const weapon of weapons) {
-    if (anyEquipped && !showGear(actor, weapon, env)) continue;
+    if (!showGear(actor, weapon, env)) continue;
     const system = weapon.system ?? {};
     const damaged = system.damageToItem?.value > 0;
     const action = itemAction(weapon, T.weapon, {
