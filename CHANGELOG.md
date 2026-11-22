@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.6
 - WFRP: trait buttons show the full name with its specification, as the system writes it – "Afraid (Elves)" instead of "Afraid".
 - WFRP: traits without a test (Nightvision, Infected and the like) are listed by default; clicking one posts it to chat. The setting "Show traits without a test" is on by default now (it keeps any value you already saved).
 - WFRP: the Status tab is built from the system's real condition effects. 5th edition now shows Besmirched, and "Defeated" is named "Dead", as in the system and its token menu. Conditions the system has no effect for no longer get a button that could only fail.
