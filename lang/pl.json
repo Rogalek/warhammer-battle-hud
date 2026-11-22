@@ -103,6 +103,13 @@
       "auto": "Domyślna systemu",
       "sheet": "Jak karta postaci",
       "dark": "Ciemna (klasyczna)"
+    },
+    "Attack": {
+      "Melee": "Atak",
+      "Ranged": "Strzał",
+      "Shield": "Obrona",
+      "NotReady": "Nie naładowana – najpierw przeładuj.",
+      "Hint": "Klik: test tą bronią · Alt: bez okna rzutu · Shift: tajny rzut MG · Prawy klik: otwórz broń"
     }
   },
   "WHFRAMES": {

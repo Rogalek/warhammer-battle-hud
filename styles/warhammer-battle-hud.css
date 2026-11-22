@@ -573,6 +573,39 @@ body.whb-system-age-of-sigmar-soulbound.whb-theme-dark {
   border-color: #e0a030;
 }
 
+/* Pasek ataku pod bronią: wąski, na całą szerokość pola, w kolorach przycisków motywu */
+.whb-hand-attack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  height: 1.05rem;
+  margin: 2px 0 0;
+  padding: 0 2px;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.whb-hand-attack i {
+  font-size: 0.65rem;
+}
+
+.whb-hand-attack.placeholder {
+  visibility: hidden;
+}
+
+/* Nienaładowana broń: pasek przygaszony, ale klikalny (system i tak wyjaśni) */
+.whb-hand-attack.unready {
+  opacity: 0.5;
+}
+
 .whb-hand-mark,
 .whb-two-handed {
   position: absolute;
@@ -1190,6 +1223,18 @@ body.whb-system-age-of-sigmar-soulbound.whb-theme-dark {
   border-radius: 4px;
   color: var(--whb-btn-text);
   text-shadow: none;
+}
+
+#warhammer-battle-hud-bar .whb-hand-attack:not(.placeholder) {
+  background: var(--whb-btn-bg);
+  border: 1px solid var(--whb-btn-border);
+  color: var(--whb-btn-text);
+}
+
+#warhammer-battle-hud-bar .whb-hand-attack:not(.placeholder):hover {
+  background: var(--whb-active-bg);
+  border-color: var(--whb-active-border);
+  color: var(--whb-active-text);
 }
 
 #warhammer-battle-hud-bar .whb-action:hover {
