@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.3
 - An attack bar under every weapon in the Hands / Equipped widget, in every system: it runs the same test as the weapon button in the action panel and shows an icon – a sword for melee, a crosshair for ranged, a shield under a shield in The Old World – with the action named in the tooltip, Alt skips the dialog, Shift rolls blind, right-click opens the weapon; weapons that need reloading have a dimmed bar.
 
 ## 0.8.2
