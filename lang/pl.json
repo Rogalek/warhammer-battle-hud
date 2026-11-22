@@ -17,17 +17,17 @@
       "ShowBarName": "Pokaż rząd amunicji",
       "ShowBarHint": "Tylko dla tego użytkownika.",
       "OnlyEquippedName": "Tylko założona broń dystansowa",
-      "OnlyEquippedHint": "Odłożona broń dystansowa trafia do małej grupy ekwipunku.",
-      "ShowGearName": "Pokazuj pozostałą broń",
-      "ShowGearHint": "Mała grupa ikon do zakładania broni białej i tarcz jednym kliknięciem. Znika, gdy widać Ręce.",
+      "OnlyEquippedHint": "Odłożona broń dystansowa znika z rzędu amunicji; zakładasz ją w grupie Ekwipunek zakładki Walka.",
       "LowAmmoName": "Ostrzeżenie o małej ilości amunicji",
       "LowAmmoHint": "Przy tej liczbie lub mniejszej licznik zmienia kolor na bursztynowy.",
-      "ShowHandsName": "Pokaż ręce",
-      "ShowHandsHint": "W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. Klik na ręce wybiera do niej broń, prawy klik ją opróżnia.",
+      "ShowHandsName": "Pokaż ręce / wyposażenie",
+      "ShowHandsHint": "Obok dużego licznika. W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. W pozostałych (The Old World, Wrath & Glory, Soulbound): każda założona broń i pancerz oraz pole „+” do założenia kolejnych. Klik wybiera, prawy klik opróżnia albo odkłada.",
       "ShowActionsName": "Pokaż panel akcji",
       "ShowActionsHint": "Zakładki nad paskiem makr z testami, bronią, zaklęciami i stanami postaci.",
+      "PanelDirectionName": "Kierunek rozwijania panelu akcji",
+      "PanelDirectionHint": "Automatycznie: w dół, gdy przesuniesz HUD w górną część ekranu, a w pozostałych miejscach w górę. HUD w domyślnym miejscu nad paskiem makr zawsze rozwija się w górę.",
       "ActionsOnlyEquippedName": "Panel akcji: tylko założony sprzęt",
-      "ActionsOnlyEquippedHint": "Postacie graczy pokazują tylko założoną broń i pancerz. BN-i i stworzenia zawsze pokazują wszystko.",
+      "ActionsOnlyEquippedHint": "We wszystkich systemach postacie graczy pokazują w zakładce Walka tylko założoną broń i pancerz (zakładasz je w grupie Ekwipunek). BN-i i stworzenia zawsze pokazują wszystko.",
       "BlindOnShiftName": "Shift-klik rzuca jako tajny rzut MG",
       "BlindOnShiftHint": "Przytrzymanie Shift przy kliknięciu testu w panelu daje tajny rzut MG.",
       "SkipDialogByDefaultName": "Domyślnie pomijaj okno rzutu",
@@ -84,7 +84,19 @@
     "MomentumOff": "Brak",
     "MomentumHint": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. System śledzi to sam. Klik: przyznaj albo odbierz Impet. Prawy klik: odbierz go.",
     "AdvantageReadOnly": "Przewaga postaci (ręcznie zmienia ją tylko MG).",
-    "MomentumReadOnly": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. Ręcznie zmienia go tylko MG."
+    "MomentumReadOnly": "Impet (zasady 5. edycji): +1 do Przewagi w testach Walki Wręcz. Zdobywa się go za wygrany w walce test przeciwstawny wręcz albo szarżę; przepada po otrzymaniu obrażeń, przegranym teście przeciwstawnym wręcz, otrzymaniu stanu albo końcu walki. Ręcznie zmienia go tylko MG.",
+    "Direction": {
+      "auto": "Automatycznie",
+      "up": "W górę",
+      "down": "W dół"
+    },
+    "Gear": {
+      "Label": "Wyposażenie",
+      "Add": "Załóż przedmiot",
+      "AddHint": "Klik: wybierz broń albo pancerz do założenia.",
+      "Hint": "Klik: zamień na inny przedmiot albo odłóż. Prawy klik: odłóż.",
+      "PutAway": "Odłóż"
+    }
   },
   "WHFRAMES": {
     "Title": "TomWa Warhammer HUD",
@@ -151,7 +163,8 @@
       "Religion": "Wiara",
       "Talents": "Talenty",
       "Conditions": "Stany",
-      "Downtime": "Poza walką"
+      "Downtime": "Poza walką",
+      "Status": "Stan"
     },
     "Groups": {
       "Characteristics": "Cechy",
@@ -174,7 +187,8 @@
       "AdvantageActions": "Użycie Przewagi",
       "GangOrders": "Rozkazy szajki",
       "Downtime": "Między przygodami",
-      "ChannelledReset": "Spleciona moc"
+      "ChannelledReset": "Spleciona moc",
+      "Equipment": "Ekwipunek"
     },
     "Info": {
       "Damage": "Uszkodzenie przedmiotu",
@@ -241,7 +255,10 @@
       "CV": "WR",
       "Channelled": "Splecione PS",
       "Career": "Kariera",
-      "Status": "Status"
+      "Status": "Status",
+      "Successes": "Sukcesy",
+      "Weapon": "Broń",
+      "Equipped": "Założone"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -256,7 +273,8 @@
       "Income": "Klik: test Zarobkowania umiejętnością bieżącej kariery",
       "Rest": "Klik: odpoczynek – test Odporności na odzyskanie Żywotności",
       "Endeavour": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
-      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)"
+      "ChannelReset": "Klik: porzuć całe splecione PS (np. po utracie skupienia)",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot"
     },
     "Income": "Dochód",
     "Rest": "Odpoczynek",
@@ -299,7 +317,10 @@
       "Fate": "Los",
       "Conditions": "Stany",
       "Wounds": "Rany",
-      "Endeavours": "Przedsięwzięcia"
+      "Endeavours": "Przedsięwzięcia",
+      "Defending": "Obrona przed",
+      "Mount": "Wierzchowiec",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Action": "Klik: wykonaj akcję",
@@ -320,8 +341,22 @@
       "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
       "Wound": "Klik: opatrzona lub nie · Prawy klik: karta rany",
       "EndeavourTest": "Klik: test przedsięwzięcia dla tej postaci",
-      "EndeavourPage": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)"
-    }
+      "EndeavourPage": "Klik: otwórz przedsięwzięcie (na jego stronie jest przycisk wykonania)",
+      "Defending": "Klik: przestań się bronić przed tym atakiem",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot",
+      "Mount": "Klik: dosiądź albo zsiądź · Prawy klik: otwórz wierzchowca",
+      "MountItem": "Klik: użyj z wierzchowcem · Prawy klik: otwórz przedmiot",
+      "WoundAdd": "Klik: dodaj ranę i ją otwórz"
+    },
+    "DicePool": "{dice}k10 ≤{target}",
+    "DicePoolRule": "Rzucasz tyloma k10, ile wynosi cecha; każda kość z wynikiem nie większym niż umiejętność to sukces.",
+    "Speed": "Szybkość",
+    "Resilience": "Wytrzymałość",
+    "Mounted": "w siodle",
+    "Dismounted": "pieszo",
+    "AddWound": "Dodaj ranę",
+    "Attacker": "Atakujący",
+    "DefendingText": "Twój następny test odpowiada na ten atak, tak jak na karcie postaci."
   },
   "WHB_IM": {
     "Reload": "Przeładuj",
@@ -356,7 +391,8 @@
       "Corruption": "Zepsucie",
       "Fate": "Przeznaczenie",
       "Conditions": "Stany",
-      "Injuries": "Urazy i rany krytyczne"
+      "Injuries": "Urazy i rany krytyczne",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Action": "Klik: wybierz to jako akcję w tej turze",
@@ -371,7 +407,8 @@
       "Purge": "Klik: oczyść Ładunek Spaczni (w walce test Dyscypliny)",
       "Use": "Klik: użyj · Prawy klik: karta przedmiotu",
       "Counter": "Klik: +1 · Prawy klik: −1",
-      "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij"
+      "Condition": "Klik: dodaj (ponownie: poważny) · Prawy klik: zdejmij",
+      "Equip": "Klik: załóż albo odłóż (broń trafia do ręki wiodącej) · Prawy klik: otwórz przedmiot"
     }
   },
   "WHB_WNG": {
@@ -404,7 +441,8 @@
       "Resources": "Zasoby",
       "Conditions": "Stany",
       "Injuries": "Urazy i mutacje",
-      "Social": "Wpływy i Bogactwo"
+      "Social": "Wpływy i Bogactwo",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -420,7 +458,8 @@
       "conviction": "Klik: test Przekonania",
       "corruption": "Klik: test Spaczenia",
       "initiative": "Klik: rzut na Inicjatywę (dodaje do walki)",
-      "influence": "Klik: test Wpływów"
+      "influence": "Klik: test Wpływów",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot"
     },
     "Wealth": "Bogactwo",
     "influence": "Wpływy"
@@ -433,7 +472,8 @@
       "skills": "Umiejętności",
       "powers": "Moce",
       "talents": "Talenty",
-      "conditions": "Stany"
+      "conditions": "Stany",
+      "status": "Stan"
     },
     "Groups": {
       "Melee": "Broń do walki wręcz",
@@ -444,7 +484,8 @@
       "Spells": "Czary",
       "Miracles": "Cuda",
       "Talents": "Talenty",
-      "Conditions": "Stany"
+      "Conditions": "Stany",
+      "Equipment": "Ekwipunek"
     },
     "Hint": {
       "Roll": "Klik: test · Alt: bez okna rzutu · Shift: tajny rzut MG",
@@ -455,7 +496,8 @@
       "Spell": "Klik: rzuć czar · Prawy klik: karta czaru",
       "Miracle": "Klik: przywołaj cud · Prawy klik: karta cudu",
       "Ability": "Klik: użyj (test albo opis na czacie) · Prawy klik: karta przedmiotu",
-      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij"
+      "Condition": "Klik: dodaj lub zdejmij · Prawy klik: zdejmij",
+      "Equip": "Klik: załóż albo odłóż · Prawy klik: otwórz przedmiot"
     }
   }
 }

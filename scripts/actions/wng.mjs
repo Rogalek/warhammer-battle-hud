@@ -6,9 +6,9 @@ import * as B from "./wng-builders.mjs";
 import { finishPanel, systemActions, testContext } from "./system-panel.mjs";
 
 const WNG = B.WNG;
-const ITEM_BACKED = new Set([WNG.weapon, WNG.armour, WNG.power, WNG.ability, WNG.sheet]);
+const ITEM_BACKED = new Set([WNG.weapon, WNG.armour, WNG.power, WNG.ability, WNG.sheet, WNG.equip]);
 
-const env = () => ({ config: game.wng?.config ?? {}, localize: (key) => game.i18n.localize(key), statusEffects: CONFIG.statusEffects });
+const env = () => ({ config: game.wng?.config ?? {}, localize: (key) => game.i18n.localize(key), statusEffects: CONFIG.statusEffects, onlyEquipped: game.settings.get("warhammer-battle-hud", "actionsOnlyEquipped") });
 const label = (key) => game.i18n.localize(`WHB_WNG.${key}`);
 const group = (key, actions) => ({ label: label(`Groups.${key}`), actions });
 
@@ -17,7 +17,7 @@ export function wngPanel(actor, e = env()) {
   const abilities = B.buildAbilities(actor, e);
   const status = B.buildStatus(actor, e);
   return finishPanel([
-    { id: "combat", groups: [group("Melee", combat.melee), group("Ranged", combat.ranged), group("Tests", combat.tests), group("Armour", combat.armour)] },
+    { id: "combat", groups: [group("Melee", combat.melee), group("Ranged", combat.ranged), group("Tests", combat.tests), group("Armour", combat.armour), group("Equipment", B.buildEquipment(actor, e))] },
     { id: "attributes", groups: [group("Attributes", B.buildAttributes(actor, e))] },
     { id: "skills", columns: 4, groups: B.buildSkillGroups(actor, e) },
     { id: "powers", groups: [group("Powers", B.buildPowers(actor, e))] },
@@ -38,6 +38,10 @@ async function perform(actor, { type, id }, mods, settings) {
     case WNG.power: return actor.setupPowerTest(id, context);
     case WNG.ability: return actor.setupAbilityRoll(id, context);
     case WNG.initiative: return actor.rollInitiative({ createCombatants: true });
+    case WNG.equip: {
+      const item = actor.items.get(id);
+      return item?.update({ "system.equipped": !item.system.equipped });
+    }
     case WNG.armour:
     case WNG.sheet: return actor.items.get(id)?.sheet?.render({ force: true });
     case WNG.condition:

@@ -65,3 +65,34 @@ export function systemActions(getSetting, { panel, types, perform, name }) {
     }
   };
 }
+
+/**
+ * Jedna reguła dla wszystkich systemów: postać gracza (typy z `pcTypes`) przy włączonym ustawieniu
+ * „tylko założone” pokazuje do walki wyłącznie założoną broń i pancerz; BN-y i stwory – wszystko.
+ */
+export function gearForUse(actor, list, isEquipped, { onlyEquipped = true, pcTypes = ["character"] } = {}) {
+  if (!onlyEquipped || !pcTypes.includes(actor?.type)) return [...list];
+  return list.filter((item) => isEquipped(item));
+}
+
+/**
+ * Grupa Ekwipunek (ostatnia w zakładce Walka, w każdym systemie): każda broń, pancerz i tarcza jako
+ * przełącznik – klik zakłada albo odkłada, prawy klik otwiera przedmiot.
+ * @param {Array} list                     przedmioty do pokazania
+ * @param {object} options
+ * @param {(item) => boolean} options.isEquipped
+ * @param {(item) => string} options.value      wartość przycisku
+ * @param {(item) => string} [options.detail]   krótka wartość przy nazwie (obrażenia, pancerz)
+ * @param {(item) => Array} [options.details]   wiersze podpowiedzi
+ * @param {string} options.hint
+ */
+export function equipmentActions(list, { isEquipped, value, detail = () => "", details = () => [], hint }) {
+  return list.map((item) => ({
+    name: item.name,
+    img: item.img,
+    value: value(item),
+    detail: String(detail(item) ?? ""),
+    cssClass: isEquipped(item) ? "toggle active" : "toggle",
+    tooltip: { details: details(item), hint }
+  }));
+}

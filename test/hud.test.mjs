@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { advantageLevel, advantageOf, clampAnchor, isAnchor } from "../scripts/bar/hud-data.mjs";
+import { advantageLevel, advantageOf, clampAnchor, clampTop, isAnchor, panelDirection } from "../scripts/bar/hud-data.mjs";
 
 describe("położenie HUD-a", () => {
   it("rozpoznaje zapisane położenie", () => {
@@ -48,5 +48,30 @@ describe("Impet na dużym liczniku (WFRP 5e)", () => {
     expect(momentumOf({ system: { status: { momentum: true } } })).toEqual({ value: 1, max: 0, active: true, level: "high" });
     expect(momentumOf({ system: { status: { momentum: false } } })).toMatchObject({ active: false, level: "none" });
     expect(momentumOf({ system: {} })).toBeNull();
+  });
+});
+
+describe("kierunek rozwijania panelu", () => {
+  const vh = 1000;
+  it("HUD w domyślnym miejscu zawsze w górę", () => {
+    expect(panelDirection("auto", {}, vh)).toBe("up");
+    expect(panelDirection("down", {}, vh)).toBe("up");
+  });
+  it("automatycznie: w dół przy górnej krawędzi ekranu", () => {
+    expect(panelDirection("auto", { x: 500, bottom: 900, top: 20 }, vh)).toBe("down");
+    expect(panelDirection("auto", { x: 500, bottom: 100, top: 800 }, vh)).toBe("up");
+  });
+  it("starsze zapisy bez górnej krawędzi: według dolnej", () => {
+    expect(panelDirection("auto", { x: 500, bottom: 800 }, vh)).toBe("down");
+    expect(panelDirection("auto", { x: 500, bottom: 120 }, vh)).toBe("up");
+  });
+  it("wybór gracza wygrywa z położeniem", () => {
+    expect(panelDirection("up", { x: 500, bottom: 900, top: 20 }, vh)).toBe("up");
+    expect(panelDirection("down", { x: 500, bottom: 100, top: 800 }, vh)).toBe("down");
+  });
+  it("górna krawędź nie wychodzi poza ekran", () => {
+    expect(clampTop(-30, 200, vh)).toBe(0);
+    expect(clampTop(950, 200, vh)).toBe(800);
+    expect(clampTop(120.4, 200, vh)).toBe(120);
   });
 });

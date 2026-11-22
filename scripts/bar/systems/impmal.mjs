@@ -9,7 +9,8 @@ export default {
   allWeapons: (actor) => actor.itemTypes.weapon ?? [],
   isRanged: (weapon) => Boolean(weapon.system.isRanged) && !weapon.system.selfAmmo,
   isEquipped: (weapon) => Boolean(weapon.system.isEquipped),
-  toggleEquip: (actor, weapon) => actor.update(actor.system.hands.toggle(undefined, weapon)),
+  // Bez wybranej ręki wiodącej system nie wie, do której ręki włożyć broń – wtedy prawa
+  toggleEquip: (actor, weapon) => (weapon.system.isEquipped ? weapon.system.unequip() : weapon.system.equip(actor.system.handed || "right")),
 
   current: (weapon) => weapon.system.ammo?.document ?? null,
   choices: (weapon) => weapon.system.ammoList ?? [],

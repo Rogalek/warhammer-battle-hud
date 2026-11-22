@@ -75,7 +75,7 @@ describe("Wrath & Glory", () => {
     itemTypes: { weapon: [{ id: "b", name: "Boltgun", system: { equipped: true, isRanged: true, damage: { formatted: 10, ED: 1, AP: -1 }, salvo: 2, needsReload: true } }] }
   };
   it("umiejętności według atrybutu", () => {
-    expect(WNG.buildSkillGroups(actor, env).map((g) => [g.label, g.actions.map((a) => `${a.name}:${a.detail}`)])).toEqual([["Strength", ["Athletics:5"]], ["Initiative", ["Weapon Skill:4"]]]);
+    expect(WNG.buildSkillGroups(actor, env).map((g) => [g.label, g.actions.map((a) => `${a.name}:${a.detail}`)])).toEqual([["Strength (3)", ["Athletics:5"]], ["Initiative (2)", ["Weapon Skill:4"]]]);
   });
   it("broń wymagająca przeładowania jest przygaszona, testy obronne z wartościami", () => {
     const c = WNG.buildCombat(actor, env);

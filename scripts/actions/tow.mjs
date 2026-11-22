@@ -8,9 +8,10 @@ import { finishPanel, systemActions, testContext } from "./system-panel.mjs";
 const TOW = B.TOW;
 
 /** Typy, które prawym klikiem otwierają kartę przedmiotu. */
-const ITEM_BACKED = new Set([TOW.weapon, TOW.ability, TOW.shield, TOW.armour, TOW.spell, TOW.use, TOW.wound]);
+const ITEM_BACKED = new Set([TOW.weapon, TOW.ability, TOW.shield, TOW.armour, TOW.spell, TOW.use, TOW.wound, TOW.equip, TOW.mountItem]);
 
 const env = () => ({
+  onlyEquipped: game.settings.get("warhammer-battle-hud", "actionsOnlyEquipped"),
   config: game.oldworld?.config ?? {},
   endeavours: game.journal.contents.flatMap((j) => j.pages.contents).filter((p) => p.getFlag("whtow", "endeavour") && p.testUserPermission(game.user, "OBSERVER")),
   localize: (key) => game.i18n.localize(key),
@@ -26,12 +27,29 @@ export function towPanel(actor, e = env()) {
   const magic = B.buildMagic(actor, e);
   const usable = B.buildUsable(actor, e);
   const status = B.buildStatus(actor, e);
+  const stats = B.combatStats(actor, e);
+  // Szybkość i Wytrzymałość w nagłówkach grup, jak pola nad listami na karcie
+  const titled = (key, extraKey, value, actions) => ({ label: value === undefined ? label(`Groups.${key}`) : `${label(`Groups.${key}`)} · ${label(extraKey)} ${value}`, actions });
   const tabs = [
-    { id: "combat", groups: [group("Actions", B.buildCombatActions(e)), group("Melee", combat.melee), group("Ranged", combat.ranged), group("Reload", combat.reload), group("Attacks", combat.attacks), group("Armour", combat.armour)] },
+    {
+      id: "combat",
+      groups: [
+        group("Defending", B.buildDefending(actor, e)),
+        titled("Actions", "Speed", stats.speed, B.buildCombatActions(e)),
+        group("Melee", combat.melee),
+        group("Ranged", combat.ranged),
+        group("Reload", combat.reload),
+        group("Attacks", combat.attacks),
+        titled("Armour", "Resilience", stats.resilience, combat.armour),
+        group("Mount", B.buildMount(actor, e)),
+        group("Equipment", B.buildEquipment(actor, e))
+      ]
+    },
     { id: "skills", columns: 4, groups: B.buildSkillGroups(actor, e) },
     { id: "magic", groups: [group("Casting", magic.lores), group("Spells", magic.spells), group("Miscasts", magic.miscasts)] },
     { id: "religion", groups: [group("Blessing", B.buildBlessing(actor, e))] },
     { id: "talents", groups: [group("Talents", usable.talents), group("Abilities", usable.abilities), group("Lores", usable.lores)] },
+    // Stan jak w pozostałych systemach: Los, stany i rany (z przyciskiem dodania rany)
     { id: "status", groups: [group("Fate", status.fate), group("Conditions", status.conditions), group("Wounds", status.wounds)] },
     { id: "downtime", groups: [group("Endeavours", B.buildEndeavours(e))] }
   ];
@@ -64,6 +82,12 @@ async function disposeMiscast(actor) {
   }
   await actor.update({ "system.magic.miscasts": 0 });
   return ChatMessage.create({ content: game.i18n.format("TOW.Chat.DisposingMiscastsNonCombat", { miscasts }), flavor, speaker });
+}
+
+/** Nowa rana jak przycisk „+” na karcie: pusta rana do uzupełnienia na jej karcie. */
+async function addWound(actor) {
+  const [wound] = await actor.createEmbeddedDocuments("Item", [{ type: "wound", name: game.i18n.localize("TYPES.Item.wound") }]);
+  return wound?.sheet?.render({ force: true });
 }
 
 async function perform(actor, { type, id, extra }, mods, settings) {
@@ -106,6 +130,18 @@ async function perform(actor, { type, id, extra }, mods, settings) {
       return ChatMessage.create({ content: game.i18n.format("WHB_TOW.FateRestored", { max }), speaker: { alias: actor.name }, flavor: game.i18n.localize("WHB_TOW.Fate") });
     }
     case TOW.endeavour: return performEndeavour(actor, id);
+    case TOW.woundAdd: return addWound(actor);
+    case TOW.equip: {
+      const item = await fromUuid(id);
+      return item?.update({ "system.equipped.value": !item.system.equipped?.value });
+    }
+    case TOW.opposed:
+      if (mods.right) return;
+      return actor.system.clearOpposed();
+    case TOW.mount:
+      if (mods.right) return actor.system.mount.document?.sheet?.render({ force: true });
+      return actor.update({ "system.mount.dismounted": !actor.system.mount.dismounted });
+    case TOW.mountItem: return actor.useMountItem(id);
     case TOW.wound: {
       if (mods.right) return openSheet(id);
       const wound = await fromUuid(id);

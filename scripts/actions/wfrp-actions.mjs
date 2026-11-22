@@ -138,6 +138,12 @@ async function rollIncome(actor) {
   }));
 }
 
+/** Ekwipunek: założenie albo odłożenie przez system (pilnuje limitu rąk z ustawień systemu). */
+async function toggleEquip(actor, action) {
+  const item = actor.items.get(action.id);
+  if (typeof item?.system?.toggleEquip === "function") return item.system.toggleEquip();
+}
+
 /** Odpoczynek jak na karcie: test Odporności (albo Wytrzymałości bez tej umiejętności) z odzyskiwaniem Żywotności. */
 async function rest(actor) {
   const skill = actor.itemTags?.skill?.find((s) => s.name === game.i18n.localize("NAME.Endurance"))
@@ -174,7 +180,7 @@ export async function performAction(actor, action, intent) {
       case "repair": return await damageGear(actor, action, -1);
       case "run": return await runManualScript(actor, action);
       case "use": {
-        const use = { [T.gangOrder]: issueGangOrder, [T.income]: rollIncome, [T.rest]: rest, [T.endeavour]: openEndeavour, [T.channelReset]: resetChannelling }[action.type];
+        const use = { [T.gangOrder]: issueGangOrder, [T.equip]: toggleEquip, [T.income]: rollIncome, [T.rest]: rest, [T.endeavour]: openEndeavour, [T.channelReset]: resetChannelling }[action.type];
         return await (use ?? useAdvantageAction)(actor, action);
       }
       case "increase":

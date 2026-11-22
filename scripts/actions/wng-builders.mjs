@@ -4,7 +4,11 @@
  * `env`: { config (game.wng.config), localize(key), statusEffects (CONFIG.statusEffects) }.
  */
 import { plain } from "./builders.mjs";
-import { panelValue as v } from "./system-panel.mjs";
+import { equipmentActions, gearForUse, panelValue as v } from "./system-panel.mjs";
+
+/** Typy postaci graczy (Agent) – reguła „tylko założone” w Walce. */
+const PC_TYPES = ["agent"];
+const gear = (actor, env, list) => gearForUse(actor, list, (item) => Boolean(item.system?.equipped), { onlyEquipped: env.onlyEquipped ?? true, pcTypes: PC_TYPES });
 
 export const WNG = Object.freeze({
   attribute: "attribute",
@@ -19,7 +23,8 @@ export const WNG = Object.freeze({
   wrath: "wrath",
   wealth: "wealth",
   faith: "faith",
-  initiative: "initiative"
+  initiative: "initiative",
+  equip: "equip"
 });
 
 const tip = (env, key, value) => ({ label: env.localize(`WFRP4E_HUD.Tip.${key}`), value });
@@ -50,7 +55,7 @@ export function buildSkillGroups(actor, env) {
   const attributes = actor?.system?.attributes ?? {};
   return Object.entries(env.config?.attributes ?? {})
     .map(([attr, attrLabel]) => ({
-      label: env.localize(attrLabel),
+      label: attributes[attr]?.total === undefined ? env.localize(attrLabel) : `${env.localize(attrLabel)} (${attributes[attr].total})`,
       actions: Object.entries(env.config?.skills ?? {})
         .filter(([key]) => skills[key]?.attribute === attr)
         .map(([key, label]) => ({
@@ -69,8 +74,7 @@ export function buildSkillGroups(actor, env) {
 /** Walka: założona broń, testy obronne (Determinacja itd.), Inicjatywa i pancerz. */
 export function buildCombat(actor, env) {
   const weapons = items(actor, "weapon").filter((w) => w.system?.isActiveMobAbility !== false);
-  const equipped = weapons.filter((w) => w.system?.equipped);
-  const shown = equipped.length ? equipped : weapons;
+  const shown = gear(actor, env, weapons);
   const weaponAction = (weapon) => {
     const s = weapon.system ?? {};
     const reload = Boolean(s.needsReload);
@@ -103,7 +107,7 @@ export function buildCombat(actor, env) {
     tooltip: { hint: hint(env, key) }
   }));
   generic.push({ name: env.localize("WHB_WNG.initiative"), value: v(WNG.initiative), tooltip: { hint: hint(env, "initiative") } });
-  const armour = items(actor, "armour").filter((a) => a.system?.equipped).map((piece) => ({
+  const armour = gear(actor, env, items(actor, "armour")).map((piece) => ({
     name: piece.name,
     img: piece.img,
     value: v(WNG.armour, piece.id),
@@ -120,6 +124,18 @@ export function buildCombat(actor, env) {
     tests: generic,
     armour
   };
+}
+
+/** Ekwipunek: broń i pancerz – klik zakłada albo odkłada. */
+export function buildEquipment(actor, env) {
+  const isWeapon = (item) => item.type === "weapon";
+  return equipmentActions([...items(actor, "weapon"), ...items(actor, "armour")], {
+    isEquipped: (item) => Boolean(item.system?.equipped),
+    value: (item) => v(WNG.equip, item.id),
+    detail: (item) => (isWeapon(item) ? item.system?.damage?.formatted : item.system?.rating),
+    details: (item) => [tip(env, isWeapon(item) ? "Damage" : "AR", isWeapon(item) ? item.system?.damage?.formatted : item.system?.rating)],
+    hint: hint(env, "Equip")
+  });
 }
 
 /** Moce psioniczne z ST, aktywacją, zasięgiem i czasem trwania. */

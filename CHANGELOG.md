@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+- Hands: the main hand always comes first (leftmost) and the other hand after it – Imperium Maledictum now follows WFRP instead of showing left and right in physical order.
+- Every system where items are equipped has the widget next to the big counter: Hands in WFRP and Imperium Maledictum (hand rules), and Equipped in The Old World, Wrath & Glory, Soulbound and for Imperium Maledictum NPCs – a slot per equipped weapon or armour plus a "+" slot; click swaps or puts away, right-click puts away, two-handed weapons are marked "2".
+- One HUD across all systems. Every system's Combat tab starts with its actions and ends with an Equipment group that equips or puts away any weapon, armour or shield (right-click opens it). One rule for weapons and armour in Combat: player characters show only equipped ones, NPCs and creatures everything (the "only equipped gear" setting now works in every system). Skills sit in columns by characteristic with its value in the header (now also in WFRP), and conditions, wounds and similar live in the Status tab (WFRP and Soulbound "Conditions" became "Status"; The Old World's wounds moved back there).
+- WFRP: the Advantage tab became the first groups of the Combat tab.
+- The small group of equip icons in the ammunition row and its "Show the other weapons" setting are gone – equipping lives in the Equipment group.
+- Colours: the HUD looks like each system's character sheet (background, buttons, active tab, list headers, fonts) – WFRP, Wrath & Glory and Soulbound now use their sheets' light pages. All systems set the same colour tokens instead of separate style overrides.
+- The Old World: the Combat tab shows the attack you are defending against, Speed and Resilience in the group headers, and the mount (mount/dismount and its attacks); wounds in Status get an "Add a wound" button.
+- The action panel opens downward when the HUD is moved to the upper part of the screen; the HUD then keeps its top edge in place. A new setting fixes the direction (automatic, upward, downward).
+- The Old World: skills show their dice pool, e.g. "4d10 ≤3" (as many d10 as the characteristic, every die at or under the skill succeeds), and each column header shows the characteristic. The tooltip no longer calls the skill value "Dice".
+
 ## 0.8.0
 - Only the GM changes the big counter by hand (Advantage, Momentum, Superiority, Glory, Soulfire); players see the value and the rules in its tooltip. The Advantage counter in the action panel is GM-only too. Spending Advantage on its actions still works for players, as on the sheet.
 - WFRP with the 5th edition rules: the big counter shows Momentum (Active/None) instead of Advantage, as the character sheet does, and follows the system gaining and losing it. The GM grants or takes it with a click, right-click takes it away. The Advantage actions (4th edition only) leave the action panel and the party frames show Momentum instead of Advantage.
