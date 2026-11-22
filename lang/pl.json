@@ -35,7 +35,7 @@
       "SkipDialogByDefaultName": "Domyślnie pomijaj okno rzutu",
       "SkipDialogByDefaultHint": "Testy z panelu rzucają od razu; przytrzymaj Alt, aby zobaczyć okno. Gdy wyłączone, Alt je pomija.",
       "ShowUnrollableTraitsName": "Pokazuj cechy bez testu",
-      "ShowUnrollableTraitsHint": "Pokazuje też cechy stworzeń bez testu (kliknięcie wysyła je na czat).",
+      "ShowUnrollableTraitsHint": "Pokazuje też cechy bez testu, np. Widzenie w ciemności czy Zakażony (kliknięcie wysyła je na czat). Domyślnie włączone.",
       "ShowTokenTestsName": "Testy na Token HUD",
       "ShowTokenTestsHint": "Szybkie testy z wartościami na HUD tokena, dla każdego, kto jest właścicielem postaci."
     },

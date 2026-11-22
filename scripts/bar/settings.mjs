@@ -15,7 +15,7 @@ export function registerSettings(hasAmmo, onChange, hasAdvantage = false, hasHan
     actionsOnlyEquipped: { scope: "client", type: Boolean, default: true },
     blindOnShift: { scope: "client", type: Boolean, default: true },
     skipDialogByDefault: { scope: "client", type: Boolean, default: false },
-    showUnrollableTraits: { scope: "client", type: Boolean, default: false },
+    showUnrollableTraits: { scope: "client", type: Boolean, default: true },
     showTokenTests: { scope: "client", type: Boolean, default: true, requiresReload: true },
     ...(hasAmmo ? {
       showBar: { scope: "client", type: Boolean, default: true },

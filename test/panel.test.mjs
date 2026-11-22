@@ -16,18 +16,34 @@ describe("nazwy stanów", () => {
   const env = (known) => ({
     localize: (key) => known[key] ?? key,
     conditionValue: () => 0,
-    config: { conditions: { prone: "C.Prone", defeated: "C.Defeated" }, statusEffects: [{ id: "dead", name: "S.Defeated" }] }
+    config: { conditions: { prone: "C.Prone", defeated: "C.Defeated" }, statusEffects: [{ id: "prone", name: "S.Prone" }, { id: "dead", name: "S.Defeated" }] }
   });
 
   it("nie pokazuje surowego klucza, gdy brakuje tłumaczenia", () => {
     const [prone, defeated] = buildConditions({}, env({ "C.Prone": "Powalony" }));
     expect(prone.name).toBe("Powalony");
-    expect(defeated.name).toBe("Defeated");
+    // „Dead” bierze nazwę z efektu systemu, a bez tłumaczenia z klucza identyfikatora efektu
+    expect(defeated.name).toBe("Dead");
   });
 
   it("korzysta z nazwy efektu statusu, jeśli jest przetłumaczona", () => {
     const [, defeated] = buildConditions({}, env({ "S.Defeated": "Pokonany" }));
     expect(defeated.name).toBe("Pokonany");
+  });
+
+  it("stan tylko z efektem (Besmirched w 5e) trafia na koniec listy, z opisem z efektu", () => {
+    const conds = buildConditions({}, {
+      localize: (k) => ({ "S.Besmirched": "Zhańbiony", "D.Besmirched": "<p>Zhańbienie</p>" })[k] ?? k,
+      conditionValue: () => 0,
+      config: { conditions: { prone: "C.Prone" }, statusEffects: [{ id: "prone", name: "S.Prone" }, { id: "besmirched", name: "S.Besmirched", description: "D.Besmirched" }] }
+    });
+    expect(conds.map((c) => c.encodedValue)).toEqual(["condition|prone", "condition|besmirched"]);
+    expect(conds[1]).toMatchObject({ name: "Zhańbiony", tooltip: "Zhańbienie" });
+  });
+
+  it("stan z mapy nazw bez efektu w systemie nie dostaje przycisku (addCondition by go nie znalazł)", () => {
+    const conds = buildConditions({}, { localize: (k) => k, conditionValue: () => 0, config: { conditions: { prone: "C.Prone", ghost: "C.Ghost" }, statusEffects: [{ id: "prone" }] } });
+    expect(conds.map((c) => c.encodedValue)).toEqual(["condition|prone"]);
   });
 
   it("„Pokonany” używa identyfikatora efektu „dead”, bo addCondition(\"defeated\") nie znajduje efektu", () => {
