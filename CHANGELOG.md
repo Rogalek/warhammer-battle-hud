@@ -10,6 +10,7 @@
 - The Old World: the Combat tab shows the attack you are defending against, Speed and Resilience in the group headers, and the mount (mount/dismount and its attacks); wounds in Status get an "Add a wound" button.
 - The action panel opens downward when the HUD is moved to the upper part of the screen; the HUD then keeps its top edge in place. A new setting fixes the direction (automatic, upward, downward).
 - The Old World: skills show their dice pool, e.g. "4d10 ≤3" (as many d10 as the characteristic, every die at or under the skill succeeds), and each column header shows the characteristic. The tooltip no longer calls the skill value "Dice".
+- WFRP: "Career check" in the Downtime tab tells only you, in chat, whether the current career level is complete and what is missing (4th edition: characteristics and 8 career skills at 5 × level advances and one career talent; 5th edition: the career path advancements), with the XP you have and what moving up or changing career costs.
 
 ## 0.8.0
 - Only the GM changes the big counter by hand (Advantage, Momentum, Superiority, Glory, Soulfire); players see the value and the rules in its tooltip. The Advantage counter in the action panel is GM-only too. Spending Advantage on its actions still works for players, as on the sheet.
