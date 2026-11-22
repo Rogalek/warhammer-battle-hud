@@ -16,7 +16,7 @@ describe("nazwy stanów", () => {
   const env = (known) => ({
     localize: (key) => known[key] ?? key,
     conditionValue: () => 0,
-    config: { conditions: { prone: "C.Prone", defeated: "C.Defeated" }, statusEffects: [{ id: "defeated", name: "S.Defeated" }] }
+    config: { conditions: { prone: "C.Prone", defeated: "C.Defeated" }, statusEffects: [{ id: "dead", name: "S.Defeated" }] }
   });
 
   it("nie pokazuje surowego klucza, gdy brakuje tłumaczenia", () => {
@@ -28,6 +28,17 @@ describe("nazwy stanów", () => {
   it("korzysta z nazwy efektu statusu, jeśli jest przetłumaczona", () => {
     const [, defeated] = buildConditions({}, env({ "S.Defeated": "Pokonany" }));
     expect(defeated.name).toBe("Pokonany");
+  });
+
+  it("„Pokonany” używa identyfikatora efektu „dead”, bo addCondition(\"defeated\") nie znajduje efektu", () => {
+    const seen = [];
+    const withValue = { ...env({}), conditionValue: (_actor, key) => (seen.push(key), key === "dead" ? 1 : 0) };
+    const [prone, defeated] = buildConditions({}, withValue);
+    expect(prone.encodedValue).toBe("condition|prone");
+    expect(defeated.encodedValue).toBe("condition|dead");
+    expect(defeated.cssClass).toBe("toggle active");
+    expect(seen).toContain("dead");
+    expect(seen).not.toContain("defeated");
   });
 });
 
