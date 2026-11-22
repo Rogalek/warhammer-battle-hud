@@ -22,6 +22,8 @@
       "LowAmmoHint": "The count turns amber at this number or below.",
       "ShowHandsName": "Show hands / equipment",
       "ShowHandsHint": "Next to the big counter. Systems with hand rules (WFRP, Imperium Maledictum): what each hand holds, with two-handed weapons taking both. Other systems (The Old World, Wrath & Glory, Soulbound): every equipped weapon and armour, with a \"+\" to equip more. Click to choose, right-click to empty or put away.",
+      "HudThemeName": "HUD colour scheme",
+      "HudThemeHint": "System default: WFRP dark, the other systems like their character sheet. Character sheet: the sheet's background, buttons, headers and fonts. Dark: the classic dark HUD in the system's colours. For this user only.",
       "ShowActionsName": "Show the action panel",
       "ShowActionsHint": "Tabs above the hotbar with the character's tests, weapons, spells and conditions.",
       "PanelDirectionName": "Action panel opens",
@@ -96,6 +98,11 @@
       "AddHint": "Click: choose a weapon or armour to equip.",
       "Hint": "Click: swap for another item or put it away. Right-click: put it away.",
       "PutAway": "Put it away"
+    },
+    "Theme": {
+      "auto": "System default",
+      "sheet": "Like the character sheet",
+      "dark": "Dark (classic)"
     }
   },
   "WHFRAMES": {

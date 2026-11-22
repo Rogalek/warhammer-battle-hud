@@ -3,11 +3,13 @@
  * Położenie HUD-a należy do gracza (scope "user").
  */
 import { MODULE_ID, I18N } from "./constants.mjs";
+import { applyTheme } from "./theme.mjs";
 
 export function registerSettings(hasAmmo, onChange, hasAdvantage = false, hasHands = false) {
   const definitions = {
     ...(hasAdvantage ? { showAdvantage: { scope: "client", type: Boolean, default: true } } : {}),
     ...(hasHands ? { showHands: { scope: "client", type: Boolean, default: true } } : {}),
+    hudTheme: { scope: "client", type: String, default: "auto", choices: { auto: `${I18N}.Theme.auto`, sheet: `${I18N}.Theme.sheet`, dark: `${I18N}.Theme.dark` }, onChange: () => applyTheme() },
     showActions: { scope: "client", type: Boolean, default: true },
     panelDirection: { scope: "client", type: String, default: "auto", choices: { auto: `${I18N}.Direction.auto`, up: `${I18N}.Direction.up`, down: `${I18N}.Direction.down` } },
     actionsOnlyEquipped: { scope: "client", type: Boolean, default: true },

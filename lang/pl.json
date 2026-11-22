@@ -22,6 +22,8 @@
       "LowAmmoHint": "Przy tej liczbie lub mniejszej licznik zmienia kolor na bursztynowy.",
       "ShowHandsName": "Pokaż ręce / wyposażenie",
       "ShowHandsHint": "Obok dużego licznika. W systemach z zasadami rąk (WFRP, Imperium Maledictum): co trzyma każda ręka, broń dwuręczna zajmuje obie. W pozostałych (The Old World, Wrath & Glory, Soulbound): każda założona broń i pancerz oraz pole „+” do założenia kolejnych. Klik wybiera, prawy klik opróżnia albo odkłada.",
+      "HudThemeName": "Kolorystyka HUD-a",
+      "HudThemeHint": "Domyślna systemu: WFRP ciemna, pozostałe systemy jak karta postaci. Jak karta postaci: tło, przyciski, nagłówki i czcionki karty. Ciemna: klasyczny ciemny HUD w kolorach systemu. Tylko dla tego użytkownika.",
       "ShowActionsName": "Pokaż panel akcji",
       "ShowActionsHint": "Zakładki nad paskiem makr z testami, bronią, zaklęciami i stanami postaci.",
       "PanelDirectionName": "Kierunek rozwijania panelu akcji",
@@ -96,6 +98,11 @@
       "AddHint": "Klik: wybierz broń albo pancerz do założenia.",
       "Hint": "Klik: zamień na inny przedmiot albo odłóż. Prawy klik: odłóż.",
       "PutAway": "Odłóż"
+    },
+    "Theme": {
+      "auto": "Domyślna systemu",
+      "sheet": "Jak karta postaci",
+      "dark": "Ciemna (klasyczna)"
     }
   },
   "WHFRAMES": {

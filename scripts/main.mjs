@@ -9,6 +9,7 @@ import { adapterFor as ammoFor } from "./bar/systems/index.mjs";
 import { BattleBar } from "./bar/battle-bar.mjs";
 import { counterFor } from "./bar/counters.mjs";
 import { handsFor } from "./bar/hands.mjs";
+import { applyTheme } from "./bar/theme.mjs";
 import { t } from "./bar/constants.mjs";
 import { registerSettings as registerFrameSettings, getSetting as getFrameSetting, toggleFrames } from "./frames/settings.mjs";
 import { adapterFor as framesFor } from "./frames/systems.mjs";
@@ -37,6 +38,8 @@ Hooks.once("init", () => {
   BattleBar.adapter = ammoFor(game.system.id);
   registerFrameSettings(refreshFrames);
   registerBarSettings(Boolean(BattleBar.adapter), refreshBar, Boolean(counterFor(game.system.id)), Boolean(handsFor(game.system.id)));
+  // Wariant kolorystyki wybrany przez gracza (albo domyślny dla systemu)
+  applyTheme();
   // Zasoby spoza aktora (np. Przewaga Taktyczna w ustawieniach świata) odświeżają licznik własnym hookiem
   for (const hook of counterFor(game.system.id)?.hooks ?? []) Hooks.on(hook, () => refreshBar());
   game.modules.get(MODULE_ID).api = {
