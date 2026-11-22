@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.4
 - The Old World: the dice pool on skills is shorter – "4d/3" ("4k/3" in Polish): 4 dice (the characteristic), success on 3 or less (the skill).
 - WFRP 4th edition: Advantage is a separate first tab again (Advantage actions, crew orders and the counter), highlighted as in 0.8.0. With the 5th edition rules there is no such tab; crew orders sit in Combat.
 
