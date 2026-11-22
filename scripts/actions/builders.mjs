@@ -371,21 +371,28 @@ function conditionName(key, label, status, env) {
 }
 
 /** Stany z konfiguracji systemu; aktywne podświetlone, numerowane z wartością. */
+/**
+ * Lista nazw stanów w konfiguracji systemu ma „defeated”, a efekt tego stanu nazywa się „dead”.
+ * Przycisk musi używać identyfikatora efektu, bo `addCondition("defeated")` nie znajduje efektu i kończy się błędem.
+ */
+export const CONDITION_EFFECT_ID = Object.freeze({ defeated: "dead" });
+
 export function buildConditions(actor, env) {
   const numbered = new Set(
     (env.config?.statusEffects ?? []).filter((s) => s.system?.condition?.numbered).map((s) => s.id)
   );
-  return Object.entries(env.config?.conditions ?? {}).map(([key, label]) => {
+  return Object.entries(env.config?.conditions ?? {}).map(([nameKey, label]) => {
+    const key = CONDITION_EFFECT_ID[nameKey] ?? nameKey;
     const value = env.conditionValue(actor, key);
     const status = (env.config?.statusEffects ?? []).find((s) => s.id === key);
     return {
       id: `${T.condition}-${key}`,
-      name: conditionName(key, label, status, env),
+      name: conditionName(nameKey, label, status, env),
       img: status?.img,
       encodedValue: encodeAction(T.condition, key),
       cssClass: value ? "toggle active" : "toggle",
       info1: value && numbered.has(key) ? { text: String(value) } : undefined,
-      tooltip: plain(env.localize(env.config?.conditionDescriptions?.[key] ?? "")) || undefined
+      tooltip: plain(env.localize(env.config?.conditionDescriptions?.[nameKey] ?? "")) || undefined
     };
   });
 }
