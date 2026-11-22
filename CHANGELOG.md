@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.5
 - WFRP: the "Defeated" button in the Status tab no longer fails with "The action failed". The system lists the condition as "defeated" but its effect is "dead"; the button now uses the effect.
 
 ## 0.8.4
