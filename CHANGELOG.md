@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.2
 - WFRP (4e and 5e) is dark again by default, as in 0.8.0.
 - New player setting "HUD colour scheme": System default (WFRP dark, the other systems like their character sheet), Like the character sheet, or Dark (classic, the 0.8.0 colours). It applies at once.
 
