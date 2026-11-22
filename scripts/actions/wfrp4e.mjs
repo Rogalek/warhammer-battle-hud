@@ -41,7 +41,9 @@ export function actionsByGroup(actor, env) {
     [G.advantageActions]: B.buildAdvantageActions(actor, env),
     [G.downtime]: B.buildDowntime(actor, env),
     [G.channelledReset]: B.buildChannelledReset(actor, env),
-    [G.gangOrders]: B.buildGangOrders(actor, env),
+    [G.gangOrders]: env.edition === "5e" ? [] : B.buildGangOrders(actor, env),
+    // 5e: bez zakładki Przewaga rozkazy szajki trafiają do Walki
+    [G.gangOrdersCombat]: env.edition === "5e" ? B.buildGangOrders(actor, env) : [],
     [G.equipment]: B.buildEquipment(actor, env)
   };
 }
@@ -96,7 +98,7 @@ export function buildPanel(actor, env) {
   });
   // Umiejętności w kolumnach według cech: grupy zależą od postaci, nie od stałego układu
   const dynamic = { skills: () => (FULL_ACTORS.includes(actor.type) ? B.buildSkillGroups(actor, env) : []) };
-  return LAYOUT.map((tab) => ({
+  return LAYOUT.filter((tab) => !tab.edition || tab.edition === (env.edition ?? "4e")).map((tab) => ({
     id: tab.id,
     label: env.localize(tab.name),
     columns: tab.columns,

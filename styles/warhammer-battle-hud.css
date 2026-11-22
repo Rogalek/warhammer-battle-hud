@@ -1249,6 +1249,12 @@ body.whb-system-age-of-sigmar-soulbound.whb-theme-dark {
   border-color: var(--whb-btn-hover-border);
 }
 
+/* Zakładka Przewaga (WFRP 4e) – wyróżniona, bo jej akcje zależą od licznika (jak w 0.8.0) */
+#warhammer-battle-hud-bar .whb-tabs button[data-tab="advantage"]:not(.active) {
+  color: var(--whb-highlight-strong);
+  font-weight: bold;
+}
+
 /* Przełączniki (stany, Ekwipunek, wierzchowiec): wyłączone jaśniej, włączone jak aktywna zakładka */
 #warhammer-battle-hud-bar .whb-action.toggle {
   background: var(--whb-toggle-bg);
