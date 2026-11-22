@@ -399,6 +399,9 @@ export function buildConditions(actor, env) {
     // „Dead” ma w mapie nazwę „Defeated”; przycisk nosi nazwę efektu z systemu
     const label = nameKey === key ? names[nameKey] : undefined;
     const descriptions = env.config?.conditionDescriptions ?? {};
+    // Opis bez tłumaczenia (np. Besmirched w 5e, którego system nie opisuje) nie może pokazywać surowego klucza
+    const descriptionKey = descriptions[key] ?? descriptions[nameKey] ?? status?.description ?? "";
+    const description = descriptionKey ? env.localize(descriptionKey) : "";
     return {
       id: `${T.condition}-${key}`,
       name: conditionName(key, label, status, env),
@@ -406,7 +409,7 @@ export function buildConditions(actor, env) {
       encodedValue: encodeAction(T.condition, key),
       cssClass: value ? "toggle active" : "toggle",
       info1: value && numbered.has(key) ? { text: String(value) } : undefined,
-      tooltip: plain(env.localize(descriptions[key] ?? descriptions[nameKey] ?? status?.description ?? "")) || undefined
+      tooltip: description && description !== descriptionKey ? plain(description) || undefined : undefined
     };
   });
 }

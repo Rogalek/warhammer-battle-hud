@@ -41,6 +41,11 @@ describe("nazwy stanów", () => {
     expect(conds[1]).toMatchObject({ name: "Zhańbiony", tooltip: "Zhańbienie" });
   });
 
+  it("opis bez tłumaczenia nie pokazuje surowego klucza", () => {
+    const [besmirched] = buildConditions({}, { localize: (k) => k, conditionValue: () => 0, config: { conditions: {}, statusEffects: [{ id: "besmirched", name: "S.Besmirched", description: "WFRP4E.Conditions.besmirched" }] } });
+    expect(besmirched.tooltip).toBeUndefined();
+  });
+
   it("stan z mapy nazw bez efektu w systemie nie dostaje przycisku (addCondition by go nie znalazł)", () => {
     const conds = buildConditions({}, { localize: (k) => k, conditionValue: () => 0, config: { conditions: { prone: "C.Prone", ghost: "C.Ghost" }, statusEffects: [{ id: "prone" }] } });
     expect(conds.map((c) => c.encodedValue)).toEqual(["condition|prone"]);
