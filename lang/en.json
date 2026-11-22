@@ -35,7 +35,7 @@
       "SkipDialogByDefaultName": "Skip the roll dialog by default",
       "SkipDialogByDefaultHint": "Tests from the panel roll straight away; hold Alt to see the dialog. When off, Alt skips it.",
       "ShowUnrollableTraitsName": "Show traits without a test",
-      "ShowUnrollableTraitsHint": "Also list traits that have no test (clicking posts them to chat).",
+      "ShowUnrollableTraitsHint": "Also list traits that have no test, such as Nightvision or Infected (clicking posts them to chat). On by default.",
       "ShowTokenTestsName": "Tests on the Token HUD",
       "ShowTokenTestsHint": "Quick tests with their values on the token's HUD, for anyone who owns the character."
     },

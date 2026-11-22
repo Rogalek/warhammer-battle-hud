@@ -242,6 +242,8 @@ export function buildTraits(actor, env) {
     .filter((trait) => trait.system?.rollable?.value || env.settings?.showUnrollableTraits)
     .sort(byName)
     .map((trait) => itemAction(trait, trait.system?.rollable?.value ? T.trait : T.talent, {
+      // Pełna nazwa ze specjalizacją („Afraid (Elves)”, „Fear (3)”), jak składa ją system
+      name: trait.system?.DisplayName || trait.name,
       tooltip: plainDescription(trait) || undefined
     }));
 }
@@ -372,27 +374,42 @@ function conditionName(key, label, status, env) {
 
 /** Stany z konfiguracji systemu; aktywne podświetlone, numerowane z wartością. */
 /**
- * Lista nazw stanów w konfiguracji systemu ma „defeated”, a efekt tego stanu nazywa się „dead”.
- * Przycisk musi używać identyfikatora efektu, bo `addCondition("defeated")` nie znajduje efektu i kończy się błędem.
+ * Mapa nazw stanów w konfiguracji systemu (`conditions`) nazywa stan „dead” kluczem „defeated” i nie zna stanów,
+ * które mają tylko efekt (np. Besmirched w 5e). Przycisk musi używać identyfikatora efektu, bo
+ * `addCondition("defeated")` nie znajduje efektu i kończy się błędem.
  */
 export const CONDITION_EFFECT_ID = Object.freeze({ defeated: "dead" });
 
+/**
+ * Stany do przycisków: prawdziwe efekty statusu systemu (stąd Besmirched w 5e i Dead), w kolejności mapy nazw,
+ * a te, których mapa nie zna, na końcu. Bez listy efektów (np. w testach) zostaje mapa nazw.
+ */
 export function buildConditions(actor, env) {
-  const numbered = new Set(
-    (env.config?.statusEffects ?? []).filter((s) => s.system?.condition?.numbered).map((s) => s.id)
-  );
-  return Object.entries(env.config?.conditions ?? {}).map(([nameKey, label]) => {
-    const key = CONDITION_EFFECT_ID[nameKey] ?? nameKey;
+  const effects = env.config?.statusEffects ?? [];
+  const names = env.config?.conditions ?? {};
+  const mapped = Object.keys(names).map((nameKey) => ({ nameKey, key: CONDITION_EFFECT_ID[nameKey] ?? nameKey }));
+  const known = new Set(mapped.map((c) => c.key));
+  const extra = effects.filter((e) => e.id && !known.has(e.id)).map((e) => ({ nameKey: e.id, key: e.id }));
+  const effectIds = new Set(effects.map((e) => e.id));
+  const list = [...mapped, ...extra].filter((c) => !effects.length || effectIds.has(c.key));
+  const numbered = new Set(effects.filter((s) => s.system?.condition?.numbered).map((s) => s.id));
+  return list.map(({ nameKey, key }) => {
     const value = env.conditionValue(actor, key);
-    const status = (env.config?.statusEffects ?? []).find((s) => s.id === key);
+    const status = effects.find((s) => s.id === key);
+    // „Dead” ma w mapie nazwę „Defeated”; przycisk nosi nazwę efektu z systemu
+    const label = nameKey === key ? names[nameKey] : undefined;
+    const descriptions = env.config?.conditionDescriptions ?? {};
+    // Opis bez tłumaczenia (np. Besmirched w 5e, którego system nie opisuje) nie może pokazywać surowego klucza
+    const descriptionKey = descriptions[key] ?? descriptions[nameKey] ?? status?.description ?? "";
+    const description = descriptionKey ? env.localize(descriptionKey) : "";
     return {
       id: `${T.condition}-${key}`,
-      name: conditionName(nameKey, label, status, env),
+      name: conditionName(key, label, status, env),
       img: status?.img,
       encodedValue: encodeAction(T.condition, key),
       cssClass: value ? "toggle active" : "toggle",
       info1: value && numbered.has(key) ? { text: String(value) } : undefined,
-      tooltip: plain(env.localize(env.config?.conditionDescriptions?.[nameKey] ?? "")) || undefined
+      tooltip: description && description !== descriptionKey ? plain(description) || undefined : undefined
     };
   });
 }

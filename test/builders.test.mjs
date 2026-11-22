@@ -83,6 +83,15 @@ describe("builders", () => {
     expect(B.buildArmour(actor, env)[0]).toMatchObject({ name: "Kaftan", info1: { text: "-1" } });
   });
 
+  it("cecha ze specjalizacją pokazuje pełną nazwę z systemu", () => {
+    const creature = { type: "npc", itemTypes: { trait: [
+      { id: "t1", name: "Afraid", img: "a.webp", system: { rollable: { value: false }, DisplayName: "Afraid (Elves)", description: { value: "" } } },
+      { id: "t2", name: "Nightvision", img: "n.webp", system: { rollable: { value: false }, description: { value: "" } } }
+    ] } };
+    const traits = B.buildTraits(creature, { ...env, settings: { showUnrollableTraits: true } });
+    expect(traits.map((t) => t.name)).toEqual(["Afraid (Elves)", "Nightvision"]);
+  });
+
   it("cechy stworzeń: tylko z testem, chyba że ustawienie", () => {
     expect(B.buildTraits(actor, env).map((a) => a.encodedValue.split("|")[0])).toEqual(["trait"]);
     const all = B.buildTraits(actor, { ...env, settings: { showUnrollableTraits: true } });
