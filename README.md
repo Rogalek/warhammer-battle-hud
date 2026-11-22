@@ -39,7 +39,9 @@ Systems without hand rules (The Old World, Wrath & Glory, Soulbound, and Imperiu
 
 ## 🎨 System colours
 
-The HUD looks like the active system's character sheet: the same background, buttons, active tab, list headers and fonts. WFRP: parchment, dark red active tab and navy tabs. The Old World: parchment with tow-blue buttons and brown list headers. Imperium Maledictum: dark teal with orange. Wrath & Glory: light paper with black buttons and Imperial red. Soulbound: light paper with Azyr-blue header bands and Sigmar gold. Every system sets the same set of colour tokens, so the layout and behaviour stay identical. The party frames follow the same colours, and their look can be switched to Parchment or Imperium in the settings.
+Each player picks the look in the settings ("HUD colour scheme"): **Like the character sheet**, **Dark (classic)**, or **System default** – dark in WFRP (4e and 5e), like the sheet in the other systems. The switch applies at once.
+
+Like the character sheet, the HUD takes the sheet's background, buttons, active tab, list headers and fonts. WFRP: parchment, dark red active tab and navy tabs. The Old World: parchment with tow-blue buttons and brown list headers. Imperium Maledictum: dark teal with orange. Wrath & Glory: light paper with black buttons and Imperial red. Soulbound: light paper with Azyr-blue header bands and Sigmar gold. The dark variant is the classic translucent HUD in each system's colours (dark brown and red in WFRP). Every system sets the same set of colour tokens, so the layout and behaviour stay identical. The party frames follow the same colours, and their look can be switched to Parchment or Imperium in the settings.
 
 ## ⚡ Advantage (WFRP)
 

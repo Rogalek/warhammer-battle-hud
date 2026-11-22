@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- WFRP (4e and 5e) is dark again by default, as in 0.8.0.
+- New player setting "HUD colour scheme": System default (WFRP dark, the other systems like their character sheet), Like the character sheet, or Dark (classic, the 0.8.0 colours). It applies at once.
+
 ## 0.8.1
 - Hands: the main hand always comes first (leftmost) and the other hand after it – Imperium Maledictum now follows WFRP instead of showing left and right in physical order.
 - Every system where items are equipped has the widget next to the big counter: Hands in WFRP and Imperium Maledictum (hand rules), and Equipped in The Old World, Wrath & Glory, Soulbound and for Imperium Maledictum NPCs – a slot per equipped weapon or armour plus a "+" slot; click swaps or puts away, right-click puts away, two-handed weapons are marked "2".

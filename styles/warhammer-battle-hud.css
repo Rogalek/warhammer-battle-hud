@@ -53,8 +53,22 @@ body {
   --whb-alert-text: #e05050;
 }
 
-/* WFRP: jak karta postaci – pergamin, ciemna czerwień aktywnej zakładki, granat zakładek, CaslonPro */
-body.whb-system-wfrp4e {
+/* Warianty kolorystyki (ustawienie gracza „Kolorystyka HUD-a”): klasa whb-theme-dark albo whb-theme-sheet na <body>.
+   Domyślnie WFRP (4e i 5e) jest ciemny jak w 0.8.0, pozostałe systemy jak karta postaci. Imperium Maledictum
+   ma ciemną kartę, więc oba warianty są u niego takie same. */
+
+/* WFRP – wariant ciemny: ciemny brąz, ciemna czerwień i złoto (z 0.8.0) */
+body.whb-system-wfrp4e.whb-theme-dark {
+  --whb-bg: rgba(38, 14, 10, 0.86);
+  --whb-bg-strong: rgba(30, 10, 8, 0.93);
+  --whb-border: #6b4f2a;
+  --whb-text: #f1ede9;
+  --whb-muted: #b5aeac;
+  --whb-accent: #7a1c12;
+}
+
+/* WFRP – wariant jak karta postaci: pergamin, ciemna czerwień aktywnej zakładki, granat zakładek */
+body.whb-system-wfrp4e.whb-theme-sheet {
   --whb-bg: rgba(239, 230, 216, 0.96);
   --whb-bg-strong: rgba(239, 230, 216, 0.98);
   --whb-surface-image: url("../../../systems/wfrp4e/ui/backgrounds/parchment-texture.webp");
@@ -88,7 +102,7 @@ body.whb-system-wfrp4e {
 }
 
 /* The Old World: jak karta postaci – pergamin, granat tow-blue z kremem, brązowe nagłówki list, złoto */
-body.whb-system-whtow {
+body.whb-system-whtow.whb-theme-sheet {
   --whb-bg: rgba(232, 224, 214, 0.96);
   --whb-bg-strong: rgba(232, 224, 214, 0.98);
   --whb-surface-image: url("../../../systems/whtow/assets/ui/background.webp");
@@ -130,6 +144,27 @@ body.whb-system-whtow {
   --whb-frame-accent: rgb(0, 69, 94);
 }
 
+/* Wariant ciemny (klasyczny, z 0.8.0) */
+body.whb-system-whtow.whb-theme-dark {
+  --whb-bg: rgba(32, 30, 29, 0.88);
+  --whb-bg-strong: rgba(26, 24, 23, 0.94);
+  --whb-border: #a39d8b;
+  --whb-text: #e8e0d6;
+  --whb-muted: #a39d8b;
+  --whb-accent: #b21a22;
+  --whb-highlight: #c6b869;
+  --whb-highlight-strong: #e6d98a;
+  --whb-highlight-dark: #a58b24;
+  --whb-badge-from: #771c18;
+  --whb-badge-to: #2a0d0b;
+  --whb-badge-text: #e8e0d6;
+  --whb-frame-bg: rgba(232, 224, 214, 0.96);
+  --whb-frame-text: #2a2420;
+  --whb-frame-border: #771c18;
+  --whb-frame-track: rgba(119, 28, 24, 0.2);
+  --whb-frame-accent: #b21a22;
+}
+
 /* Imperium Maledictum: jak karta postaci – ciemny turkus, morska zieleń i pomarańcz */
 body.whb-system-impmal {
   --whb-bg: rgba(28, 49, 50, 0.9);
@@ -154,7 +189,7 @@ body.whb-system-impmal {
 }
 
 /* Wrath & Glory: jak karta postaci – jasny papier, czarne pola z jasnym tekstem, imperialna czerwień */
-body.whb-system-wrath-and-glory {
+body.whb-system-wrath-and-glory.whb-theme-sheet {
   --whb-bg: rgba(233, 231, 226, 0.96);
   --whb-bg-strong: rgba(233, 231, 226, 0.98);
   --whb-surface-image: url("../../../systems/wrath-and-glory/assets/image/background.webp");
@@ -194,8 +229,29 @@ body.whb-system-wrath-and-glory {
   --whb-frame-accent: #8a2e2a;
 }
 
+/* Wariant ciemny (klasyczny, z 0.8.0) */
+body.whb-system-wrath-and-glory.whb-theme-dark {
+  --whb-bg: rgba(24, 30, 31, 0.9);
+  --whb-bg-strong: rgba(18, 22, 23, 0.95);
+  --whb-border: #8b8d90;
+  --whb-text: #e6e5e3;
+  --whb-muted: #8b8d90;
+  --whb-accent: #8a2e2a;
+  --whb-highlight: #c9a24a;
+  --whb-highlight-strong: #e6c36a;
+  --whb-highlight-dark: #752322;
+  --whb-badge-from: #8a2e2a;
+  --whb-badge-to: #3a002c;
+  --whb-badge-text: #e6e5e3;
+  --whb-frame-bg: rgba(230, 229, 227, 0.96);
+  --whb-frame-text: #191813;
+  --whb-frame-border: #8a2e2a;
+  --whb-frame-track: rgba(25, 24, 19, 0.2);
+  --whb-frame-accent: #8a2e2a;
+}
+
 /* Soulbound: jak karta postaci – jasny papier, granatowe paski nagłówków Azyru i złoto Sigmara */
-body.whb-system-age-of-sigmar-soulbound {
+body.whb-system-age-of-sigmar-soulbound.whb-theme-sheet {
   --whb-bg: rgba(240, 234, 214, 0.96);
   --whb-bg-strong: rgba(240, 234, 214, 0.98);
   --whb-surface-image: url("../../../systems/age-of-sigmar-soulbound/assets/image/background.webp");
@@ -232,6 +288,27 @@ body.whb-system-age-of-sigmar-soulbound {
   --whb-heading-border: #7c6c42;
   --whb-alert-bg: #7a1c12;
   --whb-alert-text: #f0ead6;
+  --whb-frame-bg: rgba(240, 234, 214, 0.96);
+  --whb-frame-text: #183051;
+  --whb-frame-border: #806b3a;
+  --whb-frame-track: rgba(24, 48, 81, 0.2);
+  --whb-frame-accent: #183051;
+}
+
+/* Wariant ciemny (klasyczny, z 0.8.0) */
+body.whb-system-age-of-sigmar-soulbound.whb-theme-dark {
+  --whb-bg: rgba(24, 48, 81, 0.9);
+  --whb-bg-strong: rgba(16, 33, 56, 0.95);
+  --whb-border: #806b3a;
+  --whb-text: #f0ead6;
+  --whb-muted: #a19e78;
+  --whb-accent: #806b3a;
+  --whb-highlight: #d8c48a;
+  --whb-highlight-strong: #f0dfa6;
+  --whb-highlight-dark: #806b3a;
+  --whb-badge-from: #183051;
+  --whb-badge-to: #0b1626;
+  --whb-badge-text: #f0ead6;
   --whb-frame-bg: rgba(240, 234, 214, 0.96);
   --whb-frame-text: #183051;
   --whb-frame-border: #806b3a;

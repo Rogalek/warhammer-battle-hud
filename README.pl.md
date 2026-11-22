@@ -39,7 +39,9 @@ Systemy bez zasad rąk (The Old World, Wrath & Glory, Soulbound oraz BN-i Imperi
 
 ## 🎨 Kolory systemów
 
-HUD wygląda jak karta postaci aktywnego systemu: to samo tło, przyciski, aktywna zakładka, nagłówki list i czcionki. WFRP: pergamin, ciemnoczerwona aktywna zakładka i granatowe zakładki. The Old World: pergamin z granatowymi przyciskami i brązowymi nagłówkami list. Imperium Maledictum: ciemny turkus z pomarańczem. Wrath & Glory: jasny papier z czarnymi przyciskami i imperialną czerwienią. Soulbound: jasny papier z granatowymi paskami nagłówków Azyru i złotem Sigmara. Każdy system ustawia ten sam zestaw zmiennych kolorów, więc układ i działanie są wszędzie takie same. Ramki drużyny mają te same kolory, a ich wygląd można w ustawieniach przełączyć na Pergamin albo Imperium.
+Każdy gracz wybiera wygląd w ustawieniach („Kolorystyka HUD-a”): **Jak karta postaci**, **Ciemna (klasyczna)** albo **Domyślna systemu** – ciemna w WFRP (4e i 5e), jak karta w pozostałych systemach. Zmiana działa od razu.
+
+W wariancie jak karta postaci HUD bierze z karty tło, przyciski, aktywną zakładkę, nagłówki list i czcionki. WFRP: pergamin, ciemnoczerwona aktywna zakładka i granatowe zakładki. The Old World: pergamin z granatowymi przyciskami i brązowymi nagłówkami list. Imperium Maledictum: ciemny turkus z pomarańczem. Wrath & Glory: jasny papier z czarnymi przyciskami i imperialną czerwienią. Soulbound: jasny papier z granatowymi paskami nagłówków Azyru i złotem Sigmara. Wariant ciemny to klasyczny półprzezroczysty HUD w kolorach systemu (w WFRP ciemny brąz i czerwień). Każdy system ustawia ten sam zestaw zmiennych kolorów, więc układ i działanie są wszędzie takie same. Ramki drużyny mają te same kolory, a ich wygląd można w ustawieniach przełączyć na Pergamin albo Imperium.
 
 ## ⚡ Przewaga (WFRP)
 
