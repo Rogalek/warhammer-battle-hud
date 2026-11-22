@@ -9,6 +9,7 @@ import { ammoState } from "./ammo-data.mjs";
 import { advantageLevel, clampAnchor, clampTop, isAnchor, panelDirection } from "./hud-data.mjs";
 import { counterFor } from "./counters.mjs";
 import { widgetFor } from "./hands.mjs";
+import { ATTACK_ICONS, attackFor } from "./attack.mjs";
 import { groupSlots, handsUsed } from "./hands-data.mjs";
 import { tooltipHtml } from "../actions/tooltip.mjs";
 
@@ -45,6 +46,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
       openTab: BattleBar.#onOpenTab,
       runAction: BattleBar.#onRunAction,
       gainAdvantage: BattleBar.#onGainAdvantage,
+      attackWith: BattleBar.#onAttackWith,
       toggleHand: BattleBar.#onToggleHand,
       holdWeapon: BattleBar.#onHoldWeapon,
       emptyHand: BattleBar.#onEmptyHand
@@ -185,6 +187,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           item: group.item,
           useless: group.useless,
           over: group.over,
+          attack: this.#attackView(actor, group.item),
           icon: group.useless ? "fa-solid fa-hand-dots" : "fa-regular fa-hand",
           emptyLabel: label("EmptyIt"),
           open,
@@ -199,6 +202,29 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           }),
           options: open ? options.map((o) => ({ ...o, current: o.id === group.item?.id, disabled: o.twoHanded && anyUseless })) : []
         };
+      })
+    };
+  }
+
+  /**
+   * Pasek ataku pod bronią: ta sama akcja co przycisk broni w panelu (Alt, Shift, prawy klik – karta broni).
+   * Pancerz, puste ręce i pole „+” paska nie mają (zostaje puste miejsce, żeby pola się nie rozjeżdżały).
+   */
+  #attackView(actor, item) {
+    if (!item || !this.constructor.actions) return null;
+    const document = actor.items.get(item.id);
+    const attack = attackFor(game.system.id, document);
+    if (!attack) return null;
+    const label = (key) => game.i18n.localize(`WHAMMO.Attack.${key}`);
+    const kind = { melee: "Melee", ranged: "Ranged", shield: "Shield" }[attack.kind];
+    return {
+      ...attack,
+      icon: ATTACK_ICONS[attack.kind],
+      label: label(kind),
+      tooltip: tooltipHtml({
+        name: `${label(kind)}: ${document.name}`,
+        text: attack.ready ? "" : label("NotReady"),
+        hint: label("Hint")
       })
     };
   }
@@ -218,6 +244,7 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
           span: 1,
           role: slot.role,
           item: slot.item,
+          attack: this.#attackView(actor, slot.item),
           icon: "fa-solid fa-plus",
           emptyLabel: label("PutAway"),
           open,
@@ -250,6 +277,12 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
     super._onFirstRender(context, options);
     const root = this.element;
     root.addEventListener("contextmenu", (event) => {
+      // Prawy klik na pasku ataku: karta broni (jak w panelu), a nie odłożenie broni
+      const attack = event.target.closest(".whb-hand-attack[data-value]");
+      if (attack) {
+        event.preventDefault();
+        return this.#perform(attack, event, true);
+      }
       const hand = event.target.closest(".whb-hand[data-hand]");
       if (hand) {
         event.preventDefault();
@@ -411,6 +444,10 @@ export class BattleBar extends HandlebarsApplicationMixin(ApplicationV2) {
   static #onOpenTab(_event, target) {
     this.openTab = this.openTab === target.dataset.tab ? null : target.dataset.tab;
     this.render();
+  }
+
+  static #onAttackWith(event, target) {
+    return this.#perform(target, event, false);
   }
 
   static #onRunAction(event, target) {

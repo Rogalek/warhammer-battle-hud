@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- An attack bar under every weapon in the Hands / Equipped widget, in every system: it runs the same test as the weapon button in the action panel and shows an icon – a sword for melee, a crosshair for ranged, a shield under a shield in The Old World – with the action named in the tooltip, Alt skips the dialog, Shift rolls blind, right-click opens the weapon; weapons that need reloading have a dimmed bar.
+
 ## 0.8.2
 - WFRP (4e and 5e) is dark again by default, as in 0.8.0.
 - New player setting "HUD colour scheme": System default (WFRP dark, the other systems like their character sheet), Like the character sheet, or Dark (classic, the 0.8.0 colours). It applies at once.

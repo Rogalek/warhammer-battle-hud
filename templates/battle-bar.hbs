@@ -42,6 +42,13 @@
                 {{/if}}
                 {{#if (eq role "off")}}{{#unless item.twoHanded}}<span class="whb-hand-mark">{{localize "WHAMMO.Hands.OffShort"}}</span>{{/unless}}{{/if}}
               </button>
+              {{#if attack}}
+                <button type="button" class="whb-hand-attack {{attack.kind}} {{#unless attack.ready}}unready{{/unless}}" data-action="attackWith" data-value="{{attack.value}}" data-tooltip-html="{{attack.tooltip}}" data-tooltip-class="whb-tooltip" aria-label="{{attack.label}}: {{item.name}}">
+                  <i class="{{attack.icon}}" inert></i>
+                </button>
+              {{else}}
+                <span class="whb-hand-attack placeholder" aria-hidden="true"></span>
+              {{/if}}
             </div>
           {{/each}}
         </div>

@@ -103,6 +103,13 @@
       "auto": "System default",
       "sheet": "Like the character sheet",
       "dark": "Dark (classic)"
+    },
+    "Attack": {
+      "Melee": "Attack",
+      "Ranged": "Shoot",
+      "Shield": "Defend",
+      "NotReady": "Not loaded – reload first.",
+      "Hint": "Click: test with this weapon · Alt: skip the dialog · Shift: Blind GM roll · Right-click: open the weapon"
     }
   },
   "WHFRAMES": {
