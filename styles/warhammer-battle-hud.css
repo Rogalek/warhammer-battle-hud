@@ -573,28 +573,23 @@ body.whb-system-age-of-sigmar-soulbound.whb-theme-dark {
   border-color: #e0a030;
 }
 
-/* Pasek ataku pod bronią: wąski, na całą szerokość pola, w kolorach przycisków motywu */
+/* Pasek ataku pod bronią: wąski, na całą szerokość pola, sama ikona (nazwa akcji w podpowiedzi) –
+   mieści się pod polem jednej ręki w każdej czcionce i każdym języku */
 .whb-hand-attack {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
   width: 100%;
-  height: 1.05rem;
+  height: 1rem;
+  min-height: 0;
   margin: 2px 0 0;
-  padding: 0 2px;
+  padding: 0;
   border-radius: 3px;
-  font-size: 0.6rem;
-  font-weight: bold;
-  letter-spacing: 0.04em;
   line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .whb-hand-attack i {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
 }
 
 .whb-hand-attack.placeholder {

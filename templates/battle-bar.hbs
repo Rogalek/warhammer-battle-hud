@@ -44,7 +44,7 @@
               </button>
               {{#if attack}}
                 <button type="button" class="whb-hand-attack {{attack.kind}} {{#unless attack.ready}}unready{{/unless}}" data-action="attackWith" data-value="{{attack.value}}" data-tooltip-html="{{attack.tooltip}}" data-tooltip-class="whb-tooltip" aria-label="{{attack.label}}: {{item.name}}">
-                  <i class="{{attack.icon}}" inert></i><span>{{attack.label}}</span>
+                  <i class="{{attack.icon}}" inert></i>
                 </button>
               {{else}}
                 <span class="whb-hand-attack placeholder" aria-hidden="true"></span>

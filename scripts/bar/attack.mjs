@@ -44,4 +44,4 @@ export function attackFor(systemId, item) {
 }
 
 /** Ikona Font Awesome dla rodzaju ataku. */
-export const ATTACK_ICONS = { melee: "fa-solid fa-sword", ranged: "fa-solid fa-crosshairs", shield: "fa-solid fa-shield" };
+export const ATTACK_ICONS = { melee: "fa-solid fa-sword", ranged: "fa-solid fa-crosshairs", shield: "fa-solid fa-shield-halved" };
