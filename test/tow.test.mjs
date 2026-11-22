@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import * as B from "../scripts/actions/tow-builders.mjs";
 
 const env = {
-  localize: (key) => ({ "WHB_TOW.DicePool": "{dice}d10 ≤{target}" })[key] ?? key,
+  localize: (key) => ({ "WHB_TOW.DicePool": "{dice}d/{target}" })[key] ?? key,
   config: {
     characteristics: { ws: "Weapon Skill", bs: "Ballistic Skill" },
     skills: { melee: "Melee", defence: "Defence", shooting: "Shooting" },
@@ -58,7 +58,7 @@ describe("The Old World: panel akcji", () => {
   it("umiejętności według cech, z kośćmi", () => {
     const groups = B.buildSkillGroups(actor, env);
     // Pula kości: tyle k10, ile cecha, sukces na wyniku ≤ umiejętności
-    expect(groups.map((g) => [g.label, g.actions.map((a) => `${a.name}:${a.detail}`)])).toEqual([["Weapon Skill (3)", ["Melee:3d10 ≤3", "Defence:3d10 ≤2"]], ["Ballistic Skill (2)", ["Shooting:2d10 ≤2"]]]);
+    expect(groups.map((g) => [g.label, g.actions.map((a) => `${a.name}:${a.detail}`)])).toEqual([["Weapon Skill (3)", ["Melee:3d/3", "Defence:3d/2"]], ["Ballistic Skill (2)", ["Shooting:2d/2"]]]);
     const melee = groups[0].actions[0].tooltip.details;
     expect(melee.find((d) => d.label.endsWith("Dice")).value).toBe("3 (Weapon Skill)");
     expect(melee.find((d) => d.label.endsWith("Target")).value).toBe(3);

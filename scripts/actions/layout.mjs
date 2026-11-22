@@ -23,17 +23,22 @@ export const GROUPS = {
   [G.advantageActions]: "WFRP4E_HUD.Groups.AdvantageActions",
   [G.equipment]: "WFRP4E_HUD.Groups.Equipment",
   [G.gangOrders]: "WFRP4E_HUD.Groups.GangOrders",
+  [G.gangOrdersCombat]: "WFRP4E_HUD.Groups.GangOrders",
   [G.downtime]: "WFRP4E_HUD.Groups.Downtime",
   [G.channelledReset]: "WFRP4E_HUD.Groups.ChannelledReset"
 };
 
 /**
  * Zakładki: id → klucz tłumaczenia i grupy w kolejności. Układ jak w pozostałych systemach:
- * Walka zaczyna się od akcji systemu (użycia Przewagi, rozkazy szajki), a kończy grupą Ekwipunek;
- * umiejętności są w kolumnach według cech (`dynamic: "skills"`); stany są w zakładce Stan.
+ * Walka kończy się grupą Ekwipunek; umiejętności są w kolumnach według cech (`dynamic: "skills"`);
+ * stany są w zakładce Stan. Zakładka z `edition` jest tylko w tej edycji zasad.
+ *
+ * WFRP 4e ma osobną, pierwszą zakładkę Przewaga (użycia Przewagi, rozkazy szajki, licznik) – Przewaga
+ * jest tam główną walutą walki. W 5e nie ma puli Przewagi: zakładki nie ma, a rozkazy szajki są w Walce.
  */
 export const LAYOUT = [
-  { id: "combat", name: "WFRP4E_HUD.Tabs.Combat", groups: [G.advantageActions, G.gangOrders, G.advantage, G.weaponsMelee, G.weaponsRanged, G.armour, G.traits, G.equipment] },
+  { id: "advantage", name: "WFRP4E_HUD.Tabs.Advantage", edition: "4e", groups: [G.advantageActions, G.gangOrders, G.advantage] },
+  { id: "combat", name: "WFRP4E_HUD.Tabs.Combat", groups: [G.gangOrdersCombat, G.weaponsMelee, G.weaponsRanged, G.armour, G.traits, G.equipment] },
   { id: "characteristics", name: "WFRP4E_HUD.Tabs.Characteristics", groups: [G.characteristics] },
   { id: "skills", name: "WFRP4E_HUD.Tabs.Skills", columns: 4, dynamic: "skills", groups: [] },
   { id: "magic", name: "WFRP4E_HUD.Tabs.Magic", groups: [G.channelledReset, G.petty, G.spells, G.channelling] },

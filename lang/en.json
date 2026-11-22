@@ -382,7 +382,7 @@
       "MountItem": "Click: use with the mount · Right-click: open the item",
       "WoundAdd": "Click: add a wound and open it"
     },
-    "DicePool": "{dice}d10 ≤{target}",
+    "DicePool": "{dice}d/{target}",
     "DicePoolRule": "Roll as many d10 as the characteristic; every die at or under the skill is a success.",
     "Speed": "Speed",
     "Resilience": "Resilience",

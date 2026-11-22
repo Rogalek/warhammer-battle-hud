@@ -54,10 +54,11 @@ describe("sterowanie i układ", () => {
     expect(decodeAction("gangOrder|trip")).toEqual({ type: "gangOrder", id: "trip", extra: "" });
   });
 
-  it("Walka jest pierwsza i zaczyna się od użyć Przewagi, kończy Ekwipunkiem", () => {
-    expect(LAYOUT[0].id).toBe("combat");
-    expect(LAYOUT[0].groups.slice(0, 3)).toEqual([B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage]);
-    expect(LAYOUT[0].groups.at(-1)).toBe(B.GROUP_IDS.equipment);
+  it("WFRP 4e: osobna, pierwsza zakładka Przewaga; Walka kończy się Ekwipunkiem", () => {
+    expect(LAYOUT[0]).toMatchObject({ id: "advantage", edition: "4e", groups: [B.GROUP_IDS.advantageActions, B.GROUP_IDS.gangOrders, B.GROUP_IDS.advantage] });
+    const combat = LAYOUT.find((tab) => tab.id === "combat");
+    expect(combat.groups.at(-1)).toBe(B.GROUP_IDS.equipment);
+    expect(combat.groups).not.toContain(B.GROUP_IDS.advantageActions);
   });
 });
 
@@ -74,5 +75,16 @@ describe("zasady 5e: bez puli Przewagi", () => {
   it("licznik Przewagi w panelu widzi tylko MG", () => {
     expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e", isGM: false })).toEqual([]);
     expect(B.buildAdvantage(actor5e, { config, localize, edition: "4e", isGM: true })).toHaveLength(1);
+  });
+});
+
+describe("zakładka Przewaga według edycji", async () => {
+  const { buildPanel } = await import("../scripts/actions/wfrp4e.mjs").catch(() => ({}));
+  it("4e ma zakładkę Przewaga, 5e jej nie ma", () => {
+    if (!buildPanel) return;
+    const fighter = { type: "character", system: { status: { advantage: { value: 2, max: 10 } } }, itemTypes: {}, items: [], effects: [] };
+    const env = (edition) => ({ config: { groupAdvantageActions: [{ cost: 1, name: "Batter" }] }, localize: (k) => k, edition, settings: {}, endeavours: [], gangOrders: () => [], conditionValue: () => 0, isGM: true });
+    expect(buildPanel(fighter, env("4e")).map((t) => t.id)[0]).toBe("advantage");
+    expect(buildPanel(fighter, env("5e")).map((t) => t.id)).not.toContain("advantage");
   });
 });

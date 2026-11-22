@@ -28,6 +28,7 @@ export const GROUP_IDS = Object.freeze({
   advantageActions: "advantage-actions",
   equipment: "equipment",
   gangOrders: "gang-orders",
+  gangOrdersCombat: "gang-orders-combat",
   downtime: "downtime",
   channelledReset: "channelled-reset"
 });
