@@ -382,7 +382,7 @@
       "MountItem": "Klik: użyj z wierzchowcem · Prawy klik: otwórz przedmiot",
       "WoundAdd": "Klik: dodaj ranę i ją otwórz"
     },
-    "DicePool": "{dice}k10 ≤{target}",
+    "DicePool": "{dice}k/{target}",
     "DicePoolRule": "Rzucasz tyloma k10, ile wynosi cecha; każda kość z wynikiem nie większym niż umiejętność to sukces.",
     "Speed": "Szybkość",
     "Resilience": "Wytrzymałość",
