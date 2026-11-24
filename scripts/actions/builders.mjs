@@ -7,6 +7,7 @@
  * i zwraca listę danych akcji w formacie TAH Core: { id, name, encodedValue, img?, info1?, cssClass?, tooltip? }.
  */
 import { ACTION_TYPES as T, encodeAction } from "./encoding.mjs";
+import { equippableGrimoires } from "../grimoire-equipment.mjs";
 
 /** Grupy HUD (id grup TAH) – układ w scripts/defaults.mjs. */
 export const GROUP_IDS = Object.freeze({
@@ -142,7 +143,7 @@ export function buildSkillGroups(actor, env = NO_ENV) {
 
 /** Ekwipunek: każda broń i pancerz – klik zakłada albo odkłada (system pilnuje limitu rąk). */
 export function buildEquipment(actor, env = NO_ENV) {
-  return [...items(actor, "weapon"), ...items(actor, "armour")].sort(byName).map((item) => {
+  return [...items(actor, "weapon"), ...items(actor, "armour"), ...equippableGrimoires(actor)].sort(byName).map((item) => {
     const equipped = Boolean(item.system?.isEquipped);
     const isWeapon = item.type === "weapon";
     return {

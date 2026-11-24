@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.7
+- **WFRP4e Grimoires**: grimoires that are held in hand show up in the Equipment list and in the hands widget. In WFRP a grimoire takes one or two hands, as set on the book; in The Old World clicking it equips or unequips it.
+- WFRP: if taking up a weapon or book fails, the items that were put away to free the hands are taken up again.
+- The message about missing hands now says "item" instead of "weapon".
+
 ## 0.8.6
 - WFRP: trait buttons show the full name with its specification, as the system writes it – "Afraid (Elves)" instead of "Afraid".
 - WFRP: traits without a test (Nightvision, Infected and the like) are listed by default; clicking one posts it to chat. The setting "Show traits without a test" is on by default now (it keeps any value you already saved).

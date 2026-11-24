@@ -79,7 +79,7 @@
       "Useless": "This hand cannot hold anything (an injury or effect).",
       "OffhandHintWfrp": "Attacks with this hand take the off-hand penalty (the system applies it). With Dual Wielder you can attack with both weapons.",
       "OffhandHintIm": "This is not the character's dominant hand; the system applies the off-hand rules to its tests.",
-      "NoHands": "The character does not have enough hands for this weapon."
+      "NoHands": "The character does not have enough hands for this item."
     },
     "Momentum": "Momentum",
     "MomentumOn": "Active",

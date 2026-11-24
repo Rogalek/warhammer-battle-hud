@@ -6,6 +6,7 @@
  */
 import { plain } from "./builders.mjs";
 import { equipmentActions, gearForUse } from "./system-panel.mjs";
+import { equippableGrimoires, towIsEquipped } from "../grimoire-equipment.mjs";
 
 /** Typy postaci graczy (reguła „tylko założone” w Walce). */
 const PC_TYPES = ["character"];
@@ -229,11 +230,13 @@ export function buildDefending(actor, env) {
 /** Ekwipunek: każda broń, pancerz i tarcza – klik zakłada albo zdejmuje (jak w zakładce Wyposażenie). */
 export function buildEquipment(actor, env) {
   const isWeapon = (item) => item.type === "weapon";
-  return equipmentActions([...items(actor, "weapon"), ...items(actor, "armour")], {
-    isEquipped: (item) => Boolean(item.system?.isEquipped),
+  return equipmentActions([...items(actor, "weapon"), ...items(actor, "armour"), ...equippableGrimoires(actor)], {
+    isEquipped: towIsEquipped,
     value: (item) => towValue(TOW.equip, item.uuid),
     detail: (item) => (isWeapon(item) ? item.system?.damage?.value : item.system?.resilience),
-    details: (item) => [tip(env, isWeapon(item) ? "Damage" : "Resilience", isWeapon(item) ? item.system?.damage?.value : item.system?.resilience)],
+    details: (item) => item.type === "trapping"
+      ? [tip(env, "Equipped", env.localize(towIsEquipped(item) ? "Yes" : "No"))]
+      : [tip(env, isWeapon(item) ? "Damage" : "Resilience", isWeapon(item) ? item.system?.damage?.value : item.system?.resilience)],
     hint: hint(env, "Equip")
   });
 }
