@@ -2,7 +2,7 @@
   "id": "warhammer-battle-hud",
   "title": "TomWa Warhammer HUD",
   "description": "Party frames, an action panel and an ammunition bar for every Warhammer system in Foundry VTT (WFRP 4e/5e, The Old World, Imperium Maledictum, Wrath & Glory, Soulbound).",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "compatibility": {
     "minimum": "14",
     "verified": "14",
@@ -12,7 +12,8 @@
     {
       "name": "Tomek (TomasWarchol)",
       "url": "https://github.com/TomasWarchol",
-      "discord": "tomek"
+      "discord": "tomek",
+      "flags": {}
     }
   ],
   "relationships": {
@@ -58,18 +59,22 @@
     "scripts/main.mjs"
   ],
   "styles": [
-    "styles/warhammer-battle-hud.css"
+    {
+      "src": "styles/warhammer-battle-hud.css"
+    }
   ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "lang/en.json",
+      "flags": {}
     },
     {
       "lang": "pl",
       "name": "Polski",
-      "path": "lang/pl.json"
+      "path": "lang/pl.json",
+      "flags": {}
     }
   ],
   "flags": {
@@ -83,7 +88,7 @@
   },
   "url": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud",
   "manifest": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/latest/download/module.json",
-  "download": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/latest/download/module.zip",
+  "download": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/releases/download/v0.8.6/module.zip",
   "bugs": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/issues",
   "readme": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/blob/main/README.md",
   "changelog": "https://github.com/TomWa-Foundry-VTT-Workshop/warhammer-battle-hud/blob/main/CHANGELOG.md",

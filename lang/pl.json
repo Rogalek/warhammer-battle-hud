@@ -79,7 +79,7 @@
       "Useless": "Ta ręka nie może nic trzymać (uraz albo efekt).",
       "OffhandHintWfrp": "Ataki tą ręką dostają karę za drugą rękę (nalicza ją system). Z talentem Walka Dwiema Brońmi możesz atakować obiema.",
       "OffhandHintIm": "To nie jest ręka wiodąca postaci; system stosuje do jej testów zasady drugiej ręki.",
-      "NoHands": "Postać nie ma dość rąk na tę broń."
+      "NoHands": "Postać nie ma dość rąk na ten przedmiot."
     },
     "Momentum": "Impet",
     "MomentumOn": "Jest",

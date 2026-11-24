@@ -4,6 +4,7 @@
  */
 import * as B from "./tow-builders.mjs";
 import { finishPanel, systemActions, testContext } from "./system-panel.mjs";
+import { setTowEquipped } from "../grimoire-equipment.mjs";
 
 const TOW = B.TOW;
 
@@ -133,7 +134,8 @@ async function perform(actor, { type, id, extra }, mods, settings) {
     case TOW.woundAdd: return addWound(actor);
     case TOW.equip: {
       const item = await fromUuid(id);
-      return item?.update({ "system.equipped.value": !item.system.equipped?.value });
+      if (item) return setTowEquipped(item, !item.system.equipped?.value);
+      return;
     }
     case TOW.opposed:
       if (mods.right) return;

@@ -8,12 +8,26 @@
  * Systemy bez wpisu nie pokazują widżetu.
  */
 import { planWfrpEquip, wfrpSlots } from "./hands-data.mjs";
+import { MODULE_ID } from "./constants.mjs";
+import { equippableGrimoires, setTowEquipped, towIsEquipped } from "../grimoire-equipment.mjs";
 
 const byName = (a, b) => String(a.name).localeCompare(String(b.name));
 const option = (item, twoHanded) => ({ id: item.id, name: item.name, img: item.img, twoHanded: Boolean(twoHanded), equipped: Boolean(item.system?.isEquipped) });
 
 const WFRP_FULL = ["character", "npc", "creature"];
-const wfrpTwoHanded = (weapon) => Boolean(weapon.system?.twohanded?.value);
+const wfrpHeldItems = (actor) => [
+  ...(actor?.itemTypes?.weapon ?? []),
+  ...equippableGrimoires(actor).filter((item) => item.system?.equipPoints > 0)
+];
+const wfrpTwoHanded = (item) => item.type === "trapping" ? item.system.equipPoints === 2 : Boolean(item.system?.twohanded?.value);
+const wfrpOffhand = (item) => Boolean(item.type === "trapping" ? item.flags?.[MODULE_ID]?.offhand : item.system?.offhand?.value);
+
+async function setWfrpOffhand(item, offhand) {
+  if (wfrpOffhand(item) === offhand) return;
+  // Trappings have no system offhand field. Weapons still use the system field for attack penalties.
+  const path = item.type === "trapping" ? `flags.${MODULE_ID}.offhand` : "system.offhand.value";
+  await item.update({ [path]: offhand });
+}
 
 /**
  * Widżet „Wyposażenie” dla systemów bez rąk: założona broń i pancerz jako pola, ostatnie pole „+” zakłada kolejny.
@@ -21,9 +35,10 @@ const wfrpTwoHanded = (weapon) => Boolean(weapon.system?.twohanded?.value);
  * @param {(item) => boolean} isEquipped
  * @param {(item, on: boolean) => Promise} setEquipped
  * @param {(item) => boolean} [twoHanded]  znacznik „2” (np. chwyt 2H w The Old World)
+ * @param {(actor) => Array} [extraItems] dodatkowe przedmioty obsługiwane przez adapter
  */
-export function gearAdapter({ types, isEquipped, setEquipped, twoHanded = () => false }) {
-  const all = (actor) => types.flatMap((type) => [...(actor?.itemTypes?.[type] ?? [])]).sort(byName);
+export function gearAdapter({ types, isEquipped, setEquipped, twoHanded = () => false, extraItems = () => [] }) {
+  const all = (actor) => [...types.flatMap((type) => [...(actor?.itemTypes?.[type] ?? [])]), ...extraItems(actor)].sort(byName);
   const view = (item) => ({ id: item.id, name: item.name, img: item.img, twoHanded: Boolean(twoHanded(item)) });
   return {
     mode: "gear",
@@ -38,12 +53,13 @@ export function gearAdapter({ types, isEquipped, setEquipped, twoHanded = () => 
         .map((item) => ({ ...view(item), equipped: isEquipped(item) }));
     },
     async hold(actor, key, itemId) {
+      const item = all(actor).find((candidate) => candidate.id === itemId);
+      if (!item) return;
       if (key !== "add" && key !== itemId) {
         const current = actor.items.get(key);
         if (current && isEquipped(current)) await setEquipped(current, false);
       }
-      const item = actor.items.get(itemId);
-      if (item && !isEquipped(item)) await setEquipped(item, true);
+      if (!isEquipped(item)) await setEquipped(item, true);
     },
     async empty(actor, key) {
       const item = key === "add" ? null : actor.items.get(key);
@@ -55,31 +71,47 @@ export function gearAdapter({ types, isEquipped, setEquipped, twoHanded = () => 
 const HANDS = {
   wfrp4e: {
     mode: "hands",
-    hasItems: (actor) => Boolean(actor.itemTypes.weapon?.length),
+    hasItems: (actor) => wfrpHeldItems(actor).length > 0,
     offhandHint: "WHAMMO.Hands.OffhandHintWfrp",
     supports: (actor) => WFRP_FULL.includes(actor?.type) && Number.isFinite(actor.system?.settings?.equipPoints),
     slots(actor) {
-      const equipped = (actor.itemTypes.weapon ?? [])
-        .filter((w) => w.system?.isEquipped)
-        .map((w) => ({ id: w.id, name: w.name, img: w.img, twoHanded: wfrpTwoHanded(w), offhand: Boolean(w.system?.offhand?.value) }));
+      const equipped = wfrpHeldItems(actor)
+        .filter((item) => item.system?.isEquipped)
+        .map((item) => ({ ...option(item, wfrpTwoHanded(item)), offhand: wfrpOffhand(item) }));
       return wfrpSlots(actor.system.settings.equipPoints, equipped);
     },
-    options: (actor) => [...(actor.itemTypes.weapon ?? [])].sort(byName).map((w) => option(w, wfrpTwoHanded(w))),
-    async hold(actor, key, weaponId) {
-      const weapon = actor.items.get(weaponId);
-      if (!weapon) return;
+    options: (actor) => wfrpHeldItems(actor).sort(byName).map((item) => option(item, wfrpTwoHanded(item))),
+    async hold(actor, key, itemId) {
+      const item = wfrpHeldItems(actor).find((candidate) => candidate.id === itemId);
+      if (!item) return;
       const slots = this.slots(actor);
-      const plan = planWfrpEquip(slots, Number(key), { id: weapon.id, twoHanded: wfrpTwoHanded(weapon), equipped: weapon.system.isEquipped });
+      const plan = planWfrpEquip(slots, Number(key), option(item, wfrpTwoHanded(item)));
       if (plan.error) return plan;
-      // Najpierw odkładamy, żeby system (limit punktów wyposażenia) pozwolił założyć nową broń
-      for (const id of plan.unequip) {
-        const item = actor.items.get(id);
-        if (item?.system.isEquipped) await item.system.toggleEquip();
+      const removed = [];
+      let ready = false;
+      try {
+        // Najpierw zwalniamy ręce, żeby system pozwolił założyć nowy przedmiot.
+        for (const id of plan.unequip) {
+          const held = actor.items.get(id);
+          if (!held?.system.isEquipped) continue;
+          const offhand = wfrpOffhand(held);
+          await held.system.toggleEquip();
+          if (held.system.isEquipped) return;
+          removed.push({ item: held, offhand });
+        }
+        if (plan.equip && !item.system.isEquipped) await item.system.toggleEquip();
+        if (!item.system.isEquipped) return;
+        ready = true;
+        await setWfrpOffhand(item, plan.offhand);
+        return plan;
+      } finally {
+        if (!ready) {
+          for (const previous of removed) {
+            if (!previous.item.system.isEquipped) await previous.item.system.toggleEquip();
+            if (previous.item.system.isEquipped) await setWfrpOffhand(previous.item, previous.offhand);
+          }
+        }
       }
-      if (plan.equip) await weapon.system.toggleEquip();
-      // Założenie zeruje „drugą rękę”, więc ustawiamy ją osobno
-      if (Boolean(weapon.system.offhand?.value) !== plan.offhand) await weapon.update({ "system.offhand.value": plan.offhand });
-      return plan;
     },
     async empty(actor, key) {
       const id = this.slots(actor).find((s) => s.key === key)?.item?.id;
@@ -125,8 +157,9 @@ const HANDS = {
 
 HANDS.whtow = gearAdapter({
   types: ["weapon", "armour"],
-  isEquipped: (item) => Boolean(item.system?.isEquipped),
-  setEquipped: (item, on) => item.update({ "system.equipped.value": on }),
+  isEquipped: towIsEquipped,
+  setEquipped: setTowEquipped,
+  extraItems: equippableGrimoires,
   twoHanded: (item) => item.system?.grip === "2H"
 });
 
